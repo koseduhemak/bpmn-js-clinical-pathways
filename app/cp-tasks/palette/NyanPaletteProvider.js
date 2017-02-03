@@ -25,8 +25,8 @@ NyanPaletteProvider.prototype.getPaletteEntries = function() {
   return {
     'create-service-task': {
       group: 'activity',
-      title: 'Create a new nyan CAT!',
-      imageUrl: Cat.dataURL,
+      title: 'Create a new Therapy Task',
+      imageUrl: Cat.imageTaskTherapy,
       action: {
         dragstart: startCreate,
         click: startCreate
