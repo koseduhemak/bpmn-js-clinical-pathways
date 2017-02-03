@@ -1,4 +1,4 @@
 module.exports = {
-  __init__: [ 'nyanPaletteProvider' ],
-  nyanPaletteProvider: [ 'type', require('./NyanPaletteProvider') ]
+  __init__: [ 'cpPaletteProvider' ],
+  cpPaletteProvider: [ 'type', require('./CPPaletteProvider') ]
 };

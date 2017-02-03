@@ -1,0 +1,28 @@
+{
+  "name": "Clinical Pathways",
+  "uri": "http://some-company/schema/bpmn/cp",
+  "prefix": "cp",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "types": [
+    {
+      "name": "TherapyTask",
+      "superClass": [
+        "bpmn:Task"
+      ]
+    },
+    {
+      "name": "DiagnosisTask",
+      "superClass": [
+        "bpmn:Task"
+      ]
+    },
+    {
+      "name": "SupportingTask",
+      "superClass": [
+        "bpmn:Task"
+      ]
+    }
+  ]
+}

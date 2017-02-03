@@ -1,10 +1,11 @@
-var Cat = require('../cat/index');
-
+var Icons = require('../icons/index');
+var CPRenderer = require('../draw/CPRenderer');
+var assign = require('lodash/object/assign');
 
 /**
  * A provider for quick service task production
  */
-function NyanPaletteProvider(palette, create, elementFactory) {
+function CPPaletteProvider(palette, create, elementFactory) {
 
   this._create = create;
   this._elementFactory = elementFactory;
@@ -12,27 +13,50 @@ function NyanPaletteProvider(palette, create, elementFactory) {
   palette.registerProvider(this);
 }
 
-NyanPaletteProvider.prototype.getPaletteEntries = function() {
+CPPaletteProvider.prototype.getPaletteEntries = function() {
 
   var elementFactory = this._elementFactory,
-      create = this._create;
+      create = this._create,
+      actions  = {};
 
-  function startCreate(event) {
-    var serviceTaskShape = elementFactory.create('shape', { type: 'bpmn:ServiceTask' });
-    create.start(event, serviceTaskShape);
-  }
+    function createAction(type, group, imageUrl, title, options) {
 
-  return {
-    'create-service-task': {
-      group: 'activity',
-      title: 'Create a new Therapy Task',
-      imageUrl: Cat.imageTaskTherapy,
-      action: {
-        dragstart: startCreate,
-        click: startCreate
-      }
+        function createListener(event) {
+            var shape = elementFactory.createShape(assign({ type: type }, options));
+
+            if (options) {
+                shape.businessObject.di.isExpanded = options.isExpanded;
+            }
+
+            create.start(event, shape);
+        }
+
+        var shortType = type.replace(/^cp\:/, '');
+
+        return {
+            group: group,
+            title: title || 'Create ' + shortType,
+            imageUrl: imageUrl,
+            action: {
+                dragstart: createListener,
+                click: createListener
+            }
+        };
     }
-  };
+
+    assign(actions, {
+      'create-therapy-task': createAction(
+          'cp:TherapyTask', 'cp', Icons.iconTherapyTask
+      ),
+      'create-diagnosis-task': createAction(
+          'cp:DiagnosisTask', 'cp', Icons.iconDiagnosisTask
+      ),
+      'create-supporting-task': createAction(
+        'cp:SupportingTask', 'cp', Icons.iconSupportingTask
+      )
+  });
+
+    return actions;
 };
 
-module.exports = NyanPaletteProvider;
+module.exports = CPPaletteProvider;

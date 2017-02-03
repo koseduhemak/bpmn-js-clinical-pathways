@@ -11,7 +11,7 @@ var BaseRenderer = require('diagram-js/lib/draw/BaseRenderer'),
 
 var is = require('bpmn-js/lib/util/ModelUtil').is;
 
-var Cat = require('../cat/index');
+var Icons = require('../icons/index');
 
 var svgAppend = require('tiny-svg/lib/append'),
     svgAttr = require('tiny-svg/lib/attr'),
@@ -25,7 +25,7 @@ var LABEL_STYLE = {
 var TASK_BORDER_RADIUS = 10;
 var INNER_OUTER_DIST = 3;
 
-function NyanRender(eventBus, styles, pathMap) {
+function CPRender(eventBus, styles, pathMap) {
     BaseRenderer.call(this, eventBus, 1500);
 
     var textUtil = new TextUtil({
@@ -35,7 +35,7 @@ function NyanRender(eventBus, styles, pathMap) {
 
     var computeStyle = styles.computeStyle;
 
-
+    // add rendering of new elements here
     var handlers = this.handlers = {
         'bpmn:Activity': function(parentGfx, element, attrs) {
             return drawRect(parentGfx, element.width, element.height, TASK_BORDER_RADIUS, attrs);
@@ -46,18 +46,48 @@ function NyanRender(eventBus, styles, pathMap) {
             renderEmbeddedLabel(parentGfx, element, 'center-middle');
             return rect;
         },
-        'bpmn:ServiceTask': function (parent, element) {
+        'cp:TherapyTask': function (parent, element) {
             var task = renderer('bpmn:Task')(parent, element);
-            var url = Cat.imageMarkerTherapy;
+            var url = Icons.iconTherapyTask;
 
-            var catGfx = svgCreate('image', {
+            var shapeGfx = svgCreate('image', {
                 x: 3,
-                y: 0,
-                width: 25,
+                y: 3,
+                width: 20,
                 href: url
             });
 
-            svgAppend(parent, catGfx);
+            svgAppend(parent, shapeGfx);
+
+            return task;
+        },
+        'cp:DiagnosisTask': function (parent, element) {
+            var task = renderer('bpmn:Task')(parent, element);
+            var url = Icons.iconDiagnosisTask;
+
+            var shapeGfx = svgCreate('image', {
+                x: 3,
+                y: 3,
+                width: 15,
+                href: url
+            });
+
+            svgAppend(parent, shapeGfx);
+
+            return task;
+        },
+        'cp:SupportingTask': function (parent, element) {
+            var task = renderer('bpmn:Task')(parent, element);
+            var url = Icons.iconSupportingTask;
+
+            var shapeGfx = svgCreate('image', {
+                x: 3,
+                y: 3,
+                width: 20,
+                href: url
+            });
+
+            svgAppend(parent, shapeGfx);
 
             return task;
         },
@@ -113,7 +143,7 @@ function NyanRender(eventBus, styles, pathMap) {
 
 
     this.canRender = function (element) {
-        return is(element, 'bpmn:ServiceTask');
+        return is(element, 'cp:TherapyTask') || is(element, 'cp:DiagnosisTask') || is(element, 'cp:SupportingTask');
     };
 
     this.drawShape = function (parent, element) {
@@ -122,20 +152,12 @@ function NyanRender(eventBus, styles, pathMap) {
 
         var handler = this.handlers[element.type];
         return handler(parent, element);
-
-
-        renderEmbeddedLabel(parent, element, 'center-middle');
-
-        //var test = this.renderEmbeddedLabel(parent, catGfx, 'center-middle');
-
-
-        return catGfx;
     };
 }
 
-inherits(NyanRender, BaseRenderer);
+inherits(CPRender, BaseRenderer);
 
-module.exports = NyanRender;
+module.exports = CPRender;
 
 function getSemantic(element) {
     return element.businessObject;

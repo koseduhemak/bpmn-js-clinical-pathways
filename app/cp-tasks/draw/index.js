@@ -1,4 +1,4 @@
 module.exports = {
-  __init__: [ 'nyanRenderer' ],
-  nyanRenderer: [ 'type', require('./NyanRenderer') ]
+  __init__: [ 'cpRenderer' ],
+  cpRenderer: [ 'type', require('./CPRenderer') ]
 };
