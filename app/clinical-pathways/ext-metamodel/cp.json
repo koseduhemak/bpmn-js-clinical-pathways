@@ -7,21 +7,55 @@
   },
   "types": [
     {
-      "name": "TherapyTask",
+      "name": "Task",
       "superClass": [
         "bpmn:Task"
+      ],
+      "properties": [
+        {
+          "name": "evidenceLevel",
+          "default": "",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "TherapyTask",
+      "superClass": [
+        "Task"
       ]
     },
     {
       "name": "DiagnosisTask",
       "superClass": [
-        "bpmn:Task"
+        "Task"
       ]
     },
     {
       "name": "SupportingTask",
       "superClass": [
-        "bpmn:Task"
+        "Task"
+      ]
+    },
+    /* Gateways */
+    {
+      "name": "SimultanParallelGateway",
+      "superClass": [
+        "bpmn:Gateway"
+      ]
+    },
+    {
+      "name": "EvidenceGateway",
+      "superClass": [
+        "bpmn:Gateway"
+      ]
+    },
+    /* Documents */
+    {
+      "name": "PatientFile",
+      "superClass": [
+        "bpmn:DataObjectReference"
       ]
     }
   ]

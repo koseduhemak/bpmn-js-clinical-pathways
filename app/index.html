@@ -1,41 +1,49 @@
-<!doctype html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>bpmn-js modeler demo</title>
 
   <link rel="stylesheet" href="css/diagram-js.css" />
-  <link rel="stylesheet" href="vendor/bpmn-font/css/bpmn.css" />
   <link rel="stylesheet" href="vendor/bpmn-font/css/bpmn-embedded.css" />
-
-  <style type="text/css">
-    html, body, #canvas, #canvas > div {
-      height: 100%;
-    }
-
-    .icon-custom-triangle {
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="#3CAA82" width="270" height="240"><path d="M8,40 l 15,-27 l 15,27 z"/></svg>');
-    }
-
-    .icon-custom-circle {
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" stroke-width="8" stroke="#48a" fill="none" viewBox="0 0 120 120"><circle cx="60" cy="60" r="40"/></svg>');
-    }
-
-  </style>
-
-  <!--
-    this is an example of how to use bpmn-js in a standalone application built with
-    CommonJS modules + browserify
-  -->
-
-  <title>custom elements example - bpmn-js-examples</title>
+  <link rel="stylesheet" href="css/app.css" />
 </head>
 <body>
+<div class="content" id="js-drop-zone">
 
+  <div class="message intro">
+    <div class="note">
+      Drop BPMN diagram from your desktop or <a id="js-create-diagram" href>create a new diagram</a> to get started.
+    </div>
+  </div>
 
-  <div id="canvas"></div>
+  <div class="message error">
+    <div class="note">
+      <p>Ooops, we could not display the BPMN 2.0 diagram.</p>
 
-  <script src="./app.js"></script>
-</body>
+      <div class="details">
+        <span>cause of the problem</span>
+        <pre></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="canvas" id="js-canvas"></div>
+</div>
+
+<ul class="buttons">
+  <li>
+    download
+  </li>
+  <li>
+    <a id="js-download-diagram" href title="download BPMN diagram">
+      BPMN diagram
+    </a>
+  </li>
+  <li>
+    <a id="js-download-svg" href title="download as SVG image">
+      SVG image
+    </a>
+  </li>
+</ul>
+
+<script src="app.js"></script>
 </html>
