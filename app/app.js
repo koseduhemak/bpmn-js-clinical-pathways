@@ -6,16 +6,17 @@ var pizzaDiagram = require('../resources/pizza-collaboration.bpmn');
 // custom elements JSON; load it from somewhere else if you like
 var customElements = require('./custom-elements.json');
 
-var cpMetamodel = require('./ext-metamodel/cp.json');
+var cpMetamodel = require('./clinical-pathways/ext-metamodel/cp.json');
 
 var $ = require('jquery');
 
 
 // our custom modeler
 var CustomModeler = require('./custom-modeler');
+var Modeler = require('bpmn-js/M')
 
-var cpPaletteModule = require('./cp-tasks/palette');
-var cpDrawModule = require('./cp-tasks/draw');
+var cpPaletteModule = require('./clinical-pathways/palette');
+var cpDrawModule = require('./clinical-pathways/draw');
 var modeler = new CustomModeler({ container: '#canvas', keyboard: { bindTo: document }, additionalModules: [
     cpPaletteModule,
     cpDrawModule
