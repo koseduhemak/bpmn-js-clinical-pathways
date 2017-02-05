@@ -57,6 +57,13 @@
       "superClass": [
         "bpmn:DataObjectReference"
       ]
-    }
+    },
+    /* Marker */
+    {
+      "name": "EvidenceMarker",
+      "superClass": [
+        "bpmn:BaseElement"
+      ]
+    },
   ]
 }

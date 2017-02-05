@@ -223,8 +223,30 @@ function CPRender(eventBus, styles, pathMap) {
             return shapeGfx;
         },
 
+
         /**
-         * MARKER
+         * MARKER CP
+         *
+         */
+        'cp:EvidenceMarker': function(parentGfx, element) {
+            console.log(parentGfx);
+            var url = Icons.iconEvidenceMarker;
+
+            element.width = 50;
+
+            var shapeGfx = svgCreate('image', {
+                x: 0,
+                y: 0,
+                width: element.width,
+                href: url
+            });
+
+            svgAppend(parentGfx, shapeGfx);
+
+            return shapeGfx;
+        },
+        /**
+         * MARKER BASE
          */
         'ParticipantMultiplicityMarker': function(parentGfx, element) {
             var markerPath = pathMap.getScaledPath('MARKER_PARALLEL', {
@@ -498,7 +520,7 @@ function CPRender(eventBus, styles, pathMap) {
 
 
     this.canRender = function (element) {
-        return isAny(element, ['cp:TherapyTask', 'cp:DiagnosisTask', 'cp:SupportingTask', 'cp:PatientFile', 'cp:SimultanParallelGateway', 'cp:EvidenceGateway']);
+        return isAny(element, ['cp:TherapyTask', 'cp:DiagnosisTask', 'cp:SupportingTask', 'cp:PatientFile', 'cp:SimultanParallelGateway', 'cp:EvidenceGateway', 'cp:EvidenceMarker']);
     };
 
     this.drawShape = function (parent, element) {

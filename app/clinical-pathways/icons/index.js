@@ -11,9 +11,13 @@ var iconPatientFile = fs.readFileSync(__dirname + '/documents/icon-patient-file.
 var iconSimultanParallelGateway = fs.readFileSync(__dirname + '/gateways/simultan-parallel-gateway.png', 'base64');
 var iconEvidenceGateway = fs.readFileSync(__dirname + '/gateways/evidence-gateway.png', 'base64');
 
+// marker
+var iconEvidenceMarker = fs.readFileSync(__dirname + '/marker/evidence-marker.png', 'base64');
+
 module.exports.iconTherapyTask = 'data:image/png;base64,' + iconTherapyTask;
 module.exports.iconSupportingTask = 'data:image/png;base64,' + iconSupportingTask;
 module.exports.iconDiagnosisTask = 'data:image/png;base64,' + iconDiagnosisTask;
 module.exports.iconPatientFile = 'data:image/png;base64,' +iconPatientFile;
 module.exports.iconSimultanParallelGateway = 'data:image/png;base64,' +iconSimultanParallelGateway;
 module.exports.iconEvidenceGateway = 'data:image/png;base64,' +iconEvidenceGateway;
+module.exports.iconEvidenceMarker = 'data:image/png;base64,' +iconEvidenceMarker;

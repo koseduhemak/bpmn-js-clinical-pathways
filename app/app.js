@@ -36,11 +36,17 @@ var container = $('#js-drop-zone');
 
 var canvas = $('#js-canvas');
 
+var ElementChanged = require('./clinical-pathways/event-handler/ElementChanged');
+
 // property panel
 var propertiesPanelModule = require('bpmn-js-properties-panel'),
     // providing camunda executable properties, too
     propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
     camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda');
+
+// CLI Module
+// @TODO implement window.cli.undo() and window.cli.redo() -> Buttons
+var CliModule = require('bpmn-js-cli');
 
 // CP properties
 var CPpropertiesProviderModule = require('./clinical-pathways/properties-provider');
@@ -54,11 +60,13 @@ var cpMetamodel = require('./clinical-pathways/ext-metamodel/cp.json');
 
 var modeler = new BpmnModeler({
     container: canvas, keyboard: {bindTo: document},
+    cli: {bindTo: 'cli'},
     propertiesPanel: {
         parent: '#js-properties-panel'
     },
     additionalModules: [
         propertiesPanelModule,
+        CliModule,
         CPpropertiesProviderModule,
         cpPaletteModule,
         cpDrawModule
@@ -69,10 +77,11 @@ var modeler = new BpmnModeler({
     }
 });
 
-modeler.on('element.changed', function(event) {
+var overlays = modeler.get('overlays');
+modeler.on('element.changed', function (event) {
     var element = event.element;
-
-    console.log(element);
+    var test = new ElementChanged(overlays);
+    test.processEvent(element);
 });
 
 var newDiagramXML = fs.readFileSync(__dirname + '/../resources/newDiagram.bpmn', 'utf-8');

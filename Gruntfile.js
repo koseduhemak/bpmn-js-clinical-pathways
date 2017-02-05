@@ -125,10 +125,11 @@ module.exports = function (grunt) {
                 files: ['<%= config.sources %>/**/*.*'],
                 tasks: ['copy:app']
             },
-            less: {
+            styles: {
                 files: [
                     'styles/**/*.less',
-                    'node_modules/bpmn-js-properties-panel/styles/**/*.less'
+                    'node_modules/bpmn-js-properties-panel/styles/**/*.less',
+                    'app/clinical-pathways/css/**/*.less'
                 ],
                 tasks: [
                     'less'
