@@ -69,6 +69,12 @@ var modeler = new BpmnModeler({
     }
 });
 
+modeler.on('element.changed', function(event) {
+    var element = event.element;
+
+    console.log(element);
+});
+
 var newDiagramXML = fs.readFileSync(__dirname + '/../resources/newDiagram.bpmn', 'utf-8');
 
 function createNewDiagram() {
