@@ -1,30 +1,30 @@
 /*'use strict';
 
-// inlined diagram; load it from somewhere else if you like
-var pizzaDiagram = require('../resources/pizza-collaboration.bpmn');
+ // inlined diagram; load it from somewhere else if you like
+ var pizzaDiagram = require('../resources/pizza-collaboration.bpmn');
 
-// custom elements JSON; load it from somewhere else if you like
-var customElements = require('./custom-elements.json');
+ // custom elements JSON; load it from somewhere else if you like
+ var customElements = require('./custom-elements.json');
 
-var cpMetamodel = require('./clinical-pathways/ext-metamodel/cp.json');
+ var cpMetamodel = require('./clinical-pathways/ext-metamodel/cp.json');
 
-var $ = require('jquery');
+ var $ = require('jquery');
 
 
-// our custom modeler
-var CustomModeler = require('./custom-modeler');
-var Modeler = require('bpmn-js/M')
+ // our custom modeler
+ var CustomModeler = require('./custom-modeler');
+ var Modeler = require('bpmn-js/M')
 
-var cpPaletteModule = require('./clinical-pathways/palette');
-var cpDrawModule = require('./clinical-pathways/draw');
-var modeler = new CustomModeler({ container: '#canvas', keyboard: { bindTo: document }, additionalModules: [
-    cpPaletteModule,
-    cpDrawModule
-],
-    moddleExtensions: {
-        cp: cpMetamodel
-    }
-});*/
+ var cpPaletteModule = require('./clinical-pathways/palette');
+ var cpDrawModule = require('./clinical-pathways/draw');
+ var modeler = new CustomModeler({ container: '#canvas', keyboard: { bindTo: document }, additionalModules: [
+ cpPaletteModule,
+ cpDrawModule
+ ],
+ moddleExtensions: {
+ cp: cpMetamodel
+ }
+ });*/
 'use strict';
 
 var fs = require('fs');
@@ -36,6 +36,12 @@ var container = $('#js-drop-zone');
 
 var canvas = $('#js-canvas');
 
+// property panel
+var propertiesPanelModule = require('bpmn-js-properties-panel'),
+    // providing camunda executable properties, too
+    propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
+    camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda');
+
 // CP DEPENDENCIES
 var cpPaletteModule = require('./clinical-pathways/palette');
 var cpDrawModule = require('./clinical-pathways/draw');
@@ -43,12 +49,20 @@ var cpDrawModule = require('./clinical-pathways/draw');
 // CP Metamodel
 var cpMetamodel = require('./clinical-pathways/ext-metamodel/cp.json');
 
-var modeler = new BpmnModeler({ container: canvas, keyboard: { bindTo: document }, additionalModules: [
-    cpPaletteModule,
-    cpDrawModule
-],
+var modeler = new BpmnModeler({
+    container: canvas, keyboard: {bindTo: document},
+    propertiesPanel: {
+        parent: '#js-properties-panel'
+    },
+    additionalModules: [
+        propertiesPanelModule,
+        propertiesProviderModule,
+        cpPaletteModule,
+        cpDrawModule
+    ],
     moddleExtensions: {
-        cp: cpMetamodel
+        cp: cpMetamodel,
+        camunda: camundaModdleDescriptor
     }
 });
 
@@ -60,7 +74,7 @@ function createNewDiagram() {
 
 function openDiagram(xml) {
 
-    modeler.importXML(xml, function(err) {
+    modeler.importXML(xml, function (err) {
 
         if (err) {
             container
@@ -86,7 +100,7 @@ function saveSVG(done) {
 
 function saveDiagram(done) {
 
-    modeler.saveXML({ format: true }, function(err, xml) {
+    modeler.saveXML({format: true}, function (err, xml) {
         done(err, xml);
     });
 }
@@ -103,7 +117,7 @@ function registerFileDrop(container, callback) {
 
         var reader = new FileReader();
 
-        reader.onload = function(e) {
+        reader.onload = function (e) {
 
             var xml = e.target.result;
 
@@ -138,9 +152,9 @@ if (!window.FileList || !window.FileReader) {
 
 // bootstrap diagram functions
 
-$(document).ready(function() {
+$(document).ready(function () {
 
-    $('#js-create-diagram').click(function(e) {
+    $('#js-create-diagram').click(function (e) {
         e.stopPropagation();
         e.preventDefault();
 
@@ -150,7 +164,7 @@ $(document).ready(function() {
     var downloadLink = $('#js-download-diagram');
     var downloadSvgLink = $('#js-download-svg');
 
-    $('.buttons a').click(function(e) {
+    $('.buttons a').click(function (e) {
         if (!$(this).is('.active')) {
             e.preventDefault();
             e.stopPropagation();
@@ -172,13 +186,13 @@ $(document).ready(function() {
 
     var _ = require('lodash');
 
-    var exportArtifacts = _.debounce(function() {
+    var exportArtifacts = _.debounce(function () {
 
-        saveSVG(function(err, svg) {
+        saveSVG(function (err, svg) {
             setEncoded(downloadSvgLink, 'diagram.svg', err ? null : svg);
         });
 
-        saveDiagram(function(err, xml) {
+        saveDiagram(function (err, xml) {
             setEncoded(downloadLink, 'diagram.bpmn', err ? null : xml);
         });
     }, 500);
