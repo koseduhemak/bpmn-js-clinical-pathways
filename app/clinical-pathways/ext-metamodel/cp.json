@@ -13,7 +13,7 @@
       ],
       "properties": [
         {
-          "name": "evidenceLevel",
+          "name": "evidence-level",
           "default": "",
           "isAttr": true,
           "type": "String"

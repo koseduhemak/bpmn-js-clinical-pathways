@@ -42,6 +42,9 @@ var propertiesPanelModule = require('bpmn-js-properties-panel'),
     propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
     camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda');
 
+// CP properties
+var CPpropertiesProviderModule = require('./clinical-pathways/properties-provider');
+
 // CP DEPENDENCIES
 var cpPaletteModule = require('./clinical-pathways/palette');
 var cpDrawModule = require('./clinical-pathways/draw');
@@ -56,7 +59,7 @@ var modeler = new BpmnModeler({
     },
     additionalModules: [
         propertiesPanelModule,
-        propertiesProviderModule,
+        CPpropertiesProviderModule,
         cpPaletteModule,
         cpDrawModule
     ],
