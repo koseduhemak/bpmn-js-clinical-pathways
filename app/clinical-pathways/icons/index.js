@@ -14,6 +14,9 @@ var iconEvidenceGateway = fs.readFileSync(__dirname + '/gateways/evidence-gatewa
 // marker
 var iconEvidenceMarker = fs.readFileSync(__dirname + '/marker/evidence-marker.png', 'base64');
 
+// decision logic
+var iconDecisionLogic = fs.readFileSync(__dirname + '/decision-logic/dmn.png', 'base64');
+
 module.exports.iconTherapyTask = 'data:image/png;base64,' + iconTherapyTask;
 module.exports.iconSupportingTask = 'data:image/png;base64,' + iconSupportingTask;
 module.exports.iconDiagnosisTask = 'data:image/png;base64,' + iconDiagnosisTask;
@@ -21,3 +24,4 @@ module.exports.iconPatientFile = 'data:image/png;base64,' +iconPatientFile;
 module.exports.iconSimultanParallelGateway = 'data:image/png;base64,' +iconSimultanParallelGateway;
 module.exports.iconEvidenceGateway = 'data:image/png;base64,' +iconEvidenceGateway;
 module.exports.iconEvidenceMarker = 'data:image/png;base64,' +iconEvidenceMarker;
+module.exports.iconDecisionLogic = 'data:image/png;base64,' +iconDecisionLogic;

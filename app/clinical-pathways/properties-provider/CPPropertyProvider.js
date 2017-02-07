@@ -16,7 +16,7 @@ var processProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/Pro
 
 
 // Require your custom property entries.
-var spellProps = require('./parts/CPProps');
+var cpProps = require('./parts/CPProps');
 
 // The general tab contains all bpmn relevant properties.
 // The properties are organized in groups.
@@ -55,7 +55,7 @@ function createGeneralTabGroups(element, bpmnFactory, elementRegistry) {
 }
 
 // Create the custom magic tab
-function createMagicTabGroups(element, elementRegistry) {
+function createCPTabGroups(element, elementRegistry) {
 
     // Create a group called "Clinical Pathways".
     var CPGroup = {
@@ -65,7 +65,7 @@ function createMagicTabGroups(element, elementRegistry) {
     };
 
     // Add the spell props to the black magic group.
-    spellProps(CPGroup, element);
+    cpProps(CPGroup, element);
 
     return [
         CPGroup
@@ -88,7 +88,7 @@ function CPPropertiesProvider(eventBus, bpmnFactory, elementRegistry) {
         var cpTab = {
             id: 'cp',
             label: 'Clinical Pathways',
-            groups: createMagicTabGroups(element, elementRegistry)
+            groups: createCPTabGroups(element, elementRegistry)
         };
 
         // Show general + "magic" tab

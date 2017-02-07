@@ -223,7 +223,6 @@ function CPRender(eventBus, styles, pathMap) {
             return shapeGfx;
         },
 
-
         /**
          * MARKER CP
          *
@@ -518,7 +517,6 @@ function CPRender(eventBus, styles, pathMap) {
         return renderLabel(parentGfx, semantic.name, { box: box, style: { fontSize: '11px' } });
     }
 
-
     this.canRender = function (element) {
         return isAny(element, ['cp:TherapyTask', 'cp:DiagnosisTask', 'cp:SupportingTask', 'cp:PatientFile', 'cp:SimultanParallelGateway', 'cp:EvidenceGateway', 'cp:EvidenceMarker']);
     };
@@ -534,6 +532,30 @@ function CPRender(eventBus, styles, pathMap) {
         return false;
     };
 }
+
+/**
+ * CONNECTIONs
+ * @param element
+ * @returns {*|Boolean}
+ */
+CPRender.prototype.drawConnection = function(p, element) {
+
+    var type = element.type;
+
+    if (type === 'cp:connection') {
+        return this.drawCustomConnection(p, element);
+    }
+};
+
+
+CPRender.prototype.getConnectionPath = function(connection) {
+
+    var type = connection.type;
+
+    if (type === 'cp:connection') {
+        return this.getCustomConnectionPath(connection);
+    }
+};
 
 inherits(CPRender, BaseRenderer);
 

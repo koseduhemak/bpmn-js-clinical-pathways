@@ -1,5 +1,4 @@
 var Icons = require('../icons/index');
-var CPRenderer = require('../draw/CPRenderer');
 var assign = require('lodash/object/assign');
 
 /**
@@ -62,7 +61,7 @@ CPPaletteProvider.prototype.getPaletteEntries = function () {
         ),
         'create-evidence-gateway': createAction(
             'cp:EvidenceGateway', 'cp', Icons.iconEvidenceGateway
-        )
+        ),
     });
 
     return actions;

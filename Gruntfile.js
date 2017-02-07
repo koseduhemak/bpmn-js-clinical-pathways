@@ -90,6 +90,16 @@ module.exports = function (grunt) {
                     }
                 ]
             },
+            dmn_js: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: resolvePath('dmn-js', 'assets'),
+                        src: ['**/*.*', '!**/*.js'],
+                        dest: '<%= config.dist %>/vendor'
+                    }
+                ]
+            },
             app: {
                 files: [
                     {
@@ -110,9 +120,10 @@ module.exports = function (grunt) {
             },
 
             styles: {
-                files: {
-                    'dist/css/app.css': 'styles/app.less'
-                }
+                files: [
+                    {'dist/css/app.css': 'styles/app.less'},
+                    {'dist/css/dmn-js.css': 'node_modules/dmn-js/styles/dmn-js.less'},
+                ]
             }
         },
 

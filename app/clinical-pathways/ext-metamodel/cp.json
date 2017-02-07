@@ -49,6 +49,20 @@
       "name": "EvidenceGateway",
       "superClass": [
         "bpmn:Gateway"
+      ],
+      "properties": [
+        {
+          "name": "evidence-level",
+          "default": "",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "dmn",
+          "default": "",
+          "isAttr": true,
+          "type": "String"
+        }
       ]
     },
     /* Documents */
@@ -58,12 +72,24 @@
         "bpmn:DataObjectReference"
       ]
     },
-    /* Marker */
+    /* Decision Logic *
     {
-      "name": "EvidenceMarker",
+      "name": "DecisionLogic",
       "superClass": [
         "bpmn:BaseElement"
+      ],
+      "properties": [
+        {
+          "name": "dmn",
+          "default": "",
+          "isAttr": true,
+          "type": "String"
+        }
       ]
     },
+    /* Connection *
+    {
+      "name": "Connection"
+    }*/
   ]
 }

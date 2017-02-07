@@ -39,10 +39,10 @@ var canvas = $('#js-canvas');
 var ElementChanged = require('./clinical-pathways/event-handler/ElementChanged');
 
 // property panel
-var propertiesPanelModule = require('bpmn-js-properties-panel'),
+var propertiesPanelModule = require('bpmn-js-properties-panel');
     // providing camunda executable properties, too
-    propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
-    camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda');
+   // propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
+   // camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda');
 
 // CLI Module
 // @TODO implement window.cli.undo() and window.cli.redo() -> Buttons
@@ -58,29 +58,77 @@ var cpDrawModule = require('./clinical-pathways/draw');
 // CP Metamodel
 var cpMetamodel = require('./clinical-pathways/ext-metamodel/cp.json');
 
+// CP Rules
+var cpRules =  require('./clinical-pathways/rules');
+
+// Core modules
+var coreModule = require('bpmn-js/lib/core'),
+    bpmnPaletteModule = require('bpmn-js/lib/features/palette'),
+    modelingModule = require('bpmn-js/lib/features/modeling'),
+    overlays = require('diagram-js/lib/features/overlays'),
+    contextPad = require('bpmn-js/lib/features/context-pad'),
+    copyPaste = require('bpmn-js/lib/features/copy-paste'),
+    distributeElements = require('bpmn-js/lib/features/distribute-elements'),
+    editorActions = require('bpmn-js/lib/features/editor-actions'),
+    globalConnect = require('bpmn-js/lib/features/global-connect'),
+    keyboard = require('bpmn-js/lib/features/keyboard'),
+    labelEditing = require('bpmn-js/lib/features/label-editing'),
+    ordering = require('bpmn-js/lib/features/ordering'),
+    popupMenu = require('bpmn-js/lib/features/popup-menu'),
+    replace = require('bpmn-js/lib/features/replace'),
+    replacePreview = require('bpmn-js/lib/features/replace-preview'),
+    rules = require('bpmn-js/lib/features/rules'),
+    search = require('bpmn-js/lib/features/search'),
+    snapping = require('bpmn-js/lib/features/snapping');
+
+
 var modeler = new BpmnModeler({
     container: canvas, keyboard: {bindTo: document},
     cli: {bindTo: 'cli'},
     propertiesPanel: {
         parent: '#js-properties-panel'
     },
+    modules: [
+        // if we have custom rules, place them before core modules!
+        cpRules,
+        // core modules
+        coreModule,
+        bpmnPaletteModule,
+        modelingModule,
+        overlays,
+        contextPad,
+        copyPaste,
+        distributeElements,
+        editorActions,
+        globalConnect,
+        keyboard,
+        labelEditing,
+        ordering,
+        popupMenu,
+        replace,
+        replacePreview,
+        rules,
+        search,
+        snapping
+    ],
     additionalModules: [
         propertiesPanelModule,
         CliModule,
         CPpropertiesProviderModule,
         cpPaletteModule,
-        cpDrawModule
+        cpDrawModule,
+
     ],
     moddleExtensions: {
         cp: cpMetamodel,
-        camunda: camundaModdleDescriptor
+        //camunda: camundaModdleDescriptor
     }
 });
 
-var overlays = modeler.get('overlays');
+
 modeler.on('element.changed', function (event) {
     var element = event.element;
-    var test = new ElementChanged(overlays);
+    var test = new ElementChanged(modeler.get('overlays'));
     test.processEvent(element);
 });
 
