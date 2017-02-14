@@ -117,7 +117,7 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: '<%= config.dist %>/',
                         src: ['**/*.*', '!index.html'],
-                        dest: 'php/public'
+                        dest: 'php/public/cp-modeler'
                     }
                 ]
             }

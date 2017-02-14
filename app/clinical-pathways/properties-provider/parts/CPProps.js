@@ -101,7 +101,8 @@ function createDMN(element, file) {
         tableName: 'DMN Table'
     });
 
-    var xml = getNewOrModifiedXML(file);
+    // @todo do something about file variable: integrate ElFinder...
+    var xml = getNewXML();
 
 
     dmnModeler.importXML(xml, function(err) {
@@ -138,14 +139,8 @@ function createDMN(element, file) {
 
     });
 
-    function getNewOrModifiedXML(file) {
-        if (file == undefined) {
-            var test = './resources/newDMN.dmn';
-        } else {
-            var test = './resources/'+file;
-        }
-        console.log(file);
-        return fs.readFileSync(test, 'utf-8');
+    function getNewXML(file) {
+        return fs.readFileSync('./resources/newDMN.dmn', 'utf-8');
     }
 
     function setEncoded(link, name, data) {

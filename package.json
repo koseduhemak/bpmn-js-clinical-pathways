@@ -10,7 +10,8 @@
   "scripts": {
     "test": "grunt test",
     "dev": "grunt auto-build",
-    "all": "grunt"
+    "all": "grunt",
+    "install": "cd php && php composer.phar update"
   },
   "keywords": [
     "bpmnjs-example"
