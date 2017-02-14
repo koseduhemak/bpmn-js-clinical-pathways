@@ -12,6 +12,8 @@ var DmnModeler = require('dmn-js/lib/table/Modeler');
 
 var fs = require('fs');
 
+var getBusinessObject = require('bpmn-js/lib/util/ModelUtil').getBusinessObject;
+
 //var newDMNXML = require('../../../../resources/newDMN.dmn');
 
 module.exports = function (group, element) {
@@ -40,13 +42,13 @@ module.exports = function (group, element) {
 
         if (element.businessObject.get('dmn').length > 0) {
             group.entries.push(entryFactory.link({
-                id: 'create-dmn',
+                id: 'modify-dmn',
                 description: 'Modify the specified DMN diagram',
                 label: 'Modify DMN',
                 getClickableElement: function() {
                     // display DMN stuff
-                    console.log(element.businessObject.get('dmn'));
-                    createDMN(element, element.businessObject.get('dmn'));
+                    var bo = getBusinessObject(element);
+                    createDMN(element, bo.get('dmn'));
                 }
             }));
         }
@@ -99,14 +101,8 @@ function createDMN(element, file) {
         tableName: 'DMN Table'
     });
 
-    console.log(file);
+    var xml = getNewOrModifiedXML(file);
 
-    if (file != undefined) {
-        var xml = fs.readFileSync('./'+file, 'utf-8');
-        console.log(xml);
-    } else {
-        var xml = getNewXML();
-    }
 
     dmnModeler.importXML(xml, function(err) {
 
@@ -142,8 +138,14 @@ function createDMN(element, file) {
 
     });
 
-    function getNewXML() {
-        return fs.readFileSync('./resources/newDMN.dmn', 'utf-8');
+    function getNewOrModifiedXML(file) {
+        if (file == undefined) {
+            var test = './resources/newDMN.dmn';
+        } else {
+            var test = './resources/'+file;
+        }
+        console.log(file);
+        return fs.readFileSync(test, 'utf-8');
     }
 
     function setEncoded(link, name, data) {

@@ -1,0 +1,32 @@
+<?= $this->doctype() ?>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <?= $this->headTitle('ZF Skeleton Application')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+    <?= $this->headMeta()
+        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+    ?>
+
+    <link rel="stylesheet" href="css/diagram-js.css"/>
+    <link rel="stylesheet" href="vendor/bpmn-font/css/bpmn-embedded.css"/>
+    <!--<link rel="stylesheet" href="vendor/dmn-font/css/dmn-embedded.css" />-->
+    <link rel="stylesheet" href="css/dmn-js.css"/>
+    <link rel="stylesheet" href="css/app.css"/>
+
+    <!-- Le styles -->
+    <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+    ?>
+
+    <!-- Scripts -->
+    <?= $this->headScript();
+    ?>
+</head>
+<body>
+
+<?= $this->content ?>
+<?= $this->inlineScript() ?>
+</body>
+</html>

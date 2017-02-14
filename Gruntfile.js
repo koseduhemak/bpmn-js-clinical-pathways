@@ -24,7 +24,8 @@ module.exports = function (grunt) {
 
         config: {
             sources: 'app',
-            dist: 'dist'
+            dist: 'dist',
+            apacheURI: 'http://bpmncp.localhost/'
         },
 
         jshint: {
@@ -109,6 +110,16 @@ module.exports = function (grunt) {
                         dest: '<%= config.dist %>'
                     }
                 ]
+            },
+            toPHP: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= config.dist %>/',
+                        src: ['**/*.*', '!index.html'],
+                        dest: 'php/public'
+                    }
+                ]
             }
         },
         less: {
@@ -174,6 +185,11 @@ module.exports = function (grunt) {
             unit: {
                 browsers: TEST_BROWSERS
             }
+        },
+        open: {
+            apache: {
+                path: '<%= config.apacheURI %>',
+            }
         }
     });
 
@@ -181,12 +197,29 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', ['copy', 'less', 'browserify:app']);
 
+
     grunt.registerTask('auto-build', [
-        'copy',
+        'copy:diagram_js',
+        'copy:bpmn_js',
+        'copy:dmn_js',
+        'copy:app',
         'less',
         'browserify:watch',
         'connect:livereload',
         'watch'
+    ]);
+
+    grunt.registerTask('release-php', [
+        'copy:diagram_js',
+        'copy:bpmn_js',
+        'copy:dmn_js',
+        'copy:app',
+        'less',
+        'browserify:watch',
+        'copy:toPHP',
+        'open'
+        //'connect:livereload',
+        //'watch'
     ]);
 
     grunt.registerTask('test', ['karma:single']);
