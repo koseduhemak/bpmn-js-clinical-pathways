@@ -145,7 +145,7 @@ function CPRender(eventBus, styles, pathMap) {
 
             return task;
         },
-        'cp:PatientFile': function (parent, element) {
+        'cp:Document': function (parent, element) {
             element.width = 40;
             element.height = 50;
 
@@ -170,7 +170,7 @@ function CPRender(eventBus, styles, pathMap) {
             }
 
 
-            var url = Icons.iconPatientFile;
+            var url = Icons.iconDocument;
 
             var iconGfx = svgCreate('image', {
                 x: 3,
@@ -518,7 +518,7 @@ function CPRender(eventBus, styles, pathMap) {
     }
 
     this.canRender = function (element) {
-        return isAny(element, ['cp:TherapyTask', 'cp:DiagnosisTask', 'cp:SupportingTask', 'cp:PatientFile', 'cp:SimultanParallelGateway', 'cp:EvidenceGateway', 'cp:EvidenceMarker']);
+        return isAny(element, ['cp:TherapyTask', 'cp:DiagnosisTask', 'cp:SupportingTask', 'cp:Document', 'cp:SimultanParallelGateway', 'cp:EvidenceGateway', 'cp:EvidenceMarker']);
     };
 
     this.drawShape = function (parent, element) {

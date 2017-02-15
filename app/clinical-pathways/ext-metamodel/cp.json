@@ -67,10 +67,17 @@
     },
     /* Documents */
     {
-      "name": "PatientFile",
+      "name": "Document",
       "superClass": [
         "bpmn:DataObjectReference"
-      ]
+      ],
+      "properties": [
+        {
+          "name": "type",
+          "isAttr": true,
+          "type": "String"
+        }
+        ]
     },
     /* Decision Logic *
     {

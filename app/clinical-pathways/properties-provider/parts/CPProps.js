@@ -11,6 +11,7 @@ var $ = require('jquery');
 var DmnModeler = require('dmn-js/lib/table/Modeler');
 
 var fs = require('fs');
+var forEach = require('lodash/collection/forEach');
 
 var getBusinessObject = require('bpmn-js/lib/util/ModelUtil').getBusinessObject;
 
@@ -22,11 +23,12 @@ module.exports = function (group, element) {
     // element is a start event.
 
     if (isAny(element, ['cp:Task', 'cp:EvidenceGateway'])) {
-        group.entries.push(entryFactory.textField({
+        group.entries.push(entryFactory.selectBox({
             id: 'evidence-level',
             description: 'Evidence Level of the task/gateway',
             label: 'Evidence Level',
-            modelProperty: 'evidence-level'
+            modelProperty: 'evidence-level',
+            selectOptions: readEnumAndGenerateSelectOptions(require('../../enums/EvidenceLevel.json'))
         }));
 
 
@@ -61,6 +63,16 @@ module.exports = function (group, element) {
                 // display DMN stuff
                 createDMN(element);
             }
+        }));
+    }
+
+    if (is(element, 'cp:Document')) {
+        group.entries.push(entryFactory.selectBox({
+            id: 'dmn',
+            description: 'Document Type.',
+            label: 'Document Type',
+            modelProperty: 'type',
+            selectOptions: readEnumAndGenerateSelectOptions(require('../../enums/DocumentTypes.json'))
         }));
     }
 };
@@ -173,4 +185,14 @@ function createDMN(element, file) {
 
     dmnModeler.on('commandStack.changed', exportArtifacts);
 
+}
+
+// helpers
+function readEnumAndGenerateSelectOptions(array) {
+    var arr = [{name: '', value: ''}];
+    forEach(array, function(value) {
+        arr.push({name: value, value: value});
+    });
+
+    return arr;
 }

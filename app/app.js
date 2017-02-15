@@ -38,6 +38,10 @@ var canvas = $('#js-canvas');
 
 var ElementChanged = require('./clinical-pathways/event-handler/ElementChanged');
 
+// helper
+var forEach = require('lodash/collection/forEach');
+var isAny = require('bpmn-js/lib/features/modeling/util/ModelingUtil').isAny;
+
 // property panel
 var propertiesPanelModule = require('bpmn-js-properties-panel');
     // providing camunda executable properties, too
@@ -128,8 +132,8 @@ var modeler = new BpmnModeler({
 
 modeler.on('element.changed', function (event) {
     var element = event.element;
-    var test = new ElementChanged(modeler.get('overlays'));
-    test.processEvent(element);
+    var elementChanged = new ElementChanged(modeler.get('overlays'));
+    elementChanged.processEvent(element);
 });
 
 var newDiagramXML = fs.readFileSync(__dirname + '/../resources/newDiagram.bpmn', 'utf-8');
@@ -154,6 +158,27 @@ function openDiagram(xml) {
             container
                 .removeClass('with-error')
                 .addClass('with-diagram');
+
+
+            // @todo auslagern in module?
+            // applys overlays to specific elements
+            var elementChanged = new ElementChanged(modeler.get('overlays'));
+            var alreadyProcessed = [];
+            var elements = modeler.get('elementRegistry').filter(function(element) {
+
+                if (alreadyProcessed.indexOf(element.businessObject.get('id')) == -1) {
+                    console.log(alreadyProcessed);
+                    alreadyProcessed.push(element.businessObject.get('id'));
+                    elementChanged.processEvent(element);
+                    return isAny(element, ['cp:Task', 'cp:EvidenceGateway']);
+                }
+                return false;
+
+            });
+
+            elements = Array.from(new Set(elements));
+
+
         }
 
 

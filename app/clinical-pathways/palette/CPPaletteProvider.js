@@ -53,8 +53,8 @@ CPPaletteProvider.prototype.getPaletteEntries = function () {
         'create-supporting-task': createAction(
             'cp:SupportingTask', 'cp', Icons.iconSupportingTask
         ),
-        'create-patient-file': createAction(
-            'cp:PatientFile', 'cp', Icons.iconPatientFile
+        'create-document': createAction(
+            'cp:Document', 'cp', Icons.iconDocument
         ),
         'create-simultan-parallel-gateway': createAction(
             'cp:SimultanParallelGateway', 'cp', Icons.iconSimultanParallelGateway
