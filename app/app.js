@@ -164,7 +164,7 @@ function openDiagram(xml) {
             // applys overlays to specific elements
             var elementChanged = new ElementChanged(modeler.get('overlays'));
             var alreadyProcessed = [];
-            var elements = modeler.get('elementRegistry').filter(function(element) {
+            modeler.get('elementRegistry').filter(function(element) {
 
                 if (alreadyProcessed.indexOf(element.businessObject.get('id')) == -1) {
                     console.log(alreadyProcessed);
@@ -175,8 +175,6 @@ function openDiagram(xml) {
                 return false;
 
             });
-
-            elements = Array.from(new Set(elements));
 
 
         }
