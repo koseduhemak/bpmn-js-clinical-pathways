@@ -1,4 +1,4 @@
 module.exports = {
-    __init__: ['elementChanged'],
+    //__init__: ['elementChanged'],
     elementChanged: ['type', require('./ElementChanged')]
 };

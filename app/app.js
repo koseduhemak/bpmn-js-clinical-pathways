@@ -42,11 +42,15 @@ var ElementChanged = require('./clinical-pathways/event-handler/ElementChanged')
 var forEach = require('lodash/collection/forEach');
 var isAny = require('bpmn-js/lib/features/modeling/util/ModelingUtil').isAny;
 
+// elfinder
+var ElFinderHelper = require('./elfinder/ElFinderHelper');
+var elFinderHelper = new ElFinderHelper(modeler, openDiagram);
+
 // property panel
 var propertiesPanelModule = require('bpmn-js-properties-panel');
-    // providing camunda executable properties, too
-   // propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
-   // camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda');
+// providing camunda executable properties, too
+// propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
+// camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda');
 
 // CLI Module
 // @TODO implement window.cli.undo() and window.cli.redo() -> Buttons
@@ -63,7 +67,7 @@ var cpDrawModule = require('./clinical-pathways/draw');
 var cpMetamodel = require('./clinical-pathways/ext-metamodel/cp.json');
 
 // CP Rules
-var cpRules =  require('./clinical-pathways/rules');
+var cpRules = require('./clinical-pathways/rules');
 
 // Core modules
 var coreModule = require('bpmn-js/lib/core'),
@@ -121,6 +125,7 @@ var modeler = new BpmnModeler({
         CPpropertiesProviderModule,
         cpPaletteModule,
         cpDrawModule,
+        ElementChanged
 
     ],
     moddleExtensions: {
@@ -129,12 +134,13 @@ var modeler = new BpmnModeler({
     }
 });
 
+//var elementChanged = new ElementChanged();
 
+/*
 modeler.on('element.changed', function (event) {
     var element = event.element;
-    var elementChanged = new ElementChanged(modeler.get('overlays'));
     elementChanged.processEvent(element);
-});
+});*/
 
 var newDiagramXML = fs.readFileSync(__dirname + '/../resources/newDiagram.bpmn', 'utf-8');
 
@@ -161,20 +167,20 @@ function openDiagram(xml) {
 
 
             // @todo auslagern in module?
-            // applys overlays to specific elements
-            var elementChanged = new ElementChanged(modeler.get('overlays'));
+            /*/ applys overlays to specific elements
+
             var alreadyProcessed = [];
-            modeler.get('elementRegistry').filter(function(element) {
+            modeler.get('elementRegistry').filter(function (element) {
 
                 if (alreadyProcessed.indexOf(element.businessObject.get('id')) == -1) {
-                    console.log(alreadyProcessed);
                     alreadyProcessed.push(element.businessObject.get('id'));
-                    elementChanged.processEvent(element);
+
                     return isAny(element, ['cp:Task', 'cp:EvidenceGateway']);
                 }
                 return false;
 
-            });
+            });*/
+
 
 
         }
@@ -248,6 +254,14 @@ $(document).ready(function () {
         e.preventDefault();
 
         createNewDiagram();
+    });
+
+    // open files via elfinder
+    $('#js-open-diagram').click(function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        elFinderHelper.open();
     });
 
     var downloadLink = $('#js-download-diagram');

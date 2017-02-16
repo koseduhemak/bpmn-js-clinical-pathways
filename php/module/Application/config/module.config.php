@@ -34,6 +34,16 @@ return [
                     ],
                 ],
             ],
+            'elFinderFolder' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/elfinder/folder',
+                    'defaults' => [
+                        'controller' => 'ElFinderIndexController',
+                        'action'     => 'folder',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [

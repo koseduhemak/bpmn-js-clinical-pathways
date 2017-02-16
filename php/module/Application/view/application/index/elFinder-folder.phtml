@@ -1,0 +1,48 @@
+<?php
+include 'vendor/reliv/elfinder/view/el-finder/index/common.phtml'; ?>
+
+<?php $this->headScript()->captureStart() ?>
+$(function () {
+var $window = jQuery(window);
+var init_win_height = $window.height() - 20;
+
+var thisElFinder = jQuery('#elfinder').elfinder({
+// lang: 'ru',             // language (OPTIONAL)
+url: '<?= $this->connectorPath; ?>',  // connector URL (REQUIRED)
+commandsOptions : {
+    // configure value for "getFileCallback" used for editor integration
+    getfile : {
+    // send only URL or URL+path if false
+    onlyURL  : false,
+
+    // allow to return multiple files info
+    multiple : false,
+
+    // allow to return folders info
+    folders  : true,
+
+    // action after callback (close/destroy)
+    oncomplete : ''
+    },
+},
+getFileCallback: function (fileInfo) {
+window.opener.elFinderFileSelected(fileInfo['url']);
+window.close();
+},
+resizable: false,
+height: init_win_height
+});
+
+var elf = thisElFinder.elfinder('instance');
+
+var $window = $(window);
+$window.resize(function () {
+var win_height = $window.height() - 20;
+if (thisElFinder.height() != win_height) {
+thisElFinder.height(win_height).resize();
+}
+});
+});
+<?php $this->headScript()->captureEnd() ?>
+
+<div id="elfinder"></div>

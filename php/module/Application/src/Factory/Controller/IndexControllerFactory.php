@@ -16,6 +16,7 @@
  */
 namespace Application\Factory\Controller;
 
+use Application\Controller\ExtendedElFinderController;
 use Interop\Container\ContainerInterface;
 use Reliv\ElFinder\Controller\IndexController;
 use Zend\ServiceManager\Factory\FactoryInterface;
@@ -46,6 +47,6 @@ class IndexControllerFactory implements FactoryInterface
         $config = $container->get('config');
         $ElFinderManager = $container->get('ElFinderManager');
 
-        return new IndexController($config, $ElFinderManager);
+        return new ExtendedElFinderController($config, $ElFinderManager);
     }
 }

@@ -72,7 +72,7 @@ return array(
         'disableLayouts' => true,
         'connectorPath' => '/elfinder/connector',
         'mounts' => array(
-            /*'images' => array(
+            'folders' => array(
                 'roots' => array(
                     'workspace' => array(
                         // driver for accessing file system (REQUIRED)
@@ -84,17 +84,18 @@ return array(
                         // URL to files (REQUIRED)
                         'URL' => '/workspace/',
 
-                        //Allowed types
-                        'uploadAllow' => array('image'),
-
-                        // White list
-                        'uploadOrder' => array('allow', 'deny'),
-
                         // disable and hide dot starting files (OPTIONAL)
-                        'accessControl' => 'access'
+                        'accessControl' => function($attr, $path, $data, $volume) {
+                            if ($attr === 'hidden') {
+                                if (! is_dir($path)) {
+                                    return true;
+                                }
+                            }
+                            return null;
+                        }
                     ),
                 ),
-            ),*/
+            ),
             'defaults' => array(
                 'roots' => array(
                     'defaults' => array(
@@ -120,3 +121,4 @@ return array(
         ),
     ),
 );
+

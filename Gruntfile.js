@@ -189,6 +189,7 @@ module.exports = function (grunt) {
         open: {
             apache: {
                 path: '<%= config.apacheURI %>',
+                app: 'Firefox'
             }
         }
     });
