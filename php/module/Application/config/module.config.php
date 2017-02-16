@@ -39,8 +39,16 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
+            'ElFinderIndexController' => Factory\Controller\IndexControllerFactory::class,
         ],
     ],
+
+    'service_manager' => array(
+        'factories' => array(
+            'ElFinderManager' => Factory\Service\ElFinderManagerFactory::class
+        ),
+    ),
+
     'view_manager' => [
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
