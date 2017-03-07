@@ -537,7 +537,7 @@ function CPRender(eventBus, styles, pathMap) {
  * CONNECTIONs
  * @param element
  * @returns {*|Boolean}
- */
+ *
 CPRender.prototype.drawConnection = function(p, element) {
 
     var type = element.type;
@@ -556,7 +556,7 @@ CPRender.prototype.getConnectionPath = function(connection) {
         return this.getCustomConnectionPath(connection);
     }
 };
-
+*/
 inherits(CPRender, BaseRenderer);
 
 module.exports = CPRender;

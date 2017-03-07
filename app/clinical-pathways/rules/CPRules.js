@@ -41,16 +41,24 @@ CPRules.prototype._init = function () {
     var self = this;
 
     eventBus.on('element.changed', function (event) {
+
         var element = event.element,
-            current = self._current,
             bo = element.businessObject;
 
-        if (isAny(bo, ['cp:Task', 'cp:EvidenceGateway'])) {
+        if (isAny(bo, ['cp:Task', 'cp:EvidenceGateway']) && element.type != "label") {
+
+
             if (evidenceLevel.includes(bo.get('evidence-level').toUpperCase())) {
                 bo.set('evidence-level', bo.get('evidence-level').toUpperCase());
 
                 overlays.clear({element: element});
-                console.log("adding");
+                /*
+                 position: {
+                 top: -20,
+                 left: element.width - 10,
+                 },
+                 */
+                console.log(element.type);
                 var overlay_id = overlays.add(element, {
                     position: {
                         top: -20,

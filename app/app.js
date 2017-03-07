@@ -36,8 +36,6 @@ var container = $('#js-drop-zone');
 
 var canvas = $('#js-canvas');
 
-var ElementChanged = require('./clinical-pathways/event-handler/ElementChanged');
-
 // helper
 var forEach = require('lodash/collection/forEach');
 var isAny = require('bpmn-js/lib/features/modeling/util/ModelingUtil').isAny;
@@ -64,7 +62,7 @@ var cpPaletteModule = require('./clinical-pathways/palette');
 var cpDrawModule = require('./clinical-pathways/draw');
 
 // CP Metamodel
-var cpMetamodel = require('./clinical-pathways/ext-metamodel/cp.json');
+var cpMetamodel = require('./clinical-pathways/ext-metamodel/CPMetamodel.json');
 
 // CP Rules
 var cpRules = require('./clinical-pathways/rules');
@@ -124,8 +122,7 @@ var modeler = new BpmnModeler({
         CliModule,
         CPpropertiesProviderModule,
         cpPaletteModule,
-        cpDrawModule,
-        ElementChanged
+        cpDrawModule
 
     ],
     moddleExtensions: {
@@ -134,13 +131,6 @@ var modeler = new BpmnModeler({
     }
 });
 
-//var elementChanged = new ElementChanged();
-
-/*
-modeler.on('element.changed', function (event) {
-    var element = event.element;
-    elementChanged.processEvent(element);
-});*/
 
 var newDiagramXML = fs.readFileSync(__dirname + '/../resources/newDiagram.bpmn', 'utf-8');
 
@@ -165,21 +155,24 @@ function openDiagram(xml) {
                 .removeClass('with-error')
                 .addClass('with-diagram');
 
+            var eventBus = modeler.get('eventBus');
+
+
 
             // @todo auslagern in module?
-            /*/ applys overlays to specific elements
+            // applys overlays to specific elements
 
             var alreadyProcessed = [];
             modeler.get('elementRegistry').filter(function (element) {
-
+                eventBus.fire({type: 'element.changed'}, {element: element});
                 if (alreadyProcessed.indexOf(element.businessObject.get('id')) == -1) {
                     alreadyProcessed.push(element.businessObject.get('id'));
 
-                    return isAny(element, ['cp:Task', 'cp:EvidenceGateway']);
+
                 }
                 return false;
 
-            });*/
+            });
 
 
 
