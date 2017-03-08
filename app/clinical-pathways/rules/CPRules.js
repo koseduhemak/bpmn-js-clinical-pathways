@@ -19,6 +19,7 @@ var evidenceLevel = require('../enums/EvidenceLevel.json');
  *
  * @param {EventBus} eventBus
  */
+var remove = false;
 function CPRules(eventBus, overlays) {
     RuleProvider.call(this, eventBus);
     this._eventBus = eventBus;
@@ -40,34 +41,31 @@ CPRules.prototype._init = function () {
 
     var self = this;
 
-    eventBus.on('element.changed', function (event) {
+    eventBus.on('element.changed', 100, function (event) {
 
         var element = event.element,
             bo = element.businessObject;
 
         if (isAny(bo, ['cp:Task', 'cp:EvidenceGateway']) && element.type != "label") {
 
-
             if (evidenceLevel.includes(bo.get('evidence-level').toUpperCase())) {
                 bo.set('evidence-level', bo.get('evidence-level').toUpperCase());
 
-                overlays.clear({element: element});
-                /*
-                 position: {
-                 top: -20,
-                 left: element.width - 10,
-                 },
-                 */
-                console.log(element.type);
-                var overlay_id = overlays.add(element, {
-                    position: {
-                        top: -20,
-                        left: element.width - 10,
-                    },
-                    html: $('<div class="cp-evidence-marker">').text(bo.get('evidence-level'))
-                });
+
+                try {
+                    var overlay_id = overlays.add(element.id, {
+                        position: {
+                            top: -20,
+                            left: element.width - 10
+                        },
+                        html: $('<div class="cp-evidence-marker">').text(bo.get('evidence-level'))
+                    });
+                } catch(e) {
+                    // this will break if element was removed... No one knows how to properly do that.
+                }
+
             } else {
-                overlays.remove({element: element});
+                overlays.remove({element: element.id});
                 bo.set('evidence-level', '');
             }
 
