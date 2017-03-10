@@ -47,8 +47,8 @@ var elFinderHelper = new ElFinderHelper(modeler, openDiagram);
 // property panel
 var propertiesPanelModule = require('bpmn-js-properties-panel');
 // providing camunda executable properties, too
-// propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
-// camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda');
+var propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
+ camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda');
 
 // CLI Module
 // @TODO implement window.cli.undo() and window.cli.redo() -> Buttons
@@ -66,6 +66,9 @@ var cpMetamodel = require('./clinical-pathways/ext-metamodel/CPMetamodel.json');
 
 // CP Rules
 var cpRules = require('./clinical-pathways/rules');
+
+// CP POPMENU
+var cpPopupMenu = require('./clinical-pathways/popup-menu/CPReplaceMenuProvider');
 
 // Core modules
 var coreModule = require('bpmn-js/lib/core'),
@@ -97,6 +100,7 @@ var modeler = new BpmnModeler({
     modules: [
         // if we have custom rules, place them before core modules!
         cpRules,
+        cpPopupMenu,
         // core modules
         coreModule,
         bpmnPaletteModule,
@@ -110,7 +114,7 @@ var modeler = new BpmnModeler({
         keyboard,
         labelEditing,
         ordering,
-        popupMenu,
+        //popupMenu,
         replace,
         replacePreview,
         rules,
@@ -119,6 +123,7 @@ var modeler = new BpmnModeler({
     ],
     additionalModules: [
         propertiesPanelModule,
+        propertiesProviderModule,
         CliModule,
         CPpropertiesProviderModule,
         cpPaletteModule,
@@ -127,7 +132,7 @@ var modeler = new BpmnModeler({
     ],
     moddleExtensions: {
         cp: cpMetamodel,
-        //camunda: camundaModdleDescriptor
+        camunda: camundaModdleDescriptor
     }
 });
 
@@ -164,6 +169,7 @@ function openDiagram(xml) {
 
             var alreadyProcessed = [];
             modeler.get('elementRegistry').filter(function (element) {
+                console.log(element);
                 eventBus.fire({type: 'element.changed'}, {element: element});
                 if (alreadyProcessed.indexOf(element.businessObject.get('id')) == -1) {
                     alreadyProcessed.push(element.businessObject.get('id'));

@@ -22,7 +22,7 @@ module.exports = function (group, element) {
     // Only return an entry, if the currently selected
     // element is a start event.
 
-    if (isAny(element, ['cp:Task', 'cp:EvidenceGateway'])) {
+    if (isAny(element, ['cp:Process', 'cp:Task', 'cp:EvidenceGateway'])) {
         group.entries.push(entryFactory.selectBox({
             id: 'evidence-level',
             description: 'Evidence Level of the task/gateway',
