@@ -69,13 +69,13 @@
     {
       "name": "SimultanParallelGateway",
       "superClass": [
-        "bpmn:Gateway"
+        "bpmn:ParallelGateway"
       ]
     },
     {
       "name": "EvidenceGateway",
       "superClass": [
-        "bpmn:Gateway"
+        "bpmn:ComplexGateway"
       ],
       "properties": [
         {

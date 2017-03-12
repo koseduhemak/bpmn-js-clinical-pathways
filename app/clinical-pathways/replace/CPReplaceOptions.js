@@ -116,3 +116,81 @@ module.exports.TASK = [
         }
     },
 ];
+
+module.exports.GATEWAY = [
+    {
+        label: 'Exclusive Gateway',
+        actionName: 'replace-with-exclusive-gateway',
+        className: 'bpmn-icon-gateway-xor',
+        target: {
+            type: 'bpmn:ExclusiveGateway'
+        }
+    },
+    {
+        label: 'Parallel Gateway',
+        actionName: 'replace-with-parallel-gateway',
+        className: 'bpmn-icon-gateway-parallel',
+        target: {
+            type: 'bpmn:ParallelGateway'
+        }
+    },
+    {
+        label: 'Inclusive Gateway',
+        actionName: 'replace-with-inclusive-gateway',
+        className: 'bpmn-icon-gateway-or',
+        target: {
+            type: 'bpmn:InclusiveGateway'
+        }
+    },
+    {
+        label: 'Complex Gateway',
+        actionName: 'replace-with-complex-gateway',
+        className: 'bpmn-icon-gateway-complex',
+        target: {
+            type: 'bpmn:ComplexGateway'
+        }
+    },
+    {
+        label: 'Event based Gateway',
+        actionName: 'replace-with-event-based-gateway',
+        className: 'bpmn-icon-gateway-eventbased',
+        target: {
+            type: 'bpmn:EventBasedGateway',
+            instantiate: false,
+            eventGatewayType: 'Exclusive'
+        }
+    },
+    // Gateways deactivated until https://github.com/bpmn-io/bpmn-js/issues/194
+    // {
+    //   label: 'Event based instantiating Gateway',
+    //   actionName: 'replace-with-exclusive-event-based-gateway',
+    //   className: 'bpmn-icon-exclusive-event-based',
+    //   target: {
+    //     type: 'bpmn:EventBasedGateway'
+    //   },
+    //   options: {
+    //     businessObject: { instantiate: true, eventGatewayType: 'Exclusive' }
+    //   }
+    // },
+    // {
+    //   label: 'Parallel Event based instantiating Gateway',
+    //   actionName: 'replace-with-parallel-event-based-instantiate-gateway',
+    //   className: 'bpmn-icon-parallel-event-based-instantiate-gateway',
+    //   target: {
+    //     type: 'bpmn:EventBasedGateway'
+    //   },
+    //   options: {
+    //     businessObject: { instantiate: true, eventGatewayType: 'Parallel' }
+    //   }
+    // }
+
+    // Clinical Pathway Gateways
+    {
+        label: 'SimultanParallelGateway',
+        actionName: 'replace-with-simultan-parallel-gateway',
+        className: 'cp-icon-simultan-parallel-gateway',
+        target: {
+            type: 'cp:SimultanParallelGateway'
+        }
+    },
+];

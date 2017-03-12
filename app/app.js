@@ -68,7 +68,7 @@ var cpMetamodel = require('./clinical-pathways/ext-metamodel/CPMetamodel.json');
 var cpRules = require('./clinical-pathways/rules');
 
 // CP POPMENU
-var cpPopupMenu = require('./clinical-pathways/popup-menu/CPReplaceMenuProvider');
+var cpPopupMenu = require('./clinical-pathways/popup-menu');
 
 // Core modules
 var coreModule = require('bpmn-js/lib/core'),

@@ -43,12 +43,10 @@ ReplaceMenuProvider.prototype.getEntries = function(element) {
 
     var differentType = isDifferentType(element);
 
-    //entries = cachedGetEntries(element);
-
     // TODO how to proper extend base method?
 
     // flow nodes
-    if (is(businessObject, 'bpmn:FlowNode')) {
+    if (is(businessObject, 'bpmn:Task')) {
         entries = filter(replaceCPOptions.TASK, differentType);
 
         // collapsed SubProcess can not be replaced with itself
@@ -59,8 +57,12 @@ ReplaceMenuProvider.prototype.getEntries = function(element) {
         }
 
         return this._createEntries(element, entries);
-    } else {
-        cachedGetEntries(element);
+    } else if (is(businessObject, 'bpmn:Gateway')) {
+        entries = filter(replaceCPOptions.GATEWAY, differentType);
+
+        return this._createEntries(element, entries);
+    }else {
+        return cachedGetEntries.call(this, element);
     }
 
     return [];
