@@ -134,7 +134,7 @@
         {
           "name": "evidenceLevel",
           "isAttr": true,
-          "type": "String"
+          "type": "EvidenceLevel"
         }
       ]
     },
@@ -445,9 +445,13 @@
       ]
     },
     /* Resources */
+
     {
       "name": "CPResource",
       "superClass": [
+        "bpmn:FlowElement"
+      ],
+      "extends": [
         "bpmn:Resource"
       ],
       "properties": [
@@ -462,6 +466,9 @@
     {
       "name": "ResourceBundle",
       "superClass": [
+        "bpmn:FlowElement"
+      ],
+      "extends": [
         "bpmn:Resource"
       ],
       "properties": [
@@ -527,13 +534,52 @@
     {
       "name": "StatementRelation",
       "superClass": [
-        "bpmn:FlowElement"
+        "bpmn:Association"
+      ],
+      "properties": [
+        {
+          "name": "name",
+          "type": "String",
+          "isAttr": true
+        }
       ]
     },
     {
       "name": "ResourceRelation",
       "superClass": [
-        "bpmn:FlowElement"
+        "bpmn:Association"
+      ]
+    },
+    {
+      "name": "AssociationAnnotation",
+      "superClass": [
+        "bpmn:TextAnnotation"
+      ]
+    }
+
+  ],
+  "enumerations": [
+    {
+      "name": "EvidenceLevel",
+      "literalValues": [
+        {
+          "name": "A"
+        },
+        {
+          "name": "B"
+        },
+        {
+          "name": "C"
+        },
+        {
+          "name": "D"
+        },
+        {
+          "name": "E"
+        },
+        {
+          "name": "F"
+        }
       ]
     }
   ]

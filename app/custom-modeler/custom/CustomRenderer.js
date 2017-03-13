@@ -105,6 +105,7 @@ function CustomRenderer(eventBus, styles) {
   };
 
   this.drawCustomConnection = function(p, element) {
+    console.log("draw custom connection");
     var attrs = computeStyle(attrs, {
       stroke: '#ff471a',
       strokeWidth: 2

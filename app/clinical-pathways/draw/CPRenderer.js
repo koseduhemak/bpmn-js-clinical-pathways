@@ -7,9 +7,11 @@ var inherits = require('inherits'),
     some = require('lodash/collection/some');
 
 var BaseRenderer = require('diagram-js/lib/draw/BaseRenderer'),
-    TextUtil = require('diagram-js/lib/util/Text');
+    TextUtil = require('diagram-js/lib/util/Text'),
+    createLine = require('diagram-js/lib/util/RenderUtil').createLine;
 
-var isAny = require('bpmn-js/lib/features/modeling/util/ModelingUtil').isAny;
+var isAny = require('bpmn-js/lib/features/modeling/util/ModelingUtil').isAny,
+    is = require('bpmn-js/lib/util/ModelUtil').is;
 
 var Icons = require('../icons/index');
 
@@ -24,7 +26,7 @@ var LABEL_STYLE = {
 };
 var TASK_BORDER_RADIUS = 10;
 
-function CPRender(eventBus, styles, pathMap) {
+function CPRenderer(eventBus, styles, pathMap) {
     BaseRenderer.call(this, eventBus, 1500);
 
     var textUtil = new TextUtil({
@@ -36,17 +38,18 @@ function CPRender(eventBus, styles, pathMap) {
 
     // add rendering of new elements here
     var handlers = this.handlers = {
-        'bpmn:Activity': function(parentGfx, element, attrs) {
-            return drawRect(parentGfx, element.width, element.height, TASK_BORDER_RADIUS, attrs);
-        },
+        'cp:Task': function (parentGfx, element, attrs) {
+            attrs = assign(attrs || {}, {
+                fill: "#e1ebf7",
+                stroke: "#376092"
+            });
 
-        'bpmn:Task': function(parentGfx, element, attrs) {
-            var rect = renderer('bpmn:Activity')(parentGfx, element, attrs);
+            var rect = drawRect(parentGfx, element.width, element.height, TASK_BORDER_RADIUS, attrs);
             renderEmbeddedLabel(parentGfx, element, 'center-middle');
             attachTaskMarkers(parentGfx, element);
             return rect;
         },
-        'label': function(parentGfx, element) {
+        'label': function (parentGfx, element) {
             // Update external label size and bounds during rendering when
             // we have the actual rendered bounds anyway.
 
@@ -57,7 +60,7 @@ function CPRender(eventBus, styles, pathMap) {
             try {
                 textBBox = textElement.getBBox();
             } catch (e) {
-                textBBox = { width: 0, height: 0, x: 0 };
+                textBBox = {width: 0, height: 0, x: 0};
             }
 
             // update element.x so that the layouted text is still
@@ -75,33 +78,8 @@ function CPRender(eventBus, styles, pathMap) {
 
             return textElement;
         },
-        'bpmn:TextAnnotation': function(parentGfx, element) {
-            var style = {
-                'fill': 'none',
-                'stroke': 'none'
-            };
-
-            var textElement = drawRect(parentGfx, element.width, element.height, 0, 0, style);
-
-            var textPathData = pathMap.getScaledPath('TEXT_ANNOTATION', {
-                xScaleFactor: 1,
-                yScaleFactor: 1,
-                containerWidth: element.width,
-                containerHeight: element.height,
-                position: {
-                    mx: 0.0,
-                    my: 0.0
-                }
-            });
-            drawPath(parentGfx, textPathData);
-
-            var text = getSemantic(element).text || '';
-            renderLabel(parentGfx, text, { box: element, align: 'left-middle', padding: 5 });
-
-            return textElement;
-        },
         'cp:TherapyTask': function (parent, element) {
-            var task = renderer('bpmn:Task')(parent, element);
+            var task = renderer('cp:Task')(parent, element);
             var url = Icons.iconTherapyTask;
 
             var shapeGfx = svgCreate('image', {
@@ -116,7 +94,7 @@ function CPRender(eventBus, styles, pathMap) {
             return task;
         },
         'cp:DiagnosisTask': function (parent, element) {
-            var task = renderer('bpmn:Task')(parent, element);
+            var task = renderer('cp:Task')(parent, element);
             var url = Icons.iconDiagnosisTask;
 
             var shapeGfx = svgCreate('image', {
@@ -131,7 +109,7 @@ function CPRender(eventBus, styles, pathMap) {
             return task;
         },
         'cp:SupportingTask': function (parent, element) {
-            var task = renderer('bpmn:Task')(parent, element);
+            var task = renderer('cp:Task')(parent, element);
             var url = Icons.iconSupportingTask;
 
             var shapeGfx = svgCreate('image', {
@@ -145,6 +123,129 @@ function CPRender(eventBus, styles, pathMap) {
 
             return task;
         },
+        'cp:EducationTask': function (parent, element) {
+            var task = renderer('cp:Task')(parent, element);
+
+            createMaterialIcon('school', parent, {
+                x: 2,
+                y: 25
+            });
+
+            return task;
+        },
+        'cp:HomeVisitTask': function (parent, element) {
+            var task = renderer('cp:Task')(parent, element);
+
+            createMaterialIcon('home', parent, {
+                x: 2,
+                y: 25
+            });
+
+            return task;
+        },
+        'cp:MonitoringTask': function (parent, element) {
+            var task = renderer('cp:Task')(parent, element);
+
+            createMaterialIcon('computer', parent, {
+                x: 2,
+                y: 25
+            });
+
+            return task;
+        },
+        'cp:PhoneContactTask': function (parent, element) {
+            var task = renderer('cp:Task')(parent, element);
+
+            createMaterialIcon('contact_phone', parent, {
+                x: 2,
+                y: 25
+            });
+
+            return task;
+        },
+        /** TASKS END **/
+
+        /** RESOURCES START */
+        'cp:CPResource': function (parent, element) {
+            var rect = drawRect(parent, element.width, element.height, 0, {stroke: "green", fill: "#d1e8c4"});
+            renderEmbeddedLabel(parent, element, 'center-middle');
+            return rect;
+        },
+        'cp:HumanResource': function (parent, element) {
+            var resource = renderer('cp:CPResource')(parent, element);
+
+            createFontawesomeIcon('\uf007', parent);
+
+            return resource;
+        },
+        'cp:ConsumptionResource': function (parent, element) {
+            var resource = renderer('cp:CPResource')(parent, element);
+
+            createFontawesomeIcon('\uf0fa', parent);
+
+            return resource;
+        },
+        'cp:Equipment': function (parent, element) {
+            var resource = renderer('cp:CPResource')(parent, element);
+
+            createFontawesomeIcon('\uf0c3', parent);
+
+            return resource;
+        },
+        'cp:Medicine': function (parent, element) {
+            var resource = renderer('cp:CPResource')(parent, element);
+
+            createMedicalIcon('pharmacy', parent);
+
+            return resource;
+        },
+        'cp:TransportationEquipment': function (parent, element) {
+            var resource = renderer('cp:CPResource')(parent, element);
+
+            createFontawesomeIcon('\uf0f9', parent);
+
+            return resource;
+        },
+        'cp:Room': function (parent, element) {
+            var resource = renderer('cp:CPResource')(parent, element);
+
+            createFontawesomeIcon('\uf0f8', parent);
+
+            return resource;
+        },
+        'cp:Auxiliaries': function (parent, element) {
+            var resource = renderer('cp:CPResource')(parent, element);
+
+            createFontawesomeIcon('\uf1cd', parent);
+
+            return resource;
+        },
+        /** RESOURCES END */
+
+        /** CUSTOM CONNECTIONS / RELATIONS START **/
+        'cp:ResourceRelation': function (parent, element) {
+
+            var attrs = computeStyle(attrs, {
+                stroke: '#f26222',
+                strokeWidth: 2,
+                strokeDasharray: "3, 3"
+            });
+
+            var gfx = svgAppend(parent, createLine(element.waypoints, attrs));
+            renderExternalLabel(parent, element);
+
+            return gfx;
+        },
+        'cp:StatementRelation': function (parent, element) {
+            var attrs = computeStyle(attrs, {
+                stroke: '#ff471a',
+                strokeWidth: 2
+            });
+
+            return svgAppend(parent, createLine(element.waypoints, attrs));
+        },
+        /** CUSTOM CONNECTIONS / RELATIONS END **/
+
         'cp:Document': function (parent, element) {
             element.width = 40;
             element.height = 50;
@@ -161,7 +262,7 @@ function CPRender(eventBus, styles, pathMap) {
             });
 
 
-            var elementObject = drawPath(parent, pathData, { fill: 'white' });
+            var elementObject = drawPath(parent, pathData, {fill: 'white'});
 
             var semantic = getSemantic(element);
 
@@ -174,7 +275,7 @@ function CPRender(eventBus, styles, pathMap) {
 
             var iconGfx = svgCreate('image', {
                 x: 3,
-                y: element.height-28,
+                y: element.height - 28,
                 height: 25,
                 href: url
             });
@@ -227,7 +328,7 @@ function CPRender(eventBus, styles, pathMap) {
          * MARKER CP
          *
          */
-        'cp:EvidenceMarker': function(parentGfx, element) {
+        'cp:EvidenceMarker': function (parentGfx, element) {
             var url = Icons.iconEvidenceMarker;
 
             element.width = 50;
@@ -246,7 +347,7 @@ function CPRender(eventBus, styles, pathMap) {
         /**
          * MARKER BASE
          */
-        'ParticipantMultiplicityMarker': function(parentGfx, element) {
+        'ParticipantMultiplicityMarker': function (parentGfx, element) {
             var markerPath = pathMap.getScaledPath('MARKER_PARALLEL', {
                 xScaleFactor: 1,
                 yScaleFactor: 1,
@@ -260,7 +361,7 @@ function CPRender(eventBus, styles, pathMap) {
 
             drawMarker('participant-multiplicity', parentGfx, markerPath);
         },
-        'SubProcessMarker': function(parentGfx, element) {
+        'SubProcessMarker': function (parentGfx, element) {
             var markerRect = drawRect(parentGfx, 14, 14, 0, {
                 strokeWidth: 1
             });
@@ -282,7 +383,7 @@ function CPRender(eventBus, styles, pathMap) {
 
             drawMarker('sub-process', parentGfx, markerPath);
         },
-        'ParallelMarker': function(parentGfx, element, position) {
+        'ParallelMarker': function (parentGfx, element, position) {
             var markerPath = pathMap.getScaledPath('MARKER_PARALLEL', {
                 xScaleFactor: 1,
                 yScaleFactor: 1,
@@ -296,7 +397,7 @@ function CPRender(eventBus, styles, pathMap) {
 
             drawMarker('parallel', parentGfx, markerPath);
         },
-        'SequentialMarker': function(parentGfx, element, position) {
+        'SequentialMarker': function (parentGfx, element, position) {
             var markerPath = pathMap.getScaledPath('MARKER_SEQUENTIAL', {
                 xScaleFactor: 1,
                 yScaleFactor: 1,
@@ -310,7 +411,7 @@ function CPRender(eventBus, styles, pathMap) {
 
             drawMarker('sequential', parentGfx, markerPath);
         },
-        'CompensationMarker': function(parentGfx, element, position) {
+        'CompensationMarker': function (parentGfx, element, position) {
             var markerMath = pathMap.getScaledPath('MARKER_COMPENSATION', {
                 xScaleFactor: 1,
                 yScaleFactor: 1,
@@ -322,9 +423,9 @@ function CPRender(eventBus, styles, pathMap) {
                 }
             });
 
-            drawMarker('compensation', parentGfx, markerMath, { strokeWidth: 1 });
+            drawMarker('compensation', parentGfx, markerMath, {strokeWidth: 1});
         },
-        'LoopMarker': function(parentGfx, element, position) {
+        'LoopMarker': function (parentGfx, element, position) {
             var markerPath = pathMap.getScaledPath('MARKER_LOOP', {
                 xScaleFactor: 1,
                 yScaleFactor: 1,
@@ -343,7 +444,7 @@ function CPRender(eventBus, styles, pathMap) {
                 strokeMiterlimit: 0.5
             });
         },
-        'AdhocMarker': function(parentGfx, element, position) {
+        'AdhocMarker': function (parentGfx, element, position) {
             var markerPath = pathMap.getScaledPath('MARKER_ADHOC', {
                 xScaleFactor: 1,
                 yScaleFactor: 1,
@@ -362,19 +463,67 @@ function CPRender(eventBus, styles, pathMap) {
         }
     };
 
+    function createMaterialIcon(icon, parent, options) {
+        options = options || {};
+
+        var attr = assign(options, {
+            class: 'material-icons'
+        });
+
+        var text = svgCreate('text', attr);
+        text.textContent = icon;
+
+        svgAppend(parent, text);
+
+        return text;
+    }
+
+    function createFontawesomeIcon(icon, parent, options) {
+        options = options || {};
+
+        var attr = assign({
+            x: 2,
+            y: 22,
+            class: 'fa fa-2x'
+        }, options);
+
+        var text = svgCreate('text', attr);
+        text.textContent = icon;
+
+        svgAppend(parent, text);
+
+        return text;
+    }
+
+    function createMedicalIcon(icon, parent, options) {
+        options = options || {};
+
+        var shapeGfx = svgCreate('image', assign({
+            x: -2,
+            y: 2,
+            width: 25,
+            href: 'clinical-pathways/icons/webfont-medical-icons/i-' + icon + '.png'
+        }, options));
+
+
+        svgAppend(parent, shapeGfx);
+
+        return shapeGfx;
+    }
+
     function renderer(type) {
         return handlers[type];
     }
 
     function drawPath(parentGfx, d, attrs) {
 
-        attrs = computeStyle(attrs, [ 'no-fill' ], {
+        attrs = computeStyle(attrs, ['no-fill'], {
             strokeWidth: 2,
             stroke: 'black'
         });
 
         var path = svgCreate('path');
-        svgAttr(path, { d: d });
+        svgAttr(path, {d: d});
         svgAttr(path, attrs);
 
         svgAppend(parentGfx, path);
@@ -397,7 +546,8 @@ function CPRender(eventBus, styles, pathMap) {
             }
         });
 
-        /* collection path */ drawPath(parentGfx, pathData, {
+        /* collection path */
+        drawPath(parentGfx, pathData, {
             strokeWidth: 2
         });
     }
@@ -410,6 +560,8 @@ function CPRender(eventBus, styles, pathMap) {
         }
 
         offset = offset || 0;
+
+        console.log(attrs);
 
         attrs = computeStyle(attrs, {
             stroke: 'black',
@@ -434,7 +586,7 @@ function CPRender(eventBus, styles, pathMap) {
     }
 
     function drawMarker(type, parentGfx, path, attrs) {
-        return drawPath(parentGfx, path, assign({ 'data-marker': type }, attrs));
+        return drawPath(parentGfx, path, assign({'data-marker': type}, attrs));
     }
 
     function attachTaskMarkers(parentGfx, element, taskMarkers) {
@@ -461,7 +613,7 @@ function CPRender(eventBus, styles, pathMap) {
             };
         }
 
-        forEach(taskMarkers, function(marker) {
+        forEach(taskMarkers, function (marker) {
             renderer(marker)(parentGfx, element, position);
         });
 
@@ -513,11 +665,27 @@ function CPRender(eventBus, styles, pathMap) {
             y: element.height / 2 + element.y
         };
 
-        return renderLabel(parentGfx, semantic.name, { box: box, style: { fontSize: '11px' } });
+        return renderLabel(parentGfx, semantic.name, {box: box, style: {fontSize: '11px'}});
     }
 
     this.canRender = function (element) {
-        return isAny(element, ['cp:TherapyTask', 'cp:DiagnosisTask', 'cp:SupportingTask', 'cp:Document', 'cp:SimultanParallelGateway', 'cp:EvidenceGateway', 'cp:EvidenceMarker']);
+        return this.handlers[element.type] != undefined;
+        return isAny(element, [
+            'cp:TherapyTask',
+            'cp:DiagnosisTask',
+            'cp:SupportingTask',
+            'cp:EducationTask',
+            'cp:HomeVisitTask',
+            'cp:MonitoringTask',
+            'cp:PhoneContactTask',
+            'cp:Document',
+            'cp:SimultanParallelGateway',
+            'cp:EvidenceGateway',
+            'cp:EvidenceMarker',
+            'cp:HumanResource',
+            'cp:ConsumptionResource',
+            'cp:TransportationEquipment'
+        ]);
     };
 
     this.drawShape = function (parent, element) {
@@ -530,6 +698,12 @@ function CPRender(eventBus, styles, pathMap) {
 
         return false;
     };
+
+    this.drawConnection = function (parent, element) {
+        if (isAny(element, ['cp:ResourceRelation', 'cp:StatementRelation'])) {
+            return this.drawShape(parent, element);
+        }
+    };
 }
 
 /**
@@ -537,7 +711,7 @@ function CPRender(eventBus, styles, pathMap) {
  * @param element
  * @returns {*|Boolean}
  *
-CPRender.prototype.drawConnection = function(p, element) {
+ CPRenderer.prototype.drawConnection = function(p, element) {
 
     var type = element.type;
 
@@ -547,7 +721,7 @@ CPRender.prototype.drawConnection = function(p, element) {
 };
 
 
-CPRender.prototype.getConnectionPath = function(connection) {
+ CPRenderer.prototype.getConnectionPath = function(connection) {
 
     var type = connection.type;
 
@@ -555,10 +729,12 @@ CPRender.prototype.getConnectionPath = function(connection) {
         return this.getCustomConnectionPath(connection);
     }
 };
-*/
-inherits(CPRender, BaseRenderer);
+ */
 
-module.exports = CPRender;
+CPRenderer.$inject = ['eventBus', 'styles', 'pathMap'];
+inherits(CPRenderer, BaseRenderer);
+
+module.exports = CPRenderer;
 
 function getSemantic(element) {
     return element.businessObject;

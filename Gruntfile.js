@@ -101,6 +101,16 @@ module.exports = function (grunt) {
                     }
                 ]
             },
+            fontawesome: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'node_modules/font-awesome',
+                        src: ['css/*.*', 'fonts/*.*'],
+                        dest: '<%= config.dist %>/vendor/font-awesome'
+                    }
+                ]
+            },
             app: {
                 files: [
                     {
@@ -203,6 +213,7 @@ module.exports = function (grunt) {
         'copy:diagram_js',
         'copy:bpmn_js',
         'copy:dmn_js',
+        'copy:fontawesome',
         'copy:app',
         'less',
         'browserify:watch',
@@ -214,6 +225,7 @@ module.exports = function (grunt) {
         'copy:diagram_js',
         'copy:bpmn_js',
         'copy:dmn_js',
+        'copy:fontawesome',
         'copy:app',
         'less',
         'browserify:watch',

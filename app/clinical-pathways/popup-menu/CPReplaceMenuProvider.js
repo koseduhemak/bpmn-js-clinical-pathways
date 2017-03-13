@@ -14,7 +14,6 @@ var forEach = require('lodash/collection/forEach'),
 var replaceCPOptions = require('../replace/CPReplaceOptions');
 
 
-
 /**
  * This module is an element agnostic replace menu provider for the popup menu.
  */
@@ -22,7 +21,7 @@ function CPReplaceMenuProvider(popupMenu, modeling, moddle, bpmnReplace, rules, 
     ReplaceMenuProvider.call(this, popupMenu, modeling, moddle, bpmnReplace, rules, translate);
 }
 
-CPReplaceMenuProvider.$inject = [ 'popupMenu', 'modeling', 'moddle', 'bpmnReplace', 'rules', 'translate' ];
+CPReplaceMenuProvider.$inject = ['popupMenu', 'modeling', 'moddle', 'bpmnReplace', 'rules', 'translate'];
 inherits(CPReplaceMenuProvider, ReplaceMenuProvider);
 module.exports = CPReplaceMenuProvider;
 
@@ -35,13 +34,11 @@ module.exports = CPReplaceMenuProvider;
  * @return {Array<Object>} a list of menu entry items
  */
 var cachedGetEntries = ReplaceMenuProvider.prototype.getEntries;
-ReplaceMenuProvider.prototype.getEntries = function(element) {
+ReplaceMenuProvider.prototype.getEntries = function (element) {
     var businessObject = element.businessObject;
     var entries;
 
     var differentType = isDifferentType(element);
-
-    // TODO how to proper extend base method?
 
     // flow nodes
     if (is(businessObject, 'bpmn:Task')) {
@@ -49,7 +46,7 @@ ReplaceMenuProvider.prototype.getEntries = function(element) {
 
         // collapsed SubProcess can not be replaced with itself
         if (is(businessObject, 'bpmn:SubProcess') && !isExpanded(businessObject)) {
-            entries = reject(entries, function(entry) {
+            entries = reject(entries, function (entry) {
                 return entry.label === 'Sub Process (collapsed)';
             });
         }
@@ -59,7 +56,11 @@ ReplaceMenuProvider.prototype.getEntries = function(element) {
         entries = filter(replaceCPOptions.GATEWAY, differentType);
 
         return this._createEntries(element, entries);
-    }else {
+    }else if (is(businessObject, 'cp:CPResource')) {
+        entries = filter(replaceCPOptions.CPRESOURCES, differentType);
+
+        return this._createEntries(element, entries);
+    } else {
         return cachedGetEntries.call(this, element);
     }
 

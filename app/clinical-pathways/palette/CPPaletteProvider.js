@@ -62,6 +62,9 @@ CPPaletteProvider.prototype.getPaletteEntries = function () {
         'create-evidence-gateway': createAction(
             'cp:EvidenceGateway', 'cp', Icons.iconEvidenceGateway
         ),
+        'create-resource': createAction(
+            'cp:CPResource', 'cp', Icons.iconResource
+        )
     });
 
     return actions;

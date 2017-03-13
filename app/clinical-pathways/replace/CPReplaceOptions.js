@@ -224,5 +224,72 @@ module.exports.GATEWAY = [
         target: {
             type: 'cp:SimultanParallelGateway'
         }
-    },
+    }
 ];
+
+module.exports.CPRESOURCES = [
+    {
+        label: 'CP Resource',
+        actionName: 'replace-with-resource',
+        className: 'cp-icon-resource',
+        target: {
+            type: 'cp:CPResource'
+        }
+    },
+    {
+        label: 'Consumption Resource',
+        actionName: 'replace-with-consumption-resource',
+        className: 'cp-icon-consumption-resource',
+        target: {
+            type: 'cp:ConsumptionResource'
+        }
+    },
+    {
+        label: 'Equipment',
+        actionName: 'replace-with-Equipment',
+        className: 'cp-icon-Equipment',
+        target: {
+            type: 'cp:Equipment'
+        }
+    },
+    {
+        label: 'Medicine',
+        actionName: 'replace-with-medicine',
+        className: 'cp-icon-medicine',
+        target: {
+            type: 'cp:Medicine'
+        }
+    },
+    {
+        label: 'Transportation Equipment',
+        actionName: 'replace-with-transportation-equipment',
+        className: 'cp-icon-transportation-equipment',
+        target: {
+            type: 'cp:TransportationEquipment'
+        }
+    },
+    {
+        label: 'Room',
+        actionName: 'replace-with-room',
+        className: 'cp-icon-room',
+        target: {
+            type: 'cp:Room'
+        }
+    },
+    {
+        label: 'Auxiliaries',
+        actionName: 'replace-with-auxiliaries',
+        className: 'cp-icon-auxiliaries',
+        target: {
+            type: 'cp:Auxiliaries'
+        }
+    },
+    {
+        label: 'Human Resource',
+        actionName: 'replace-with-human-resource',
+        className: 'cp-icon-human-resource',
+        target: {
+            type: 'cp:HumanResource'
+        }
+    }
+]

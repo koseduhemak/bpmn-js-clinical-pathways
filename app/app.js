@@ -70,6 +70,12 @@ var cpRules = require('./clinical-pathways/rules');
 // CP POPMENU
 var cpPopupMenu = require('./clinical-pathways/popup-menu');
 
+// CP ContextPad
+var cpContextPad = require('./clinical-pathways/context-pad');
+
+// CP CommandInterceptor
+//var cpCommandInterceptor = require('./clinical-pathways/command');
+
 // Core modules
 var coreModule = require('bpmn-js/lib/core'),
     bpmnPaletteModule = require('bpmn-js/lib/features/palette'),
@@ -101,6 +107,7 @@ var modeler = new BpmnModeler({
         // if we have custom rules, place them before core modules!
         cpRules,
         cpPopupMenu,
+        //cpCommandInterceptor,
         // core modules
         coreModule,
         bpmnPaletteModule,
@@ -127,7 +134,8 @@ var modeler = new BpmnModeler({
         CliModule,
         CPpropertiesProviderModule,
         cpPaletteModule,
-        cpDrawModule
+        cpDrawModule,
+        cpContextPad
 
     ],
     moddleExtensions: {

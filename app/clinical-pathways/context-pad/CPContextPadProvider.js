@@ -9,7 +9,7 @@ var isAny = require('bpmn-js/lib/features/modeling/util/ModelingUtil').isAny;
 var assign = require('lodash/object/assign'),
     bind = require('lodash/function/bind');
 
-function CustomContextPadProvider(eventBus, contextPad, modeling, elementFactory, connect,
+function CPContextPadProvider(eventBus, contextPad, modeling, elementFactory, connect,
                                   create, popupMenu, canvas, rules, translate) {
 
     ContextPadProvider.call(this, eventBus, contextPad, modeling, elementFactory, connect, create,
@@ -18,7 +18,6 @@ function CustomContextPadProvider(eventBus, contextPad, modeling, elementFactory
     var cached = bind(this.getContextPadEntries, this);
 
     this.getContextPadEntries = function(element) {
-        console.log(element.type);
         var actions = cached(element);
 
         var businessObject = element.businessObject;
@@ -28,7 +27,7 @@ function CustomContextPadProvider(eventBus, contextPad, modeling, elementFactory
         }
 
         // todo add new elements to ContextPad here...
-        /*if (isAny(businessObject, [ 'custom:triangle', 'custom:circle'])) {
+        if (isAny(businessObject, [ 'cp:CPResource'])) {
             assign(actions, {
                 'connect': {
                     group: 'connect',
@@ -40,15 +39,15 @@ function CustomContextPadProvider(eventBus, contextPad, modeling, elementFactory
                     }
                 }
             });
-        }*/
+        }
 
         return actions;
     };
 }
 
-inherits(CustomContextPadProvider, ContextPadProvider);
+inherits(CPContextPadProvider, ContextPadProvider);
 
-CustomContextPadProvider.$inject = [
+CPContextPadProvider.$inject = [
     'eventBus',
     'contextPad',
     'modeling',
@@ -61,4 +60,4 @@ CustomContextPadProvider.$inject = [
     'translate'
 ];
 
-module.exports = CustomContextPadProvider;
+module.exports = CPContextPadProvider;
