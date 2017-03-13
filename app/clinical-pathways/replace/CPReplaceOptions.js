@@ -115,6 +115,38 @@ module.exports.TASK = [
             type: 'cp:SupportingTask'
         }
     },
+    {
+        label: 'Education Task',
+        actionName: 'replace-with-education-task',
+        className: 'cp-icon-education-task',
+        target: {
+            type: 'cp:EducationTask'
+        }
+    },
+    {
+        label: 'Home Visit Task',
+        actionName: 'replace-with-home-visit-task',
+        className: 'cp-icon-home-visit-task',
+        target: {
+            type: 'cp:HomeVisitTask'
+        }
+    },
+    {
+        label: 'Monitoring Task',
+        actionName: 'replace-with-monitoring-task',
+        className: 'cp-icon-monitoring-task',
+        target: {
+            type: 'cp:MonitoringTask'
+        }
+    },
+    {
+        label: 'Phone Contact Task',
+        actionName: 'replace-with-phone-contact-task',
+        className: 'cp-icon-phone-contact-task',
+        target: {
+            type: 'cp:PhoneContactTask'
+        }
+    }
 ];
 
 module.exports.GATEWAY = [

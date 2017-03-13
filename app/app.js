@@ -123,7 +123,7 @@ var modeler = new BpmnModeler({
     ],
     additionalModules: [
         propertiesPanelModule,
-        propertiesProviderModule,
+        //propertiesProviderModule,
         CliModule,
         CPpropertiesProviderModule,
         cpPaletteModule,

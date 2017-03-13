@@ -46,10 +46,12 @@ CPRules.prototype._init = function () {
         var element = event.element,
             bo = element.businessObject;
 
-        if (isAny(bo, ['cp:Task', 'cp:EvidenceGateway']) && element.type != "label") {
+        if (isAny(bo, ['bpmn:Task', 'bpmn:Gateway']) && element.type != "label") {
 
-            if (evidenceLevel.includes(bo.get('evidence-level').toUpperCase())) {
-                bo.set('evidence-level', bo.get('evidence-level').toUpperCase());
+            console.log(bo);
+
+            if (evidenceLevel.includes(bo.get('evidenceIndicator').toUpperCase())) {
+                //bo.set('cp:EvidenceLevel', bo.get('evidenceIndicator').toUpperCase());
 
 
                 try {
@@ -58,7 +60,7 @@ CPRules.prototype._init = function () {
                             top: -20,
                             left: element.width - 10
                         },
-                        html: $('<div class="cp-evidence-marker">').text(bo.get('evidence-level'))
+                        html: $('<div class="cp-evidence-marker">').text(bo.get('evidenceIndicator'))
                     });
                 } catch(e) {
                     // this will break if element was removed... No one knows how to properly do that.
@@ -66,7 +68,7 @@ CPRules.prototype._init = function () {
 
             } else {
                 overlays.remove({element: element.id});
-                bo.set('evidence-level', '');
+                bo.set('evidenceIndicator', '');
             }
 
         }

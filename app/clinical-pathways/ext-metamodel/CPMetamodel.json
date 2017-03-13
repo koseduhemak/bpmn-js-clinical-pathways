@@ -8,64 +8,102 @@
   "types": [
     {
       "name": "Process",
-      "superClass": [
+      "extends": [
         "bpmn:Process"
       ],
       "properties": [
         {
-          "name": "evidence-level",
+          "name": "evidenceIndicator",
           "default": "",
-          "type": "bpmn:Property",
-          "isAttr": true
+          "isAttr": true,
+          "type": "EvidenceIndicator"
         }
       ]
     },
     {
       "name": "Task",
-      "superClass": [
+      "extends": [
         "bpmn:Task"
       ],
       "properties": [
         {
-          "name": "evidence-level",
+          "name": "evidenceIndicator",
           "default": "",
           "isAttr": true,
-          "type": "bpmn:Property"
+          "type": "EvidenceIndicator"
         },
         {
           "name": "objective",
           "default": "",
           "isAttr": true,
-          "type": "bpmn:Property"
+          "type": "Objective"
         },
         {
-          "name": "quality-indicator",
+          "name": "qualityIndicator",
           "default": "",
           "isAttr": true,
           "isMany": true,
-          "type": "bpmn:Property"
+          "type": "QualityIndicator"
         }
       ]
     },
     {
       "name": "TherapyTask",
       "superClass": [
-        "Task"
+        "bpmn:Task"
       ]
     },
     {
       "name": "DiagnosisTask",
       "superClass": [
-        "Task"
+        "bpmn:Task"
       ]
     },
     {
       "name": "SupportingTask",
       "superClass": [
-        "Task"
+        "bpmn:Task"
+      ]
+    },
+    {
+      "name": "EducationTask",
+      "superClass": [
+        "bpmn:Task"
+      ]
+    },
+    {
+      "name": "HomeVisitTask",
+      "superClass": [
+        "bpmn:Task"
+      ]
+    },
+    {
+      "name": "MonitoringTask",
+      "superClass": [
+        "bpmn:Task"
+      ]
+    },
+    {
+      "name": "PhoneContactTask",
+      "superClass": [
+        "bpmn:Task"
       ]
     },
     /* Gateways */
+    {
+      "name": "Gateway",
+      "extends": [
+        "bpmn:Gateway"
+      ],
+      "properties": [
+        {
+          "name": "evidenceIndicator",
+          "default": "",
+          "isAttr": true,
+          "type": "EvidenceIndicator"
+        }
+      ]
+    },
     {
       "name": "SimultanParallelGateway",
       "superClass": [
@@ -79,51 +117,424 @@
       ],
       "properties": [
         {
-          "name": "evidence-level",
+          "name": "dmn",
           "default": "",
-          "type": "bpmn:Property",
-          "isAttr": true
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    /* Properties */
+    {
+      "name": "EvidenceIndicator",
+      "extends": [
+        "bpmn:Property"
+      ],
+      "properties": [
+        {
+          "name": "evidenceLevel",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "QualityIndicator",
+      "extends": [
+        "bpmn:Property"
+      ],
+      "properties": [
+        {
+          "name": "quality",
+          "isAttr": true,
+          "type": "Integer"
+        }
+      ]
+    },
+    {
+      "name": "Objective",
+      "extends": [
+        "bpmn:Property"
+      ],
+      "properties": [
+        {
+          "name": "objective",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    /* CPG Reference */
+    {
+      "name": "CPGReference",
+      "properties": [
+        {
+          "name": "pageFrom",
+          "isAttr": true,
+          "type": "Integer"
         },
         {
-          "name": "dmn",
-          "default": "",
+          "name": "pageTo",
+          "isAttr": true,
+          "type": "Integer"
+        },
+        {
+          "name": "paragraphFrom",
           "isAttr": true,
           "type": "String"
+        },
+        {
+          "name": "paragraphTo",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "url",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "cpgName",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "evidenceIndicators",
+          "isMany": true,
+          "type": "EvidenceIndicator"
+        },
+        {
+          "name": "document",
+          "isAttr": true,
+          "type": "bpmn:DataObject",
+          "isReference": true
+        },
+        {
+          "name": "referredStatements",
+          "isMany": true,
+          "type": "ClinicalStatement",
+          "isReference": true
         }
       ]
     },
-    /* Documents */
+    /* Clinical Statement */
     {
-      "name": "Document",
+      "name": "ClinicalStatement",
       "superClass": [
-        "bpmn:DataObjectReference"
+        "bpmn:DataObject"
       ],
       "properties": [
         {
-          "name": "type",
+          "name": "statementContent",
           "isAttr": true,
           "type": "String"
+        },
+        {
+          "name": "guidelineReference",
+          "isAttr": true,
+          "type": "CPGReference",
+          "isReference": true
+        },
+        {
+          "name": "section",
+          "isAttr": true,
+          "type": "Segment",
+          "isReference": true
+        },
+        {
+          "name": "organizer",
+          "isAttr": true,
+          "type": "Organizer",
+          "isReference": true
         }
       ]
     },
-    /* Decision Logic *
     {
-      "name": "DecisionLogic",
+      "name": "Observation",
       "superClass": [
-        "bpmn:BaseElement"
+        "ClinicalStatement"
+      ]
+    },
+    {
+      "name": "Medication",
+      "superClass": [
+        "ClinicalStatement"
+      ]
+    },
+    {
+      "name": "Action",
+      "superClass": [
+        "ClinicalStatement"
+      ]
+    },
+    {
+      "name": "Meeting",
+      "superClass": [
+        "ClinicalStatement"
+      ]
+    },
+    {
+      "name": "Care",
+      "superClass": [
+        "ClinicalStatement"
+      ]
+    },
+    {
+      "name": "MultimediaObject",
+      "superClass": [
+        "ClinicalStatement"
+      ]
+    },
+    {
+      "name": "ObjectiveArea",
+      "superClass": [
+        "ClinicalStatement"
+      ]
+    },
+    {
+      "name": "Procedure",
+      "superClass": [
+        "ClinicalStatement"
+      ]
+    },
+    /* Organizer */
+    {
+      "name": "Organizer",
+      "properties": [
+        {
+          "name": "component",
+          "isMany": true,
+          "type": "ClinicalStatement",
+          "isReference": true
+        },
+        {
+          "name": "hasHumanResource",
+          "isAttr": true,
+          "type": "HumanResource",
+          "isReference": true
+        }
+      ]
+    },
+    /* Segment */
+    {
+      "name": "Segment",
+      "superClass": [
+        "bpmn:DataObject"
       ],
       "properties": [
         {
-          "name": "dmn",
-          "default": "",
+          "name": "title",
           "isAttr": true,
           "type": "String"
+        },
+        {
+          "name": "code",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "text",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "statement",
+          "isMany": true,
+          "type": "ClinicalStatement",
+          "isReference": true
+        },
+        {
+          "name": "parentSegment",
+          "isMany": true,
+          "type": "Segment",
+          "isReference": true
+        },
+        {
+          "name": "subSegment",
+          "isMany": true,
+          "type": "Segment",
+          "isReference": true
+        },
+        {
+          "name": "document",
+          "isMany": true,
+          "type": "StructuredDocument",
+          "isReference": true
         }
       ]
     },
-    /* Connection *
+    /* ClinicalDocument */
     {
-      "name": "Connection"
-    }*/
+      "name": "ClinicalDocument",
+      "superClass": [
+        "bpmn:DataObject"
+      ],
+      "properties": [
+        {
+          "name": "serializedContent",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "relatedCaseChart",
+          "isMany": true,
+          "type": "CaseChart",
+          "isReference": true
+        }
+      ]
+    },
+    /* UnstructuredDocument */
+    {
+      "name": "UnstructuredDocument",
+      "superClass": [
+        "ClinicalDocument"
+      ]
+    },
+    {
+      "name": "VideoDocument",
+      "superClass": [
+        "UnstructuredDocument"
+      ]
+    },
+    {
+      "name": "SignalingDocument",
+      "superClass": [
+        "UnstructuredDocument"
+      ]
+    },
+    {
+      "name": "TextDocument",
+      "superClass": [
+        "UnstructuredDocument"
+      ]
+    },
+    {
+      "name": "ImageDocument",
+      "superClass": [
+        "UnstructuredDocument"
+      ]
+    },
+    /* StructuredDocument */
+    {
+      "name": "StructuredDocument",
+      "superClass": [
+        "ClinicalDocument"
+      ],
+      "properties": [
+        {
+          "name": "segment",
+          "isMany": true,
+          "type": "Segment",
+          "isReference": true
+        }
+      ]
+    },
+    /* CaseChart */
+    {
+      "name": "CaseChart",
+      "superClass": [
+        "bpmn:DataObject"
+      ],
+      "properties": [
+        {
+          "name": "document",
+          "isMany": true,
+          "type": "ClinicalDocument",
+          "isReference": true
+        }
+      ]
+    },
+    /* Resources */
+    {
+      "name": "CPResource",
+      "superClass": [
+        "bpmn:Resource"
+      ],
+      "properties": [
+        {
+          "name": "resourceBundles",
+          "isMany": true,
+          "type": "ResourceBundle",
+          "isReference": true
+        }
+      ]
+    },
+    {
+      "name": "ResourceBundle",
+      "superClass": [
+        "bpmn:Resource"
+      ],
+      "properties": [
+        {
+          "name": "containedResources",
+          "isMany": true,
+          "type": "CPResource",
+          "isReference": true
+        }
+      ]
+    },
+    {
+      "name": "HumanResource",
+      "superClass": [
+        "CPResource"
+      ],
+      "properties": [
+        {
+          "name": "organizer",
+          "isMany": true,
+          "type": "Organizer",
+          "isReference": true
+        }
+      ]
+    },
+    {
+      "name": "ConsumptionResource",
+      "superClass": [
+        "CPResource"
+      ]
+    },
+    {
+      "name": "Equipment",
+      "superClass": [
+        "CPResource"
+      ]
+    },
+    {
+      "name": "Medicine",
+      "superClass": [
+        "CPResource"
+      ]
+    },
+    {
+      "name": "TransportationEquipment",
+      "superClass": [
+        "CPResource"
+      ]
+    },
+    {
+      "name": "Room",
+      "superClass": [
+        "CPResource"
+      ]
+    },
+    {
+      "name": "Auxiliaries",
+      "superClass": [
+        "CPResource"
+      ]
+    },
+    /* RELATIONS */
+    {
+      "name": "StatementRelation",
+      "superClass": [
+        "bpmn:FlowElement"
+      ]
+    },
+    {
+      "name": "ResourceRelation",
+      "superClass": [
+        "bpmn:FlowElement"
+      ]
+    }
   ]
 }

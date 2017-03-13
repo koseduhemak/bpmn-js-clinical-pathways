@@ -22,12 +22,12 @@ module.exports = function (group, element) {
     // Only return an entry, if the currently selected
     // element is a start event.
 
-    if (isAny(element, ['cp:Process', 'cp:Task', 'cp:EvidenceGateway'])) {
+    if (isAny(element, ['bpmn:Activity', 'bpmn:Gateway', 'bpmn:Process'])) {
         group.entries.push(entryFactory.selectBox({
-            id: 'evidence-level',
+            id: 'evidenceIndicator',
             description: 'Evidence Level of the task/gateway',
             label: 'Evidence Level',
-            modelProperty: 'evidence-level',
+            modelProperty: 'evidenceIndicator',
             selectOptions: readEnumAndGenerateSelectOptions(require('../../enums/EvidenceLevel.json'))
         }));
 
@@ -63,6 +63,15 @@ module.exports = function (group, element) {
                 // display DMN stuff
                 createDMN(element);
             }
+        }));
+    }
+
+    if (is(element, 'cp:CPGReference')) {
+        group.entries.push(entryFactory.textField({
+            id: 'document',
+            description: 'Document',
+            label: 'Document',
+            modelProperty: 'document'
         }));
     }
 

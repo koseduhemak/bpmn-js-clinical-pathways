@@ -228,7 +228,6 @@ function CPRender(eventBus, styles, pathMap) {
          *
          */
         'cp:EvidenceMarker': function(parentGfx, element) {
-            console.log(parentGfx);
             var url = Icons.iconEvidenceMarker;
 
             element.width = 50;

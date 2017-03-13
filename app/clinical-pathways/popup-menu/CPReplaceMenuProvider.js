@@ -19,7 +19,6 @@ var replaceCPOptions = require('../replace/CPReplaceOptions');
  * This module is an element agnostic replace menu provider for the popup menu.
  */
 function CPReplaceMenuProvider(popupMenu, modeling, moddle, bpmnReplace, rules, translate) {
-    console.log("hier");
     ReplaceMenuProvider.call(this, popupMenu, modeling, moddle, bpmnReplace, rules, translate);
 }
 
@@ -37,7 +36,6 @@ module.exports = CPReplaceMenuProvider;
  */
 var cachedGetEntries = ReplaceMenuProvider.prototype.getEntries;
 ReplaceMenuProvider.prototype.getEntries = function(element) {
-    console.log("getEntries");
     var businessObject = element.businessObject;
     var entries;
 
