@@ -226,7 +226,7 @@ function CPRenderer(eventBus, styles, pathMap) {
         'cp:ResourceRelation': function (parent, element) {
 
             var attrs = computeStyle(attrs, {
-                stroke: '#f26222',
+                stroke: '#008000',
                 strokeWidth: 2,
                 strokeDasharray: "3, 3"
             });
@@ -238,7 +238,7 @@ function CPRenderer(eventBus, styles, pathMap) {
         },
         'cp:StatementRelation': function (parent, element) {
             var attrs = computeStyle(attrs, {
-                stroke: '#ff471a',
+                stroke: '#4aa8cc',
                 strokeWidth: 2
             });
 
