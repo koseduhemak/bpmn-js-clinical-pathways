@@ -218,11 +218,19 @@ module.exports.GATEWAY = [
 
     // Clinical Pathway Gateways
     {
-        label: 'SimultanParallelGateway',
+        label: 'Simultan Parallel Gateway',
         actionName: 'replace-with-simultan-parallel-gateway',
         className: 'cp-icon-simultan-parallel-gateway',
         target: {
             type: 'cp:SimultanParallelGateway'
+        }
+    },
+    {
+        label: 'Evidence Gateway',
+        actionName: 'replace-with-evidence-gateway',
+        className: 'cp-icon-evidence-gateway',
+        target: {
+            type: 'cp:EvidenceGateway'
         }
     }
 ];

@@ -44,23 +44,8 @@ CPPaletteProvider.prototype.getPaletteEntries = function () {
     }
 
     assign(actions, {
-        'create-therapy-task': createAction(
-            'cp:TherapyTask', 'cp', Icons.iconTherapyTask
-        ),
-        'create-diagnosis-task': createAction(
-            'cp:DiagnosisTask', 'cp', Icons.iconDiagnosisTask
-        ),
-        'create-supporting-task': createAction(
-            'cp:SupportingTask', 'cp', Icons.iconSupportingTask
-        ),
         'create-document': createAction(
-            'cp:Document', 'cp', Icons.iconDocument
-        ),
-        'create-simultan-parallel-gateway': createAction(
-            'cp:SimultanParallelGateway', 'cp', Icons.iconSimultanParallelGateway
-        ),
-        'create-evidence-gateway': createAction(
-            'cp:EvidenceGateway', 'cp', Icons.iconEvidenceGateway
+            'cp:ClinicalDocument', 'cp', Icons.iconDocument
         ),
         'create-resource': createAction(
             'cp:CPResource', 'cp', Icons.iconResource

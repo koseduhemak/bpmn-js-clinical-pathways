@@ -226,6 +226,19 @@ function CPRenderer(eventBus, styles, pathMap) {
         'cp:ResourceRelation': function (parent, element) {
 
             var attrs = computeStyle(attrs, {
+                stroke: '#f26222',
+                strokeWidth: 2,
+                strokeDasharray: "3, 3"
+            });
+
+            var gfx = svgAppend(parent, createLine(element.waypoints, attrs));
+            renderExternalLabel(parent, element);
+
+            return gfx;
+        },
+        'cp:ResourceAssociation': function (parent, element) {
+
+            var attrs = computeStyle(attrs, {
                 stroke: '#008000',
                 strokeWidth: 2,
                 strokeDasharray: "3, 3"
@@ -246,9 +259,9 @@ function CPRenderer(eventBus, styles, pathMap) {
         },
         /** CUSTOM CONNECTIONS / RELATIONS END **/
 
-        'cp:Document': function (parent, element) {
-            element.width = 40;
-            element.height = 50;
+        'cp:ClinicalDocument': function (parent, element) {
+            element.width = 100;
+            element.height = 75;
 
             var pathData = pathMap.getScaledPath('DATA_OBJECT_PATH', {
                 xScaleFactor: 1,
@@ -281,6 +294,8 @@ function CPRenderer(eventBus, styles, pathMap) {
             });
 
             svgAppend(parent, iconGfx);
+
+            renderEmbeddedLabel(parent, element, "center-middle");
 
             return elementObject;
         },

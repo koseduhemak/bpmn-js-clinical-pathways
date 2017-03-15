@@ -544,8 +544,16 @@
         }
       ]
     },
+    /* Relation between two CPResources / ResourceBundles */
     {
       "name": "ResourceRelation",
+      "superClass": [
+        "bpmn:Association"
+      ]
+    },
+    /* Relation between BPMN-Elements and CPResource */
+    {
+      "name": "ResourceAssociation",
       "superClass": [
         "bpmn:Association"
       ]

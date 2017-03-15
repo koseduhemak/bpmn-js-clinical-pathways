@@ -29,7 +29,7 @@ function CPRules(eventBus, overlays) {
     this._eventBus = eventBus;
     this._overlays = overlays;
 
-    this._init();
+    this.registerEventListener();
 }
 
 inherits(CPRules, RuleProvider);
@@ -38,15 +38,14 @@ CPRules.$inject = ['eventBus', 'overlays'];
 
 module.exports = CPRules;
 
-CPRules.prototype._init = function () {
+CPRules.prototype.registerEventListener = function () {
 
     var eventBus = this._eventBus;
     var overlays = this._overlays;
 
     var self = this;
 
-
-    eventBus.on('element.changed', 100, function (event) {
+    eventBus.on('element.changed', HIGH_PRIORITY, function (event) {
 
         var element = event.element,
             bo = element.businessObject;
@@ -78,9 +77,14 @@ CPRules.prototype._init = function () {
 
         }
     });
+
+
+
 };
 
 CPRules.prototype.init = function () {
+
+
     function canCreate(shape, target) {
         // only judge about custom elements
         if (!isCPElement(shape)) {
@@ -96,8 +100,10 @@ CPRules.prototype.init = function () {
         }
 
          if (is(source, 'cp:CPResource')) {
-            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway', 'cp:CPResource'])) {
-                return {type: 'cp:ResourceRelation'};
+            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway'])) {
+                return {type: 'cp:ResourceAssociation'};
+            } else if (is(target, 'cp:CPResource')) {
+                return {type: 'cp:ResourceRelation'}
             } else {
                 return false;
             }

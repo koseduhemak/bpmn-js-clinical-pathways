@@ -54,7 +54,7 @@ function createGeneralTabGroups(element, bpmnFactory, elementRegistry) {
     ];
 }
 
-// Create the custom magic tab
+// Create the custom CP tab
 function createCPTabGroups(element, elementRegistry) {
 
     // Create a group called "Clinical Pathways".
@@ -64,7 +64,7 @@ function createCPTabGroups(element, elementRegistry) {
         entries: []
     };
 
-    // Add the spell props to the black magic group.
+    // Add the cp props to the clinical-pathways group.
     cpProps(CPGroup, element);
 
     return [
@@ -84,14 +84,14 @@ function CPPropertiesProvider(eventBus, bpmnFactory, elementRegistry) {
             groups: createGeneralTabGroups(element, bpmnFactory, elementRegistry)
         };
 
-        // The "magic" tab
+        // The CP tab
         var cpTab = {
             id: 'cp',
             label: 'Clinical Pathways',
             groups: createCPTabGroups(element, elementRegistry)
         };
 
-        // Show general + "magic" tab
+        // Show general + CP tab
         return [
             generalTab,
             cpTab
