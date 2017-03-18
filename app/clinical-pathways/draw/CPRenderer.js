@@ -256,7 +256,6 @@ function CPRenderer(eventBus, styles, pathMap) {
             return gfx;
         },
         'cp:ResourceAssociation': function (parent, element) {
-            console.log("hier");
 
             var attrs = computeStyle(attrs, {
                 stroke: '#008000',

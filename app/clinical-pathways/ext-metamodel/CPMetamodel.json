@@ -402,7 +402,8 @@
     {
       "name": "CaseChart",
       "superClass": [
-        "bpmn:DataObject"
+        "bpmn:DataObject",
+        "bpmn:FlowElementsContainer"
       ],
       "properties": [
         {
@@ -414,11 +415,10 @@
       ]
     },
     /* Resources */
-
     {
       "name": "CPResource",
       "superClass": [
-        "bpmn:FlowElement"
+          "bpmn:FlowElement"
       ],
       "extends": [
         "bpmn:Resource"
@@ -435,7 +435,7 @@
     {
       "name": "ResourceBundle",
       "superClass": [
-        "bpmn:FlowElement",
+        "bpmn:DataObject",
         "bpmn:FlowElementsContainer"
       ],
       "extends": [
