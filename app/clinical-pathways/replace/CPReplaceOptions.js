@@ -230,7 +230,7 @@ module.exports.GATEWAY = [
         actionName: 'replace-with-evidence-gateway',
         className: 'cp-icon-evidence-gateway',
         target: {
-            type: 'cp:EvidenceGateway'
+            type: 'cp:EvidenceBasedGateway'
         }
     }
 ];
@@ -300,4 +300,71 @@ module.exports.CPRESOURCES = [
             type: 'cp:HumanResource'
         }
     }
-]
+];
+
+module.exports.CLINICALSTATEMENTS = [
+    {
+        label: 'Observation',
+        actionName: 'replace-with-observation',
+        className: 'cp-icon-observation',
+        target: {
+            type: 'cp:Observation'
+        }
+    },
+    {
+        label: 'Action',
+        actionName: 'replace-with-action',
+        className: 'cp-icon-action',
+        target: {
+            type: 'cp:Action'
+        }
+    },
+    {
+        label: 'Medication',
+        actionName: 'replace-with-medication',
+        className: 'cp-icon-medication',
+        target: {
+            type: 'cp:Medication'
+        }
+    },
+    {
+        label: 'Multimedia Object',
+        actionName: 'replace-with-multimedia-object',
+        className: 'cp-icon-multimedia-object',
+        target: {
+            type: 'cp:MultimediaObject'
+        }
+    },
+    {
+        label: 'Care',
+        actionName: 'replace-with-care',
+        className: 'cp-icon-care',
+        target: {
+            type: 'cp:Care'
+        }
+    },
+    {
+        label: 'Meeting',
+        actionName: 'replace-with-meeting',
+        className: 'cp-icon-meeting',
+        target: {
+            type: 'cp:Meeting'
+        }
+    },
+    {
+        label: 'Procedure',
+        actionName: 'replace-with-procedure',
+        className: 'cp-icon-procedure',
+        target: {
+            type: 'cp:Procedure'
+        }
+    },
+    {
+        label: 'Objective Area',
+        actionName: 'replace-with-objective-area',
+        className: 'cp-icon-objective-area',
+        target: {
+            type: 'cp:ObjectiveArea'
+        }
+    }
+];

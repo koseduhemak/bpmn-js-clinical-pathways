@@ -63,13 +63,13 @@ describe('custom modeling', function() {
     }));
 
 
-    it('should not resize custom shape', inject(function(elementRegistry, rules) {
+    it('should not autoResize custom shape', inject(function(elementRegistry, rules) {
 
       // given
       var customElement = elementRegistry.get('CustomTriangle_1');
 
       // when
-      var allowed = rules.allowed('resize', { shape: customElement });
+      var allowed = rules.allowed('autoResize', { shape: customElement });
 
       // then
       expect(allowed).to.be.false;

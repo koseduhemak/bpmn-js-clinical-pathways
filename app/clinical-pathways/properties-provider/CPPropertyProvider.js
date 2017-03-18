@@ -54,27 +54,29 @@ function createGeneralTabGroups(element, bpmnFactory, elementRegistry) {
     ];
 }
 
-// Create the custom CP tab
-function createCPTabGroups(element, elementRegistry) {
-
-    // Create a group called "Clinical Pathways".
-    var CPGroup = {
-        id: 'clinical-pathways',
-        label: 'Clinical Pathways',
-        entries: []
-    };
-
-    // Add the cp props to the clinical-pathways group.
-    cpProps(CPGroup, element);
-
-    return [
-        CPGroup
-    ];
-}
 
 function CPPropertiesProvider(eventBus, bpmnFactory, elementRegistry) {
 
     PropertiesActivator.call(this, eventBus);
+
+
+    // Create the custom CP tab
+    this.createCPTabGroups = function(element, elementRegistry) {
+
+        // Create a group called "Clinical Pathways".
+        var CPGroup = {
+            id: 'clinical-pathways',
+            label: 'Clinical Pathways',
+            entries: []
+        };
+
+        // Add the cp props to the clinical-pathways group.
+        cpProps(CPGroup, element);
+
+        return [
+            CPGroup
+        ];
+    }
 
     this.getTabs = function (element) {
 
@@ -88,7 +90,7 @@ function CPPropertiesProvider(eventBus, bpmnFactory, elementRegistry) {
         var cpTab = {
             id: 'cp',
             label: 'Clinical Pathways',
-            groups: createCPTabGroups(element, elementRegistry)
+            groups: this.createCPTabGroups(element, elementRegistry)
         };
 
         // Show general + CP tab

@@ -65,7 +65,8 @@ var cpDrawModule = require('./clinical-pathways/draw');
 var cpMetamodel = require('./clinical-pathways/ext-metamodel/CPMetamodel.json');
 
 // CP Rules
-var cpRules = require('./clinical-pathways/rules');
+var cpRules = require('./clinical-pathways/rules').cpRules;
+var resizeRules = require('./clinical-pathways/rules');
 
 // CP POPMENU
 var cpPopupMenu = require('./clinical-pathways/popup-menu');
@@ -94,7 +95,9 @@ var coreModule = require('bpmn-js/lib/core'),
     replacePreview = require('bpmn-js/lib/features/replace-preview'),
     rules = require('bpmn-js/lib/features/rules'),
     search = require('bpmn-js/lib/features/search'),
-    snapping = require('bpmn-js/lib/features/snapping');
+    snapping = require('bpmn-js/lib/features/snapping'),
+    resize = require('diagram-js/lib/features/resize'),
+    autoResize = require('bpmn-js/lib/features/auto-resize');
 
 
 var modeler = new BpmnModeler({
@@ -108,6 +111,7 @@ var modeler = new BpmnModeler({
         cpRules,
         cpPopupMenu,
         //cpCommandInterceptor,
+
         // core modules
         coreModule,
         bpmnPaletteModule,
@@ -126,7 +130,10 @@ var modeler = new BpmnModeler({
         replacePreview,
         rules,
         search,
-        snapping
+        snapping,
+        resize,
+        autoResize
+
     ],
     additionalModules: [
         propertiesPanelModule,
@@ -135,7 +142,8 @@ var modeler = new BpmnModeler({
         CPpropertiesProviderModule,
         cpPaletteModule,
         cpDrawModule,
-        cpContextPad
+        cpContextPad,
+        resizeRules
 
     ],
     moddleExtensions: {

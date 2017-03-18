@@ -56,8 +56,12 @@ ReplaceMenuProvider.prototype.getEntries = function (element) {
         entries = filter(replaceCPOptions.GATEWAY, differentType);
 
         return this._createEntries(element, entries);
-    }else if (is(businessObject, 'cp:CPResource')) {
+    } else if (is(businessObject, 'cp:CPResource')) {
         entries = filter(replaceCPOptions.CPRESOURCES, differentType);
+
+        return this._createEntries(element, entries);
+    } else if (is(businessObject, 'cp:ClinicalStatement')) {
+        entries = filter(replaceCPOptions.CLINICALSTATEMENTS, differentType);
 
         return this._createEntries(element, entries);
     } else {

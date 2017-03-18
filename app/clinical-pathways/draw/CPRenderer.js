@@ -166,6 +166,25 @@ function CPRenderer(eventBus, styles, pathMap) {
         /** TASKS END **/
 
         /** RESOURCES START */
+        'cp:ResourceBundle': function (parent, element) {
+            if (element.width < 250) {
+                element.width = 250;
+            }
+            if (element.height < 250) {
+                element.height = 200;
+            }
+
+            var elementObject = drawRectWithHeader(parent, element.width, element.height, 10, {
+                header: {
+                    fill: '#006033',
+                    stroke: '#006033'
+                }, body: {fill: '#fff', stroke: '#006033'}
+            });
+
+            renderEmbeddedLabel(parent, element, "center-middle", {box: assign(getHeaderSize(element), {x: element.x, y: element.y}), fill: '#fff'});
+
+            return elementObject;
+        },
         'cp:CPResource': function (parent, element) {
             var rect = drawRect(parent, element.width, element.height, 0, {stroke: "green", fill: "#d1e8c4"});
             renderEmbeddedLabel(parent, element, 'center-middle');
@@ -237,6 +256,7 @@ function CPRenderer(eventBus, styles, pathMap) {
             return gfx;
         },
         'cp:ResourceAssociation': function (parent, element) {
+            console.log("hier");
 
             var attrs = computeStyle(attrs, {
                 stroke: '#008000',
@@ -251,17 +271,149 @@ function CPRenderer(eventBus, styles, pathMap) {
         },
         'cp:StatementRelation': function (parent, element) {
             var attrs = computeStyle(attrs, {
+                stroke: '#000',
+                strokeWidth: 2,
+                strokeDasharray: "5, 5"
+            });
+
+            return svgAppend(parent, createLine(element.waypoints, attrs));
+        },
+        'cp:CaseChartAssociation': function (parent, element) {
+            var attrs = computeStyle(attrs, {
                 stroke: '#4aa8cc',
-                strokeWidth: 2
+                strokeWidth: 2,
+                strokeDasharray: "3, 3"
             });
 
             return svgAppend(parent, createLine(element.waypoints, attrs));
         },
         /** CUSTOM CONNECTIONS / RELATIONS END **/
+        'cp:SimultanParallelGateway': function (parent, element) {
+            var url = Icons.iconSimultanParallelGateway;
 
+            element.width = 50;
+            element.height = 50;
+
+            var shapeGfx = svgCreate('image', {
+                x: 0,
+                y: 0,
+                width: element.width,
+                height: element.height,
+                href: url
+            });
+
+            svgAppend(parent, shapeGfx);
+
+            return shapeGfx;
+        },
+        'cp:EvidenceBasedGateway': function (parent, element) {
+            var url = Icons.iconEvidenceBasedGateway;
+
+            element.width = 50;
+            element.height = 50;
+
+            var shapeGfx = svgCreate('image', {
+                x: 0,
+                y: 0,
+                width: element.width,
+                height: element.height,
+                href: url
+            });
+
+            svgAppend(parent, shapeGfx);
+
+            // draw evidence marker
+
+
+            return shapeGfx;
+        },
+
+        /**
+         * ClinicalDocument / Clinical Statement etc.
+         */
+        'cp:CaseChart': function (parent, element) {
+            if (element.width < 250) {
+                element.width = 250;
+            }
+            if (element.height < 250) {
+                element.height = 200;
+            }
+
+            var elementObject = drawRectWithHeader(parent, element.width, element.height, 0, {
+                header: {
+                    fill: '#4aa8cc',
+                    stroke: '#4aa8cc'
+                }, body: {fill: '#fff', stroke: '#4aa8cc'}
+            });
+
+            renderEmbeddedLabel(parent, element, "center-middle", {box: assign(getHeaderSize(element), {x: element.x, y: element.y})});
+
+            return elementObject;
+        },
+        'cp:StructuredDocument': function (parent, element) {
+            if (element.width < 250) {
+                element.width = 250;
+            }
+            if (element.height < 250) {
+                element.height = 200;
+            }
+
+            var elementObject = drawRectWithHeader(parent, element.width, element.height, 0, {
+                header: {
+                    fill: '#cbcaca',
+                    stroke: '#000'
+                }, body: {fill: '#fff', stroke: '#000'}
+            });
+
+            renderEmbeddedLabel(parent, element, "center-middle", {box: assign(getHeaderSize(element), {x: element.x, y: element.y})});
+
+            return elementObject;
+        },
+        'cp:Segment': function (parent, element) {
+            if (element.width < 250) {
+                element.width = 250;
+            }
+            if (element.height < 250) {
+                element.height = 200;
+            }
+
+            var elementObject = drawRectWithHeader(parent, element.width, element.height, 0, {
+                header: {
+                    fill: '#d1e8c4',
+                    stroke: '#000'
+                }, body: {fill: '#fff', stroke: '#000'}
+            });
+
+            renderEmbeddedLabel(parent, element, "center-middle", {box: assign(getHeaderSize(element), {x: element.x, y: element.y})});
+
+            return elementObject;
+        },
+        'cp:Organizer': function (parent, element) {
+            if (element.width < 250) {
+                element.width = 250;
+            }
+            if (element.height < 250) {
+                element.height = 200;
+            }
+
+            var elementObject = drawRectWithHeader(parent, element.width, element.height, 0, {
+                header: {
+                    fill: '#fdcc97',
+                    stroke: '#000'
+                }, body: {fill: '#fff', stroke: '#000'}
+            });
+
+            renderEmbeddedLabel(parent, element, "center-middle", {box: assign(getHeaderSize(element), {x: element.x, y: element.y})});
+
+            return elementObject;
+        },
         'cp:ClinicalDocument': function (parent, element) {
-            element.width = 100;
-            element.height = 75;
+            if (element.width < 100) {
+                element.width = 100;
+            }
+            if (element.height < 75) {
+                element.height = 75;
+            }
 
             var pathData = pathMap.getScaledPath('DATA_OBJECT_PATH', {
                 xScaleFactor: 1,
@@ -299,46 +451,77 @@ function CPRenderer(eventBus, styles, pathMap) {
 
             return elementObject;
         },
-        'cp:SimultanParallelGateway': function (parent, element) {
-            var url = Icons.iconSimultanParallelGateway;
 
-            element.width = 50;
-            element.height = 50;
+        'cp:ClinicalStatement': function (parent, element) {
+            if (element.width < 90) {
+                element.width = 90;
+            }
+            if (element.height < 75) {
+                element.height = 75;
+            }
 
-            var shapeGfx = svgCreate('image', {
-                x: 0,
-                y: 0,
-                width: element.width,
-                height: element.height,
-                href: url
-            });
+            var rect = drawRect(parent, element.width, element.height, 0, {stroke: '#000', fill:'#fff'});
 
-            svgAppend(parent, shapeGfx);
+            renderEmbeddedLabel(parent, element, "center-middle");
 
-            return shapeGfx;
+            return rect;
         },
-        'cp:EvidenceGateway': function (parent, element) {
-            var url = Icons.iconEvidenceGateway;
+        'cp:Observation': function (parent, element) {
+            var rect = renderer('cp:ClinicalStatement')(parent, element);
 
-            element.width = 50;
-            element.height = 50;
+            createFontawesomeIcon('\uf1e5', parent);
 
-            var shapeGfx = svgCreate('image', {
-                x: 0,
-                y: 0,
-                width: element.width,
-                height: element.height,
-                href: url
-            });
-
-            svgAppend(parent, shapeGfx);
-
-            // draw evidence marker
-
-
-            return shapeGfx;
+            return rect;
         },
+        'cp:Medication': function (parent, element) {
+            var rect = renderer('cp:ClinicalStatement')(parent, element);
 
+            createMedicalIcon('pharmacy', parent);
+
+            return rect;
+        },
+        'cp:Action': function (parent, element) {
+            var rect = renderer('cp:ClinicalStatement')(parent, element);
+
+            createFontawesomeIcon('\uf2c5', parent);
+
+            return rect;
+        },
+        'cp:Meeting': function (parent, element) {
+            var rect = renderer('cp:ClinicalStatement')(parent, element);
+
+            createFontawesomeIcon('\uf0c0', parent);
+
+            return rect;
+        },
+        'cp:Care': function (parent, element) {
+            var rect = renderer('cp:ClinicalStatement')(parent, element);
+
+            createMedicalIcon('care-staff-area', parent);
+
+            return rect;
+        },
+        'cp:MultimediaObject': function (parent, element) {
+            var rect = renderer('cp:ClinicalStatement')(parent, element);
+
+            createFontawesomeIcon('\uf1c8', parent);
+
+            return rect;
+        },
+        'cp:ObjectiveArea': function (parent, element) {
+            var rect = renderer('cp:ClinicalStatement')(parent, element);
+
+            createFontawesomeIcon('\uf041', parent);
+
+            return rect;
+        },
+        'cp:Procedure': function (parent, element) {
+            var rect = renderer('cp:ClinicalStatement')(parent, element);
+
+            createFontawesomeIcon('\uf085', parent);
+
+            return rect;
+        },
         /**
          * MARKER CP
          *
@@ -567,6 +750,28 @@ function CPRenderer(eventBus, styles, pathMap) {
         });
     }
 
+    function getHeaderSize(element) {
+        return {width: element.width-50, height: 25}
+    }
+
+    function drawRectWithHeader(parentGfx, width, height, r, attrs) {
+        var size = getHeaderSize({width: width, height: height});
+        var headerRect = drawRect(parentGfx, size.width, size.height, 0, 0, attrs.header);
+
+        var rect = svgCreate('rect');
+        svgAttr(rect, {
+            x: 0,
+            y: 25,
+            width: width,
+            height: height - 25
+        });
+        svgAttr(rect, attrs.body);
+
+        svgAppend(parentGfx, rect);
+
+        return headerRect;
+    }
+
     function drawRect(parentGfx, width, height, r, offset, attrs) {
 
         if (isObject(offset)) {
@@ -575,8 +780,6 @@ function CPRenderer(eventBus, styles, pathMap) {
         }
 
         offset = offset || 0;
-
-        console.log(attrs);
 
         attrs = computeStyle(attrs, {
             stroke: 'black',
@@ -666,9 +869,12 @@ function CPRenderer(eventBus, styles, pathMap) {
         return text;
     }
 
-    function renderEmbeddedLabel(parentGfx, element, align) {
+    function renderEmbeddedLabel(parentGfx, element, align, attr) {
+        attr = assign({box: element, align: align, padding: 5},
+            attr);
+
         var semantic = getSemantic(element);
-        return renderLabel(parentGfx, semantic.name, {box: element, align: align, padding: 5});
+        return renderLabel(parentGfx, semantic.name, attr);
     }
 
     function renderExternalLabel(parentGfx, element) {
@@ -685,22 +891,6 @@ function CPRenderer(eventBus, styles, pathMap) {
 
     this.canRender = function (element) {
         return this.handlers[element.type] != undefined;
-        return isAny(element, [
-            'cp:TherapyTask',
-            'cp:DiagnosisTask',
-            'cp:SupportingTask',
-            'cp:EducationTask',
-            'cp:HomeVisitTask',
-            'cp:MonitoringTask',
-            'cp:PhoneContactTask',
-            'cp:Document',
-            'cp:SimultanParallelGateway',
-            'cp:EvidenceGateway',
-            'cp:EvidenceMarker',
-            'cp:HumanResource',
-            'cp:ConsumptionResource',
-            'cp:TransportationEquipment'
-        ]);
     };
 
     this.drawShape = function (parent, element) {
@@ -715,10 +905,14 @@ function CPRenderer(eventBus, styles, pathMap) {
     };
 
     this.drawConnection = function (parent, element) {
-        if (isAny(element, ['cp:ResourceRelation', 'cp:StatementRelation'])) {
+        if (isAny(element, getConnectionsAbleToDraw())) {
             return this.drawShape(parent, element);
         }
     };
+}
+
+function getConnectionsAbleToDraw() {
+    return ['cp:ResourceAssociation', 'cp:ResourceRelation', 'cp:StatementRelation', 'cp:CaseChartAssociation'];
 }
 
 /**

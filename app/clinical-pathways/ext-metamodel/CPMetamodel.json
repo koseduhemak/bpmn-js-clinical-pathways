@@ -111,7 +111,7 @@
       ]
     },
     {
-      "name": "EvidenceGateway",
+      "name": "EvidenceBasedGateway",
       "superClass": [
         "bpmn:ComplexGateway"
       ],
@@ -220,6 +220,7 @@
     /* Clinical Statement */
     {
       "name": "ClinicalStatement",
+      "isAbstract": true,
       "superClass": [
         "bpmn:DataObject"
       ],
@@ -300,26 +301,17 @@
     /* Organizer */
     {
       "name": "Organizer",
-      "properties": [
-        {
-          "name": "component",
-          "isMany": true,
-          "type": "ClinicalStatement",
-          "isReference": true
-        },
-        {
-          "name": "hasHumanResource",
-          "isAttr": true,
-          "type": "HumanResource",
-          "isReference": true
-        }
+      "superClass": [
+        "bpmn:DataObject",
+        "bpmn:FlowElementsContainer"
       ]
     },
     /* Segment */
     {
       "name": "Segment",
       "superClass": [
-        "bpmn:DataObject"
+        "bpmn:DataObject",
+        "bpmn:FlowElementsContainer"
       ],
       "properties": [
         {
@@ -336,30 +328,6 @@
           "name": "text",
           "isAttr": true,
           "type": "String"
-        },
-        {
-          "name": "statement",
-          "isMany": true,
-          "type": "ClinicalStatement",
-          "isReference": true
-        },
-        {
-          "name": "parentSegment",
-          "isMany": true,
-          "type": "Segment",
-          "isReference": true
-        },
-        {
-          "name": "subSegment",
-          "isMany": true,
-          "type": "Segment",
-          "isReference": true
-        },
-        {
-          "name": "document",
-          "isMany": true,
-          "type": "StructuredDocument",
-          "isReference": true
         }
       ]
     },
@@ -418,7 +386,8 @@
     {
       "name": "StructuredDocument",
       "superClass": [
-        "ClinicalDocument"
+        "ClinicalDocument",
+        "bpmn:FlowElementsContainer"
       ],
       "properties": [
         {
@@ -466,18 +435,11 @@
     {
       "name": "ResourceBundle",
       "superClass": [
-        "bpmn:FlowElement"
+        "bpmn:FlowElement",
+        "bpmn:FlowElementsContainer"
       ],
       "extends": [
         "bpmn:Resource"
-      ],
-      "properties": [
-        {
-          "name": "containedResources",
-          "isMany": true,
-          "type": "CPResource",
-          "isReference": true
-        }
       ]
     },
     {
@@ -531,6 +493,7 @@
       ]
     },
     /* RELATIONS */
+    /* Relation between Clinical Statements */
     {
       "name": "StatementRelation",
       "superClass": [
@@ -544,6 +507,21 @@
         }
       ]
     },
+    /* Relation between BPMN-Elements and Case Charts */
+    {
+      "name": "CaseChartAssociation",
+      "superClass": [
+        "bpmn:Association"
+      ],
+      "properties": [
+        {
+          "name": "name",
+          "type": "String",
+          "isAttr": true
+        }
+      ]
+    },
+
     /* Relation between two CPResources / ResourceBundles */
     {
       "name": "ResourceRelation",

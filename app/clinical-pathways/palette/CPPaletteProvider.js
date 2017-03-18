@@ -44,11 +44,29 @@ CPPaletteProvider.prototype.getPaletteEntries = function () {
     }
 
     assign(actions, {
-        'create-document': createAction(
-            'cp:ClinicalDocument', 'cp', Icons.iconDocument
+        'create-resource-bundle': createAction(
+            'cp:ResourceBundle', 'cp', Icons.iconResourceBundle
         ),
         'create-resource': createAction(
             'cp:CPResource', 'cp', Icons.iconResource
+        ),
+        'create-document': createAction(
+            'cp:Document', 'cp', Icons.iconDocument
+        ),
+        'create-case-chart': createAction(
+            'cp:CaseChart', 'cp', Icons.iconCaseChart
+        ),
+        'create-structured-document': createAction(
+            'cp:StructuredDocument', 'cp-Documents', Icons.iconStructuredDocument
+        ),
+        'create-segment': createAction(
+            'cp:Segment', 'cp-Documents', Icons.iconSegment
+        ),
+        'create-organizer': createAction(
+            'cp:Organizer', 'cp-Documents', Icons.iconOrganizer
+        ),
+        'create-clinical-statement': createAction(
+            'cp:Observation', 'cp-Documents', Icons.iconClinicalStatement
         )
     });
 

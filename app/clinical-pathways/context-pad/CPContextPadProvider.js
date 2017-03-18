@@ -27,7 +27,7 @@ function CPContextPadProvider(eventBus, contextPad, modeling, elementFactory, co
         }
 
         // todo add new elements to ContextPad here...
-        if (isAny(businessObject, [ 'cp:CPResource'])) {
+        if (isAny(businessObject, [ 'cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart'])) {
             assign(actions, {
                 'connect': {
                     group: 'connect',

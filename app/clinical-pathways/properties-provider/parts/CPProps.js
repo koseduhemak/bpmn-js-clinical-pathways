@@ -15,7 +15,10 @@ var forEach = require('lodash/collection/forEach');
 
 var getBusinessObject = require('bpmn-js/lib/util/ModelUtil').getBusinessObject;
 
+var cmdHelper = require('bpmn-js-properties-panel/lib/helper/CmdHelper');
+
 //var newDMNXML = require('../../../../resources/newDMN.dmn');
+
 
 module.exports = function (group, element) {
 
@@ -34,7 +37,7 @@ module.exports = function (group, element) {
 
     }
 
-    if (is(element, 'cp:EvidenceGateway')) {
+    if (is(element, 'cp:EvidenceBasedGateway')) {
         group.entries.push(entryFactory.textField({
             id: 'dmn',
             description: 'The decision logic can be modeled as DMN. The path should point to the corresponding DMN file.',
@@ -47,7 +50,7 @@ module.exports = function (group, element) {
                 id: 'modify-dmn',
                 description: 'Modify the specified DMN diagram',
                 label: 'Modify DMN',
-                getClickableElement: function() {
+                getClickableElement: function () {
                     // display DMN stuff
                     var bo = getBusinessObject(element);
                     createDMN(element, bo.get('dmn'));
@@ -59,7 +62,7 @@ module.exports = function (group, element) {
             id: 'create-dmn',
             description: 'Create a DMN to model the decision logic',
             label: 'Create new DMN',
-            getClickableElement: function() {
+            getClickableElement: function () {
                 // display DMN stuff
                 createDMN(element);
             }
@@ -117,7 +120,7 @@ function createDMN(element, file) {
 
     var dmnModeler = new DmnModeler({
         container: dmnContainer,
-        keyboard: { bindTo: document },
+        keyboard: {bindTo: document},
         minColWidth: 200,
         tableName: 'DMN Table'
     });
@@ -126,7 +129,7 @@ function createDMN(element, file) {
     var xml = getNewXML();
 
 
-    dmnModeler.importXML(xml, function(err) {
+    dmnModeler.importXML(xml, function (err) {
 
         if (err) {
             console.log('error rendering', err);
@@ -136,7 +139,7 @@ function createDMN(element, file) {
     });
 
 
-    downloadLink.on('click', function() {
+    downloadLink.on('click', function () {
         originalXML = latestXML;
         dirty = false;
 
@@ -144,7 +147,7 @@ function createDMN(element, file) {
             diagramName = prompt('Specify name');
         } while (!diagramName || diagramName == "");
 
-        if (diagramName.substr(diagramName.lastIndexOf('.')+1) !== "dmn") {
+        if (diagramName.substr(diagramName.lastIndexOf('.') + 1) !== "dmn") {
             diagramName += ".dmn";
         }
 
@@ -154,7 +157,7 @@ function createDMN(element, file) {
         dmnContainer.remove();
     });
 
-    cancelLink.on('click', function(ev) {
+    cancelLink.on('click', function (ev) {
         ev.preventDefault();
         dmnContainer.remove();
 
@@ -182,12 +185,13 @@ function createDMN(element, file) {
 
     function saveTable(done) {
 
-        dmnModeler.saveXML({ format: true }, function(err, xml) {
+        dmnModeler.saveXML({format: true}, function (err, xml) {
             done(err, xml);
         });
     }
-    var exportArtifacts = function() {
-        saveTable(function(err, xml) {
+
+    var exportArtifacts = function () {
+        saveTable(function (err, xml) {
             setEncoded(downloadLink, diagramName, err ? null : xml);
         });
     };
@@ -199,9 +203,10 @@ function createDMN(element, file) {
 // helpers
 function readEnumAndGenerateSelectOptions(array) {
     var arr = [{name: '', value: ''}];
-    forEach(array, function(value) {
+    forEach(array, function (value) {
         arr.push({name: value, value: value});
     });
 
     return arr;
 }
+

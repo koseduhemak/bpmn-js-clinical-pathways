@@ -24,17 +24,18 @@ var HIGH_PRIORITY = 1500;
  * @param {EventBus} eventBus
  */
 var remove = false;
-function CPRules(eventBus, overlays) {
+function CPRules(eventBus, overlays, elementFactory) {
     RuleProvider.call(this, eventBus);
     this._eventBus = eventBus;
     this._overlays = overlays;
+    this._elementFactory = elementFactory;
 
     this.registerEventListener();
 }
 
 inherits(CPRules, RuleProvider);
 
-CPRules.$inject = ['eventBus', 'overlays'];
+CPRules.$inject = ['eventBus', 'overlays', 'elementFactory'];
 
 module.exports = CPRules;
 
@@ -51,8 +52,6 @@ CPRules.prototype.registerEventListener = function () {
             bo = element.businessObject;
 
         if (isAny(bo, ['bpmn:Task', 'bpmn:Gateway']) && element.type != "label") {
-
-            console.log(bo);
 
             if (evidenceLevel.includes(bo.get('evidenceIndicator').toUpperCase())) {
                 //bo.set('cp:EvidenceLevel', bo.get('evidenceIndicator').toUpperCase());
@@ -79,7 +78,6 @@ CPRules.prototype.registerEventListener = function () {
     });
 
 
-
 };
 
 CPRules.prototype.init = function () {
@@ -91,6 +89,27 @@ CPRules.prototype.init = function () {
             return;
         }
 
+        if (is(shape, 'cp:CPResource')) {
+            return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'bpmn:Collaboration') || is(target, 'cp:ResourceBundle');
+        }
+
+        if (is(shape, 'cp:Segment')) {
+            return is(target, 'cp:StructuredDocument') || is(target, 'cp:Segment');
+        }
+
+        if (is(shape, 'cp:ClinicalStatement')) {
+            return is(target, 'cp:Segment') || is(target, 'cp:Organizer') || is(target, 'cp:StructuredDocument');
+        }
+
+        if (is(shape, 'cp:Organizer')) {
+            return is(target, 'cp:Segment');
+        }
+
+        if (is(shape, 'cp:StructuredDocument')) {
+            return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'cp:CaseChart');
+        }
+
+
         return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'bpmn:Collaboration');
     }
 
@@ -99,7 +118,7 @@ CPRules.prototype.init = function () {
             return false;
         }
 
-         if (is(source, 'cp:CPResource')) {
+        if (is(source, 'cp:CPResource')) {
             if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway'])) {
                 return {type: 'cp:ResourceAssociation'};
             } else if (is(target, 'cp:CPResource')) {
@@ -108,13 +127,18 @@ CPRules.prototype.init = function () {
                 return false;
             }
         } else if (is(source, 'cp:ClinicalStatement')) {
-             if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway', 'cp:ClinicalStatement'])) {
-                 return {type: 'cp:StatementRelation'};
-             } else {
-                 return false;
-             }
-         }
-         return false;
+            if (is(target, 'cp:ClinicalStatement')) {
+                return {type: 'cp:StatementRelation'};
+            } else {
+                return false;
+            }
+        } else if (is(source, 'cp:CaseChart')) {
+
+            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway'])) {
+                return {type: 'cp:CaseChartAssociation'};
+            }
+        }
+        return false;
     }
 
     /**
@@ -122,9 +146,9 @@ CPRules.prototype.init = function () {
      */
     function canConnect(source, target) {
 
-        if (isAny(source, ['cp:CPResource', 'cp:ClinicalStatement'])) {
+        if (isAny(source, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart'])) {
             return getConnection(source, target);
-        } else if (isAny(target, ['cp:CPResource', 'cp:ClinicalStatement'])) {
+        } else if (isAny(target, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart'])) {
             return getConnection(target, source);
         } else {
             return;
@@ -187,6 +211,11 @@ CPRules.prototype.init = function () {
         return canConnect(source, target, connection);
     });
 
+    // enable resizing
+    this.addRule('shape.resize', 1500, function () {
+        return true;
+    });
+
 };
 
 function isCPElement(element) {
@@ -197,7 +226,7 @@ function isCPElement(element) {
 
  function canDecisionLogicConnect(source, target) {
  // only judge about custom elements
- if (isAny(source, ['cp:DecisionLogic', 'cp:EvidenceGateway']) && isAny(target, ['cp:DecisionLogic', 'cp:EvidenceGateway']) && (source.type != target.type)) {
+ if (isAny(source, ['cp:DecisionLogic', 'cp:EvidenceBasedGateway']) && isAny(target, ['cp:DecisionLogic', 'cp:EvidenceBasedGateway']) && (source.type != target.type)) {
  return {type: 'cp:Connection'};
  } else {
  return;
