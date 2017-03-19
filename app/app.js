@@ -77,6 +77,9 @@ var cpContextPad = require('./clinical-pathways/context-pad');
 // Factory
 var elementFactory = require('./clinical-pathways/modeling');
 
+// CP Auto-Resize
+var cpAutoResize = require('./clinical-pathways/auto-resize');
+
 // Core modules
 var coreModule = require('bpmn-js/lib/core'),
     bpmnPaletteModule = require('bpmn-js/lib/features/palette'),
@@ -144,7 +147,8 @@ var modeler = new BpmnModeler({
 
          cpPopupMenu,
          //elementFactory,
-         resizeRules
+         resizeRules,
+        cpAutoResize
 
 
     ],

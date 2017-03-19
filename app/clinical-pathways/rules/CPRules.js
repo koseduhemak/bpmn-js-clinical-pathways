@@ -105,7 +105,7 @@ CPRules.prototype.init = function () {
             return is(target, 'cp:Segment');
         }
 
-        if (is(shape, 'cp:StructuredDocument')) {
+        if (is(shape, 'cp:ClinicalDocument')) {
             return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'cp:CaseChart');
         }
 
@@ -138,9 +138,12 @@ CPRules.prototype.init = function () {
                 return false;
             }
         } else if (is(source, 'cp:CaseChart')) {
-
             if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway'])) {
                 return {type: 'cp:CaseChartAssociation'};
+            }
+        } else if (is(source, 'cp:ClinicalDocument')) {
+            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway'])) {
+                return {type: 'cp:DocumentAssociation'};
             }
         }
         return false;
@@ -150,10 +153,11 @@ CPRules.prototype.init = function () {
      * Can source and target be connected?
      */
     function canConnect(source, target) {
+        var cpElementsWithCustomConnections = ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:ClinicalDocument'];
 
-        if (isAny(source, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle'])) {
+        if (isAny(source, cpElementsWithCustomConnections)) {
             return getConnection(source, target);
-        } else if (isAny(target, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle'])) {
+        } else if (isAny(target, cpElementsWithCustomConnections)) {
             return getConnection(target, source);
         } else {
             return;

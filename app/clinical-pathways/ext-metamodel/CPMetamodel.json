@@ -202,18 +202,6 @@
           "name": "evidenceIndicators",
           "isMany": true,
           "type": "EvidenceIndicator"
-        },
-        {
-          "name": "document",
-          "isAttr": true,
-          "type": "bpmn:DataObject",
-          "isReference": true
-        },
-        {
-          "name": "referredStatements",
-          "isMany": true,
-          "type": "ClinicalStatement",
-          "isReference": true
         }
       ]
     },
@@ -222,6 +210,7 @@
       "name": "ClinicalStatement",
       "isAbstract": true,
       "superClass": [
+        "bpmn:FlowNode",
         "bpmn:DataObject"
       ],
       "properties": [
@@ -361,7 +350,8 @@
     {
       "name": "UnstructuredDocument",
       "superClass": [
-        "ClinicalDocument"
+        "ClinicalDocument",
+        "bpmn:FlowNode"
       ]
     },
     {
@@ -520,6 +510,13 @@
       "name": "AssociationAnnotation",
       "superClass": [
         "bpmn:TextAnnotation"
+      ]
+    },
+    /* Relation between unstructured or structured documents with activities or gateways */
+    {
+      "name": "DocumentAssociation",
+      "superClass": [
+        "bpmn:Association"
       ]
     }
   ],

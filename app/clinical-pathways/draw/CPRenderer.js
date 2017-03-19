@@ -126,40 +126,28 @@ function CPRenderer(eventBus, styles, pathMap) {
         'cp:EducationTask': function (parent, element) {
             var task = renderer('cp:Task')(parent, element);
 
-            createMaterialIcon('school', parent, {
-                x: 2,
-                y: 25
-            });
+            createMaterialIcon('school', parent);
 
             return task;
         },
         'cp:HomeVisitTask': function (parent, element) {
             var task = renderer('cp:Task')(parent, element);
 
-            createMaterialIcon('home', parent, {
-                x: 2,
-                y: 25
-            });
+            createMaterialIcon('home', parent);
 
             return task;
         },
         'cp:MonitoringTask': function (parent, element) {
             var task = renderer('cp:Task')(parent, element);
 
-            createMaterialIcon('computer', parent, {
-                x: 2,
-                y: 25
-            });
+            createMaterialIcon('computer', parent);
 
             return task;
         },
         'cp:PhoneContactTask': function (parent, element) {
             var task = renderer('cp:Task')(parent, element);
 
-            createMaterialIcon('contact_phone', parent, {
-                x: 2,
-                y: 25
-            });
+            createMaterialIcon('contact_phone', parent);
 
             return task;
         },
@@ -181,7 +169,12 @@ function CPRenderer(eventBus, styles, pathMap) {
                 }, body: {fill: '#fff', stroke: '#006033'}
             });
 
-            renderEmbeddedLabel(parent, element, "center-middle", {box: assign(getHeaderSize(element), {x: element.x, y: element.y}), fill: '#fff'});
+            renderEmbeddedLabel(parent, element, "center-middle", {
+                box: assign(getHeaderSize(element), {
+                    x: element.x,
+                    y: element.y
+                }), fill: '#fff'
+            });
 
             return elementObject;
         },
@@ -286,6 +279,15 @@ function CPRenderer(eventBus, styles, pathMap) {
 
             return svgAppend(parent, createLine(element.waypoints, attrs));
         },
+        'cp:DocumentAssociation': function (parent, element) {
+            var attrs = computeStyle(attrs, {
+                stroke: '#cbcaca',
+                strokeWidth: 2,
+                strokeDasharray: "3, 3"
+            });
+
+            return svgAppend(parent, createLine(element.waypoints, attrs));
+        },
         /** CUSTOM CONNECTIONS / RELATIONS END **/
         'cp:SimultanParallelGateway': function (parent, element) {
             var url = Icons.iconSimultanParallelGateway;
@@ -345,7 +347,12 @@ function CPRenderer(eventBus, styles, pathMap) {
                 }, body: {fill: '#fff', stroke: '#4aa8cc'}
             });
 
-            renderEmbeddedLabel(parent, element, "center-middle", {box: assign(getHeaderSize(element), {x: element.x, y: element.y})});
+            renderEmbeddedLabel(parent, element, "center-middle", {
+                box: assign(getHeaderSize(element), {
+                    x: element.x,
+                    y: element.y
+                })
+            });
 
             return elementObject;
         },
@@ -364,7 +371,12 @@ function CPRenderer(eventBus, styles, pathMap) {
                 }, body: {fill: '#fff', stroke: '#000'}
             });
 
-            renderEmbeddedLabel(parent, element, "center-middle", {box: assign(getHeaderSize(element), {x: element.x, y: element.y})});
+            renderEmbeddedLabel(parent, element, "center-middle", {
+                box: assign(getHeaderSize(element), {
+                    x: element.x,
+                    y: element.y
+                })
+            });
 
             return elementObject;
         },
@@ -383,7 +395,12 @@ function CPRenderer(eventBus, styles, pathMap) {
                 }, body: {fill: '#fff', stroke: '#000'}
             });
 
-            renderEmbeddedLabel(parent, element, "center-middle", {box: assign(getHeaderSize(element), {x: element.x, y: element.y})});
+            renderEmbeddedLabel(parent, element, "center-middle", {
+                box: assign(getHeaderSize(element), {
+                    x: element.x,
+                    y: element.y
+                })
+            });
 
             return elementObject;
         },
@@ -402,7 +419,12 @@ function CPRenderer(eventBus, styles, pathMap) {
                 }, body: {fill: '#fff', stroke: '#000'}
             });
 
-            renderEmbeddedLabel(parent, element, "center-middle", {box: assign(getHeaderSize(element), {x: element.x, y: element.y})});
+            renderEmbeddedLabel(parent, element, "center-middle", {
+                box: assign(getHeaderSize(element), {
+                    x: element.x,
+                    y: element.y
+                })
+            });
 
             return elementObject;
         },
@@ -459,7 +481,7 @@ function CPRenderer(eventBus, styles, pathMap) {
                 element.height = 75;
             }
 
-            var rect = drawRect(parent, element.width, element.height, 0, {stroke: '#000', fill:'#fff'});
+            var rect = drawRect(parent, element.width, element.height, 0, {stroke: '#000', fill: '#fff'});
 
             renderEmbeddedLabel(parent, element, "center-middle");
 
@@ -543,7 +565,7 @@ function CPRenderer(eventBus, styles, pathMap) {
                 }
             });
 
-            var elementObject = drawPath(parentGfx, pathData, { fill: 'white' });
+            var elementObject = drawPath(parentGfx, pathData, {fill: 'white'});
 
             var semantic = getSemantic(element);
 
@@ -720,7 +742,9 @@ function CPRenderer(eventBus, styles, pathMap) {
         options = options || {};
 
         var attr = assign(options, {
-            class: 'material-icons'
+            class: 'material-icons',
+            x: 2,
+            y: 25
         });
 
         var text = svgCreate('text', attr);
@@ -806,7 +830,7 @@ function CPRenderer(eventBus, styles, pathMap) {
     }
 
     function getHeaderSize(element) {
-        return {width: element.width-50, height: 25}
+        return {width: element.width - 50, height: 25}
     }
 
     function drawRectWithHeader(parentGfx, width, height, r, attrs) {
@@ -967,7 +991,7 @@ function CPRenderer(eventBus, styles, pathMap) {
 }
 
 function getConnectionsAbleToDraw() {
-    return ['cp:ResourceAssociation', 'cp:ResourceRelation', 'cp:StatementRelation', 'cp:CaseChartAssociation'];
+    return ['cp:ResourceAssociation', 'cp:ResourceRelation', 'cp:StatementRelation', 'cp:CaseChartAssociation', 'cp:DocumentAssociation'];
 }
 
 /**

@@ -26,11 +26,20 @@ function CPContextPadProvider(eventBus, contextPad, modeling, elementFactory, co
             connect.start(event, element, autoActivate);
         }
 
-        // todo add new elements to ContextPad here...
+        // we only want the delete action for custom FlowNode elements
         if (isAny(businessObject, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:ClinicalDocument'])) {
+            var cachedActions = actions;
             actions = {
-                delete: actions.delete
+                delete: cachedActions.delete
             };
+
+            if (isAny(businessObject, ['cp:ClinicalDocument', 'cp:CPResource'])) {
+                actions.replace = cachedActions.replace
+            }
+        }
+
+        // if we have custom elements that should connect to other elements they have to be listed here
+        if (isAny(businessObject, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:ClinicalDocument'])) {
 
             assign(actions, {
                 'connect': {
