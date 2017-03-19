@@ -126,6 +126,11 @@ CPRules.prototype.init = function () {
             } else {
                 return false;
             }
+        } else if (is(source, 'cp:ResourceBundle')) {
+            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway'])) {
+                return {type: 'cp:ResourceAssociation'};
+            }
+            return false;
         } else if (is(source, 'cp:ClinicalStatement')) {
             if (is(target, 'cp:ClinicalStatement')) {
                 return {type: 'cp:StatementRelation'};
@@ -146,9 +151,9 @@ CPRules.prototype.init = function () {
      */
     function canConnect(source, target) {
 
-        if (isAny(source, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart'])) {
+        if (isAny(source, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle'])) {
             return getConnection(source, target);
-        } else if (isAny(target, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart'])) {
+        } else if (isAny(target, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle'])) {
             return getConnection(target, source);
         } else {
             return;
@@ -183,6 +188,12 @@ CPRules.prototype.init = function () {
     this.addRule('shape.create', HIGH_PRIORITY, function (context) {
         var target = context.target,
             shape = context.shape;
+
+        // ContainerElements should be expanded
+        if (is(shape, 'bpmn:FlowElementsContainer')) {
+            shape.isExpanded = true;
+            shape.businessObject.di.isExpanded = true;
+        }
 
         return canCreate(shape, target);
     });

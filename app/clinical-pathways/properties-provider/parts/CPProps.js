@@ -25,7 +25,7 @@ module.exports = function (group, element) {
     // Only return an entry, if the currently selected
     // element is a start event.
 
-    if (isAny(element, ['bpmn:Activity', 'bpmn:Gateway', 'bpmn:Process'])) {
+    if (isAny(element, ['bpmn:Activity', 'bpmn:Gateway', 'bpmn:Process']) && !is(element, 'cp:AbstractContainerElement')) {
         group.entries.push(entryFactory.selectBox({
             id: 'evidenceIndicator',
             description: 'Evidence Level of the task/gateway',
@@ -75,6 +75,28 @@ module.exports = function (group, element) {
             description: 'Document',
             label: 'Document',
             modelProperty: 'document'
+        }));
+    }
+
+    if (is(element, 'cp:ClinicalStatement')) {
+        group.entries.push(entryFactory.textField({
+            id: 'statementContent',
+            label: 'Content',
+            modelProperty: 'statementContent'
+        }));
+    }
+
+    if (is(element, 'cp:Segment')) {
+        group.entries.push(entryFactory.textField({
+            id: 'code',
+            label: 'Code',
+            modelProperty: 'code'
+        }));
+
+        group.entries.push(entryFactory.textField({
+            id: 'text',
+            label: 'Text',
+            modelProperty: 'text'
         }));
     }
 

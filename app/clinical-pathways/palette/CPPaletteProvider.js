@@ -44,29 +44,37 @@ CPPaletteProvider.prototype.getPaletteEntries = function () {
     }
 
     assign(actions, {
+        'resources-separator': {
+            group: 'cpResources',
+            separator: true
+        },
         'create-resource-bundle': createAction(
-            'cp:ResourceBundle', 'cp', Icons.iconResourceBundle
+            'cp:ResourceBundle', 'cpResources', Icons.iconResourceBundle, 'Create Resource Bundle'
         ),
         'create-resource': createAction(
-            'cp:CPResource', 'cp', Icons.iconResource
+            'cp:CPResource', 'cpResources', Icons.iconResource, 'Create CP Resource'
         ),
-        'create-document': createAction(
-            'cp:Document', 'cp', Icons.iconDocument
-        ),
-        'create-case-chart': createAction(
-            'cp:CaseChart', 'cp', Icons.iconCaseChart
+        'documents-separator': {
+            group: 'cpResources',
+            separator: true
+        },
+        'create-video-document': createAction(
+            'cp:VideoDocument', 'cpDocuments', Icons.iconUnstructuredDocument, 'Create an Unstructured Document'
         ),
         'create-structured-document': createAction(
-            'cp:StructuredDocument', 'cp-Documents', Icons.iconStructuredDocument
+            'cp:StructuredDocument', 'cpDocuments', Icons.iconStructuredDocument, 'Create a Structured Document'
+        ),
+        'create-case-chart': createAction(
+            'cp:CaseChart', 'cpDocuments', Icons.iconCaseChart, 'Create Case Chart'
         ),
         'create-segment': createAction(
-            'cp:Segment', 'cp-Documents', Icons.iconSegment
+            'cp:Segment', 'cpDocuments', Icons.iconSegment, 'Create Segment'
         ),
         'create-organizer': createAction(
-            'cp:Organizer', 'cp-Documents', Icons.iconOrganizer
+            'cp:Organizer', 'cpDocuments', Icons.iconOrganizer, 'Create Organizer'
         ),
         'create-clinical-statement': createAction(
-            'cp:Observation', 'cp-Documents', Icons.iconClinicalStatement
+            'cp:Observation', 'cpDocuments', Icons.iconClinicalStatement, 'Create Statement'
         )
     });
 

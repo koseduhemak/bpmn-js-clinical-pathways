@@ -522,6 +522,62 @@ function CPRenderer(eventBus, styles, pathMap) {
             return rect;
         },
         /**
+         * UNSTRUCTURED DOCUMENTS
+         */
+        'cp:UnstructuredDocument': function (parentGfx, element) {
+            if (element.width < 75) {
+                element.width = 75;
+            }
+            if (element.height < 90) {
+                element.height = 90;
+            }
+
+            var pathData = pathMap.getScaledPath('DATA_OBJECT_PATH', {
+                xScaleFactor: 1,
+                yScaleFactor: 1,
+                containerWidth: element.width,
+                containerHeight: element.height,
+                position: {
+                    mx: 0.474,
+                    my: 0.296
+                }
+            });
+
+            var elementObject = drawPath(parentGfx, pathData, { fill: 'white' });
+
+            var semantic = getSemantic(element);
+
+            renderEmbeddedLabel(parentGfx, element, 'center-middle');
+
+            return elementObject;
+        },
+        'cp:VideoDocument': function (parent, element) {
+            var docShape = renderer('cp:UnstructuredDocument')(parent, element);
+
+            createFontawesomeIcon('\uf03d', parent);
+
+            return docShape;
+        },
+        'cp:ImageDocument': function (parent, element) {
+            var docShape = renderer('cp:UnstructuredDocument')(parent, element);
+
+            createFontawesomeIcon('\uf030', parent);
+            return docShape;
+        },
+        'cp:SignalingDocument': function (parent, element) {
+            var docShape = renderer('cp:UnstructuredDocument')(parent, element);
+
+            createFontawesomeIcon('\uf21e', parent);
+            return docShape;
+        },
+        'cp:TextDocument': function (parent, element) {
+            var docShape = renderer('cp:UnstructuredDocument')(parent, element);
+
+            createMaterialIcon('text_fields', parent);
+            return docShape;
+        },
+
+        /**
          * MARKER CP
          *
          */

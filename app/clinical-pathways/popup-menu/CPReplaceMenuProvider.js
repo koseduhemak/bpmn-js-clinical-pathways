@@ -64,6 +64,10 @@ ReplaceMenuProvider.prototype.getEntries = function (element) {
         entries = filter(replaceCPOptions.CLINICALSTATEMENTS, differentType);
 
         return this._createEntries(element, entries);
+    } else if (is(businessObject, 'cp:UnstructuredDocument')) {
+        entries = filter(replaceCPOptions.UNSTRUCTUREDDOCUMENTS, differentType);
+
+        return this._createEntries(element, entries);
     } else {
         return cachedGetEntries.call(this, element);
     }

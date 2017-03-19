@@ -10,24 +10,28 @@ var assign = require('lodash/object/assign'),
     bind = require('lodash/function/bind');
 
 function CPContextPadProvider(eventBus, contextPad, modeling, elementFactory, connect,
-                                  create, popupMenu, canvas, rules, translate) {
+                              create, popupMenu, canvas, rules, translate) {
 
     ContextPadProvider.call(this, eventBus, contextPad, modeling, elementFactory, connect, create,
         popupMenu, canvas, rules, translate);
 
     var cached = bind(this.getContextPadEntries, this);
 
-    this.getContextPadEntries = function(element) {
-        var actions = cached(element);
+    this.getContextPadEntries = function (element) {
 
         var businessObject = element.businessObject;
+        var actions = cached(element);
 
         function startConnect(event, element, autoActivate) {
             connect.start(event, element, autoActivate);
         }
 
         // todo add new elements to ContextPad here...
-        if (isAny(businessObject, [ 'cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart'])) {
+        if (isAny(businessObject, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:ClinicalDocument'])) {
+            actions = {
+                delete: actions.delete
+            };
+
             assign(actions, {
                 'connect': {
                     group: 'connect',

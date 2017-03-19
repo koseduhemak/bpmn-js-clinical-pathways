@@ -298,20 +298,26 @@
         "ClinicalStatement"
       ]
     },
+    {
+      "name": "AbstractContainerElement",
+      "superClass": [
+        "bpmn:SubProcess"
+        ]
+    },
     /* Organizer */
     {
       "name": "Organizer",
       "superClass": [
-        "bpmn:DataObject",
-        "bpmn:FlowElementsContainer"
+        "AbstractContainerElement",
+        "bpmn:DataObject"
       ]
     },
     /* Segment */
     {
       "name": "Segment",
       "superClass": [
-        "bpmn:DataObject",
-        "bpmn:FlowElementsContainer"
+        "AbstractContainerElement",
+        "bpmn:DataObject"
       ],
       "properties": [
         {
@@ -387,56 +393,31 @@
       "name": "StructuredDocument",
       "superClass": [
         "ClinicalDocument",
-        "bpmn:FlowElementsContainer"
-      ],
-      "properties": [
-        {
-          "name": "segment",
-          "isMany": true,
-          "type": "Segment",
-          "isReference": true
-        }
+        "AbstractContainerElement"
       ]
     },
     /* CaseChart */
     {
       "name": "CaseChart",
       "superClass": [
-        "bpmn:DataObject",
-        "bpmn:FlowElementsContainer"
-      ],
-      "properties": [
-        {
-          "name": "document",
-          "isMany": true,
-          "type": "ClinicalDocument",
-          "isReference": true
-        }
+        "AbstractContainerElement",
+        "bpmn:DataObject"
       ]
     },
     /* Resources */
     {
       "name": "CPResource",
       "superClass": [
-          "bpmn:FlowElement"
+        "bpmn:FlowNode"
       ],
       "extends": [
         "bpmn:Resource"
-      ],
-      "properties": [
-        {
-          "name": "resourceBundles",
-          "isMany": true,
-          "type": "ResourceBundle",
-          "isReference": true
-        }
       ]
     },
     {
       "name": "ResourceBundle",
       "superClass": [
-        "bpmn:DataObject",
-        "bpmn:FlowElementsContainer"
+        "AbstractContainerElement"
       ],
       "extends": [
         "bpmn:Resource"
@@ -521,7 +502,6 @@
         }
       ]
     },
-
     /* Relation between two CPResources / ResourceBundles */
     {
       "name": "ResourceRelation",
@@ -542,7 +522,6 @@
         "bpmn:TextAnnotation"
       ]
     }
-
   ],
   "enumerations": [
     {

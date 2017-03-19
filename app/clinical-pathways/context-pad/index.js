@@ -1,4 +1,4 @@
 module.exports = {
-    __init__: ['cpContextPadProvider'],
-    cpContextPadProvider: ['type', require('./CPContextPadProvider')]
+    __init__: ['contextPadProvider'],
+    contextPadProvider: ['type', require('./CPContextPadProvider')]
 };

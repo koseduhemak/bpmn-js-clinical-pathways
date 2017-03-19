@@ -368,3 +368,38 @@ module.exports.CLINICALSTATEMENTS = [
         }
     }
 ];
+
+module.exports.UNSTRUCTUREDDOCUMENTS = [
+    {
+        label: 'Video Document',
+        actionName: 'replace-with-video-document',
+        className: 'cp-icon-video-document',
+        target: {
+            type: 'cp:VideoDocument'
+        }
+    },
+    {
+        label: 'Singaling Document',
+        actionName: 'replace-with-signaling-document',
+        className: 'cp-icon-signaling-document',
+        target: {
+            type: 'cp:SignalingDocument'
+        }
+    },
+    {
+        label: 'Text Document',
+        actionName: 'replace-with-text-document',
+        className: 'cp-icon-text-document',
+        target: {
+            type: 'cp:TextDocument'
+        }
+    },
+    {
+        label: 'Image Document',
+        actionName: 'replace-with-image-document',
+        className: 'cp-icon-image-document',
+        target: {
+            type: 'cp:ImageDocument'
+        }
+    }
+];

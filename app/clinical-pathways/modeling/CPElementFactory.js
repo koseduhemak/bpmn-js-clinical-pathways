@@ -13,6 +13,8 @@ var BpmnElementFactory = require('bpmn-js/lib/features/modeling/ElementFactory')
 function CPElementFactory(bpmnFactory, moddle) {
     BpmnElementFactory.call(this, bpmnFactory, moddle);
 
+    console.log("this never gets executed. 1..");
+
     var self = this;
 
     /**

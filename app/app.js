@@ -48,7 +48,7 @@ var elFinderHelper = new ElFinderHelper(modeler, openDiagram);
 var propertiesPanelModule = require('bpmn-js-properties-panel');
 // providing camunda executable properties, too
 var propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
- camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda');
+    camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda');
 
 // CLI Module
 // @TODO implement window.cli.undo() and window.cli.redo() -> Buttons
@@ -99,7 +99,6 @@ var coreModule = require('bpmn-js/lib/core'),
     resize = require('diagram-js/lib/features/resize'),
     autoResize = require('bpmn-js/lib/features/auto-resize');
 
-
 var modeler = new BpmnModeler({
     container: canvas, keyboard: {bindTo: document},
     cli: {bindTo: 'cli'},
@@ -109,8 +108,7 @@ var modeler = new BpmnModeler({
     modules: [
         // if we have custom rules, place them before core modules!
         cpRules,
-        cpPopupMenu,
-        elementFactory,
+
 
         // core modules
         coreModule,
@@ -136,14 +134,17 @@ var modeler = new BpmnModeler({
 
     ],
     additionalModules: [
-        propertiesPanelModule,
-        //propertiesProviderModule,
-        CliModule,
-        CPpropertiesProviderModule,
-        cpPaletteModule,
-        cpDrawModule,
         cpContextPad,
-        resizeRules
+        propertiesPanelModule,
+         //propertiesProviderModule,
+         CliModule,
+         CPpropertiesProviderModule,
+         cpPaletteModule,
+         cpDrawModule,
+
+         cpPopupMenu,
+         //elementFactory,
+         resizeRules
 
 
     ],
@@ -180,7 +181,6 @@ function openDiagram(xml) {
             var eventBus = modeler.get('eventBus');
 
 
-
             // @todo auslagern in module?
             // applys overlays to specific elements
 
@@ -196,7 +196,6 @@ function openDiagram(xml) {
                 return false;
 
             });
-
 
 
         }
