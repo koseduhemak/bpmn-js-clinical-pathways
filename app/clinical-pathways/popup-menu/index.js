@@ -1,4 +1,4 @@
 module.exports = {
-    __init__: [ 'cpPopupMenu' ],
-    cpPopupMenu: [ 'type', require('./CPReplaceMenuProvider') ],
+    __init__: [ 'replaceMenuProvider' ],
+    replaceMenuProvider: [ 'type', require('./CPReplaceMenuProvider') ],
 };

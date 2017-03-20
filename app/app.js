@@ -65,8 +65,8 @@ var cpDrawModule = require('./clinical-pathways/draw');
 var cpMetamodel = require('./clinical-pathways/ext-metamodel/CPMetamodel.json');
 
 // CP Rules
-var cpRules = require('./clinical-pathways/rules').cpRules;
-var resizeRules = require('./clinical-pathways/rules');
+var cpRules = require('./clinical-pathways/rules');
+//var resizeRules = require('./clinical-pathways/rules');
 
 // CP POPMENU
 var cpPopupMenu = require('./clinical-pathways/popup-menu');
@@ -81,26 +81,65 @@ var elementFactory = require('./clinical-pathways/modeling');
 var cpAutoResize = require('./clinical-pathways/auto-resize');
 
 // Core modules
-var coreModule = require('bpmn-js/lib/core'),
-    bpmnPaletteModule = require('bpmn-js/lib/features/palette'),
-    modelingModule = require('bpmn-js/lib/features/modeling'),
-    overlays = require('diagram-js/lib/features/overlays'),
-    contextPad = require('bpmn-js/lib/features/context-pad'),
-    copyPaste = require('bpmn-js/lib/features/copy-paste'),
-    distributeElements = require('bpmn-js/lib/features/distribute-elements'),
-    editorActions = require('bpmn-js/lib/features/editor-actions'),
-    globalConnect = require('bpmn-js/lib/features/global-connect'),
-    keyboard = require('bpmn-js/lib/features/keyboard'),
-    labelEditing = require('bpmn-js/lib/features/label-editing'),
-    ordering = require('bpmn-js/lib/features/ordering'),
-    popupMenu = require('bpmn-js/lib/features/popup-menu'),
-    replace = require('bpmn-js/lib/features/replace'),
-    replacePreview = require('bpmn-js/lib/features/replace-preview'),
-    rules = require('bpmn-js/lib/features/rules'),
-    search = require('bpmn-js/lib/features/search'),
-    snapping = require('bpmn-js/lib/features/snapping'),
-    resize = require('diagram-js/lib/features/resize'),
-    autoResize = require('bpmn-js/lib/features/auto-resize');
+/*var coreModule = require('bpmn-js/lib/core'),
+ bpmnPaletteModule = require('bpmn-js/lib/features/palette'),
+ modelingModule = require('bpmn-js/lib/features/modeling'),
+ overlays = require('diagram-js/lib/features/overlays'),
+ contextPad = require('bpmn-js/lib/features/context-pad'),
+ copyPaste = require('bpmn-js/lib/features/copy-paste'),
+ distributeElements = require('bpmn-js/lib/features/distribute-elements'),
+ editorActions = require('bpmn-js/lib/features/editor-actions'),
+ globalConnect = require('bpmn-js/lib/features/global-connect'),
+ keyboard = require('bpmn-js/lib/features/keyboard'),
+ labelEditing = require('bpmn-js/lib/features/label-editing'),
+ ordering = require('bpmn-js/lib/features/ordering'),
+ popupMenu = require('bpmn-js/lib/features/popup-menu'),
+ replace = require('bpmn-js/lib/features/replace'),
+ replacePreview = require('bpmn-js/lib/features/replace-preview'),
+ rules = require('bpmn-js/lib/features/rules'),
+ search = require('bpmn-js/lib/features/search'),
+ snapping = require('bpmn-js/lib/features/snapping'),
+ resize = require('diagram-js/lib/features/resize'),
+ autoResize = require('bpmn-js/lib/features/auto-resize'),
+ bendingPoints = require('diagram-js/lib/features/bendpoints');*/
+
+var modelingModules = [
+
+    //require('./clinical-pathways/rules'),
+    // core
+    require('bpmn-js/lib/core'),
+    require('diagram-js/lib/i18n/translate'),
+    require('diagram-js/lib/features/selection'),
+    require('diagram-js/lib/features/overlays'),
+
+    // modeling components
+    require('diagram-js/lib/features/auto-scroll'),
+    require('diagram-js/lib/features/bendpoints'),
+    require('diagram-js/lib/features/move'),
+    require('diagram-js/lib/features/resize'),
+    require('bpmn-js/lib/features/auto-resize'),
+    require('bpmn-js/lib/features/editor-actions'),
+    require('bpmn-js/lib/features/context-pad'),
+    require('bpmn-js/lib/features/keyboard'),
+    require('bpmn-js/lib/features/label-editing'),
+    require('bpmn-js/lib/features/modeling'),
+    require('bpmn-js/lib/features/palette'),
+    require('bpmn-js/lib/features/replace-preview'),
+    require('bpmn-js/lib/features/snapping')
+
+];
+
+var interactionModules = [
+    // non-modeling components
+    require('diagram-js/lib/navigation/movecanvas'),
+    require('diagram-js/lib/navigation/touch'),
+    require('diagram-js/lib/navigation/zoomscroll')
+];
+
+var modules = [].concat(
+    modelingModules,
+    interactionModules
+);
 
 var modeler = new BpmnModeler({
     container: canvas, keyboard: {bindTo: document},
@@ -108,46 +147,48 @@ var modeler = new BpmnModeler({
     propertiesPanel: {
         parent: '#js-properties-panel'
     },
-    modules: [
-        // if we have custom rules, place them before core modules!
-        cpRules,
+    //modules: modules,
+    /*[
+     // if we have custom rules, place them before core modules!
+     cpRules,
 
 
-        // core modules
-        coreModule,
-        bpmnPaletteModule,
-        modelingModule,
-        overlays,
-        contextPad,
-        copyPaste,
-        distributeElements,
-        editorActions,
-        globalConnect,
-        keyboard,
-        labelEditing,
-        ordering,
-        //popupMenu,
-        replace,
-        replacePreview,
-        rules,
-        search,
-        snapping,
-        resize,
-        autoResize
+     // core modules
+     coreModule,
+     bpmnPaletteModule,
+     modelingModule,
+     overlays,
+     contextPad,
+     copyPaste,
+     distributeElements,
+     editorActions,
+     globalConnect,
+     keyboard,
+     labelEditing,
+     ordering,
+     //popupMenu,
+     replace,
+     replacePreview,
+     rules,
+     search,
+     snapping,
+     resize,
+     autoResize,
+     bendingPoints
 
-    ],
+     ],*/
     additionalModules: [
+        cpRules,
         cpContextPad,
         propertiesPanelModule,
-         //propertiesProviderModule,
-         CliModule,
-         CPpropertiesProviderModule,
-         cpPaletteModule,
-         cpDrawModule,
+        //propertiesProviderModule,
+        CliModule,
+        CPpropertiesProviderModule,
+        cpPaletteModule,
+        cpDrawModule,
 
-         cpPopupMenu,
-         //elementFactory,
-         resizeRules,
+        cpPopupMenu,
+        //elementFactory,
         cpAutoResize
 
 

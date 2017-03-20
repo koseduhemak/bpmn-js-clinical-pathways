@@ -34,7 +34,7 @@ module.exports = CPReplaceMenuProvider;
  * @return {Array<Object>} a list of menu entry items
  */
 var cachedGetEntries = ReplaceMenuProvider.prototype.getEntries;
-ReplaceMenuProvider.prototype.getEntries = function (element) {
+CPReplaceMenuProvider.prototype.getEntries = function (element) {
     var businessObject = element.businessObject;
     var entries;
 
@@ -42,6 +42,7 @@ ReplaceMenuProvider.prototype.getEntries = function (element) {
 
     // flow nodes
     if (is(businessObject, 'bpmn:Task')) {
+        console.log("subtask");
         entries = filter(replaceCPOptions.TASK, differentType);
 
         // collapsed SubProcess can not be replaced with itself

@@ -1,4 +1,4 @@
 module.exports = {
-  __init__: [ 'cpRenderer' ],
-  cpRenderer: [ 'type', require('./CPRenderer') ]
+  __init__: [ 'customRenderer' ],
+    customRenderer: [ 'type', require('./CPRenderer') ]
 };

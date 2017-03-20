@@ -58,11 +58,20 @@ CPPaletteProvider.prototype.getPaletteEntries = function () {
             group: 'cpResources',
             separator: true
         },
-        'create-video-document': createAction(
+
+        'create-document': createAction(
+            'cp:Document', 'cpDocuments', Icons.iconDocument, 'Create an Document'
+        ),
+        'create-unstructured-document': createAction(
             'cp:VideoDocument', 'cpDocuments', Icons.iconUnstructuredDocument, 'Create an Unstructured Document'
         ),
+
         'create-structured-document': createAction(
             'cp:StructuredDocument', 'cpDocuments', Icons.iconStructuredDocument, 'Create a Structured Document'
+        ),
+
+        'create-structured-document-reference': createAction(
+            'cp:StructuredDocumentReference', 'cpDocuments', Icons.iconStructuredDocumentReference, 'Create a Reference of an Structured Document'
         ),
         'create-case-chart': createAction(
             'cp:CaseChart', 'cpDocuments', Icons.iconCaseChart, 'Create Case Chart'

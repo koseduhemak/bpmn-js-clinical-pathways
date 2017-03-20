@@ -386,6 +386,33 @@
         "AbstractContainerElement"
       ]
     },
+    {
+      "name": "StructuredDocumentReference",
+      "superClass": [
+        "ClinicalDocument",
+        "bpmn:FlowNode"
+      ]
+    },
+    /* Document (unspecified) */
+    {
+      "name": "Document",
+      "superClass": [
+        "bpmn:DataObject",
+        "bpmn:FlowNode"
+      ],
+      "properties": [
+        {
+          "name": "type",
+          "isAttr": true,
+          "type": "DocumentType"
+        },
+        {
+          "name": "documentContent",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
     /* CaseChart */
     {
       "name": "CaseChart",
@@ -541,6 +568,35 @@
         },
         {
           "name": "F"
+        }
+      ]
+    },
+    {
+      "name": "DocumentType",
+      "literalValues": [
+        {
+          "name": "Patients Chart"
+        },
+        {
+          "name": "Treatment Contract"
+        },
+        {
+          "name": "Anamnesis"
+        },
+        {
+          "name": "Accounting Document"
+        },
+        {
+          "name": "Result"
+        },
+        {
+          "name": "Physican's Letter"
+        },
+        {
+          "name": "Patient File"
+        },
+        {
+          "name": "Accounting Case"
         }
       ]
     }

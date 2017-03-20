@@ -81,7 +81,7 @@ CPRules.prototype.registerEventListener = function () {
 };
 
 CPRules.prototype.init = function () {
-
+    console.log("init cp Rules");
 
     function canCreate(shape, target) {
         // only judge about custom elements
@@ -90,7 +90,7 @@ CPRules.prototype.init = function () {
         }
 
         if (is(shape, 'cp:CPResource')) {
-            return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'bpmn:Collaboration') || is(target, 'cp:ResourceBundle');
+            return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'cp:ResourceBundle');
         }
 
         if (is(shape, 'cp:Segment')) {
@@ -98,7 +98,7 @@ CPRules.prototype.init = function () {
         }
 
         if (is(shape, 'cp:ClinicalStatement')) {
-            return is(target, 'cp:Segment') || is(target, 'cp:Organizer') || is(target, 'cp:StructuredDocument');
+            return is(target, 'cp:Segment') || is(target, 'cp:Organizer');
         }
 
         if (is(shape, 'cp:Organizer')) {
@@ -110,7 +110,7 @@ CPRules.prototype.init = function () {
         }
 
 
-        return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'bpmn:Collaboration');
+        return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant');
     }
 
     function getConnection(source, target) {
@@ -155,13 +155,21 @@ CPRules.prototype.init = function () {
     function canConnect(source, target) {
         var cpElementsWithCustomConnections = ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:ClinicalDocument'];
 
+        // first two statements check only bi-directional connections!
+        // last n statements check uni-directional connections!
         if (isAny(source, cpElementsWithCustomConnections)) {
             return getConnection(source, target);
         } else if (isAny(target, cpElementsWithCustomConnections)) {
             return getConnection(target, source);
-        } else {
-            return;
+        } else  if (isAny(source, [ 'cp:Document' ]) &&
+            isAny(target, [ 'bpmn:Activity', 'bpmn:ThrowEvent' ])) {
+            return { type: 'bpmn:DataInputAssociation' };
+        } else if (isAny(target, [ 'cp:Document' ]) &&
+            isAny(source, [ 'bpmn:Activity', 'bpmn:CatchEvent' ])) {
+            return { type: 'bpmn:DataOutputAssociation' };
         }
+
+        return;
     }
 
     this.addRule('elements.move', HIGH_PRIORITY, function (context) {
@@ -227,8 +235,14 @@ CPRules.prototype.init = function () {
     });
 
     // enable resizing
-    this.addRule('shape.resize', 1500, function () {
-        return true;
+    this.addRule('shape.resize', 1500, function (context) {
+
+        var element = context.shape,
+            bo = element.businessObject;
+
+        if (isAny(bo, ['bpmn:Task', 'bpmn:DataObject', 'bpmn:DataObjectReference', 'cp:AbstractContainerElement', 'cp:CPResource'])) {
+            return true;
+        }
     });
 
 };

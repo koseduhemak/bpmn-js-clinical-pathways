@@ -7,6 +7,7 @@ var iconDiagnosisTask = fs.readFileSync(__dirname + '/tasks/icon-diagnosis.png',
 // documents
 var iconDocument = fs.readFileSync(__dirname + '/documents/icon-patient-file.png', 'base64');
 var iconStructuredDocument = fs.readFileSync(__dirname + '/documents/icon-structured-document.png', 'base64');
+var iconStructuredDocumentReference = fs.readFileSync(__dirname + '/documents/icon-structured-document-reference.png', 'base64');
 var iconUnstructuredDocument = fs.readFileSync(__dirname + '/documents/icon-unstructured-document.png', 'base64');
 var iconSegment = fs.readFileSync(__dirname + '/documents/icon-segment.png', 'base64');
 var iconOrganizer = fs.readFileSync(__dirname + '/documents/icon-organizer.png', 'base64');
@@ -38,6 +39,7 @@ module.exports.iconDecisionLogic = 'data:image/png;base64,' +iconDecisionLogic;
 module.exports.iconResourceBundle = 'data:image/png;base64,' +iconResourceBundle;
 module.exports.iconResource = 'data:image/png;base64,' +iconResource;
 module.exports.iconStructuredDocument = 'data:image/png;base64,' +iconStructuredDocument;
+module.exports.iconStructuredDocumentReference = 'data:image/png;base64,' +iconStructuredDocumentReference;
 module.exports.iconUnstructuredDocument = 'data:image/png;base64,' +iconUnstructuredDocument;
 module.exports.iconSegment = 'data:image/png;base64,' +iconSegment;
 module.exports.iconOrganizer = 'data:image/png;base64,' +iconOrganizer;

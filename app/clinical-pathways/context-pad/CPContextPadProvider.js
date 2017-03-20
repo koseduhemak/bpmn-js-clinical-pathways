@@ -21,25 +21,28 @@ function CPContextPadProvider(eventBus, contextPad, modeling, elementFactory, co
 
         var businessObject = element.businessObject;
         var actions = cached(element);
+        var newActions = {};
 
         function startConnect(event, element, autoActivate) {
             connect.start(event, element, autoActivate);
         }
 
         // we only want the delete action for custom FlowNode elements
-        if (isAny(businessObject, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:ClinicalDocument'])) {
+        if (isAny(businessObject, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:AbstractContainerElement', 'cp:Document', 'cp:StructuredDocumentReference'])) {
             var cachedActions = actions;
-            actions = {
+            newActions = {
                 delete: cachedActions.delete
             };
 
-            if (isAny(businessObject, ['cp:ClinicalDocument', 'cp:CPResource'])) {
-                actions.replace = cachedActions.replace
+            if (isAny(businessObject, ['cp:UnstructuredDocument', 'cp:CPResource', 'cp:ClinicalStatement'])) {
+                newActions.replace = cachedActions.replace
             }
+
+            actions = newActions;
         }
 
         // if we have custom elements that should connect to other elements they have to be listed here
-        if (isAny(businessObject, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:ClinicalDocument'])) {
+        if (isAny(businessObject, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:ClinicalDocument', 'cp:Document'])) {
 
             assign(actions, {
                 'connect': {
