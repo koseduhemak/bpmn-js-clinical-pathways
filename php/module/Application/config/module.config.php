@@ -44,13 +44,43 @@ return [
                     ],
                 ],
             ],
+            'getDiagram' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/diagram/get/:diagram',
+                    'defaults' => [
+                        'controller' => Controller\DiagramController::class,
+                        'action'     => 'get',
+                    ],
+                    'constraints' => [
+                        'diagram' => '.+'
+                    ]
+                ],
+            ],
+            'saveDiagram' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/diagram/save/:diagram',
+                    'defaults' => [
+                        'controller' => Controller\DiagramController::class,
+                        'action'     => 'save',
+                    ],
+                    'constraints' => [
+                        'diagram' => '.+'
+                    ]
+                ],
+            ],
         ],
     ],
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
             'ElFinderIndexController' => Factory\Controller\IndexControllerFactory::class,
+            Controller\DiagramController::class => InvokableFactory::class
         ],
+        'invokables' => [
+
+        ]
     ],
 
     'service_manager' => array(
@@ -74,5 +104,8 @@ return [
         'template_path_stack' => [
             __DIR__ . '/../view',
         ],
+        'strategies' => array(
+            'ViewJsonStrategy',
+        ),
     ],
 ];

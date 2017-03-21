@@ -221,7 +221,7 @@ module.exports = function (grunt) {
         'watch'
     ]);
 
-    grunt.registerTask('release-php', [
+    grunt.registerTask('php', [
         'copy:diagram_js',
         'copy:bpmn_js',
         'copy:dmn_js',

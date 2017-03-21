@@ -20,13 +20,16 @@ var svgAppend = require('tiny-svg/lib/append'),
     svgCreate = require('tiny-svg/lib/create'),
     svgClasses = require('tiny-svg/lib/classes');
 
+var LabelUtil = require('bpmn-js/lib/util/LabelUtil'),
+    getExternalLabelMid = LabelUtil.getExternalLabelMid;
+
 var LABEL_STYLE = {
     fontFamily: 'Arial, sans-serif',
     fontSize: 12
 };
 var TASK_BORDER_RADIUS = 10;
 
-function CPRenderer(eventBus, styles, pathMap) {
+function CPRenderer(eventBus, styles, pathMap, modeling) {
     BaseRenderer.call(this, eventBus, 1500);
 
     var textUtil = new TextUtil({
@@ -288,6 +291,33 @@ function CPRenderer(eventBus, styles, pathMap) {
         'cp:DocumentAssociation': function (parent, element) {
             var attrs = computeStyle(attrs, {
                 stroke: '#cbcaca',
+                strokeWidth: 2,
+                strokeDasharray: "3, 3"
+            });
+
+            return svgAppend(parent, createLine(element.waypoints, attrs));
+        },
+        'cp:ObjectiveAssociation': function (parent, element) {
+            var attrs = computeStyle(attrs, {
+                stroke: '#000',
+                strokeWidth: 2,
+                strokeDasharray: "3, 3"
+            });
+
+            return svgAppend(parent, createLine(element.waypoints, attrs));
+        },
+        'cp:QualityIndicatorAssociation': function (parent, element) {
+            var attrs = computeStyle(attrs, {
+                stroke: '#009749',
+                strokeWidth: 2,
+                strokeDasharray: "3, 3"
+            });
+
+            return svgAppend(parent, createLine(element.waypoints, attrs));
+        },
+        'cp:CPGReferenceAssociation': function (parent, element) {
+            var attrs = computeStyle(attrs, {
+                stroke: '#000',
                 strokeWidth: 2,
                 strokeDasharray: "3, 3"
             });
@@ -565,6 +595,72 @@ function CPRenderer(eventBus, styles, pathMap) {
 
             createMaterialIcon('text_fields', parent);
             return docShape;
+        },
+        /**
+         * CPG Reference
+         */
+        'cp:CPGReference': function (parent, element) {
+
+            element.width = 40;
+            element.height = 50;
+
+            var pathData = pathMap.getScaledPath('DATA_OBJECT_PATH', {
+                xScaleFactor: 1,
+                yScaleFactor: 1,
+                containerWidth: element.width,
+                containerHeight: element.height,
+                position: {
+                    mx: 0.474,
+                    my: 0.296
+                }
+            });
+
+            var elementObject = drawPath(parent, pathData, {fill: 'white'});
+
+            createFontawesomeIcon('\uf02d', parent);
+
+            return elementObject;
+        },
+        /**
+         * Objective and Quality Indicators
+         */
+        'cp:Objective': function (parent, element) {
+
+            element.width = 35;
+            element.height = 35;
+
+            var url = Icons.iconObjective;
+
+            var shapeGfx = svgCreate('image', {
+                x: 0,
+                y: 0,
+                width: element.width,
+                height: element.height,
+                href: url
+            });
+
+            svgAppend(parent, shapeGfx);
+
+            return shapeGfx;
+        },
+        'cp:QualityIndicator': function (parent, element) {
+
+            element.width = 35;
+            element.height = 35;
+
+            var url = Icons.iconQualityIndicator;
+
+            var shapeGfx = svgCreate('image', {
+                x: 0,
+                y: 0,
+                width: element.width,
+                height: element.height,
+                href: url
+            });
+
+            svgAppend(parent, shapeGfx);
+
+            return shapeGfx;
         },
 
         /**
@@ -933,7 +1029,8 @@ function CPRenderer(eventBus, styles, pathMap) {
             y: element.height / 2 + element.y
         };
 
-        return renderLabel(parentGfx, semantic.name, {box: box, style: {fontSize: '11px'}});
+
+        return renderLabel(parentGfx, semantic.name, {box: box, style: {fontSize: '11px'}, align: 'center-bottom'});
     }
 
     this.canRender = function (element) {
@@ -961,7 +1058,7 @@ function CPRenderer(eventBus, styles, pathMap) {
 }
 
 function getConnectionsAbleToDraw() {
-    return ['cp:ResourceAssociation', 'cp:ResourceRelation', 'cp:StatementRelation', 'cp:CaseChartAssociation', 'cp:DocumentAssociation'];
+    return ['cp:ResourceAssociation', 'cp:ResourceRelation', 'cp:StatementRelation', 'cp:CaseChartAssociation', 'cp:DocumentAssociation', 'cp:QualityIndicatorAssociation', 'cp:ObjectiveAssociation', 'cp:CPGReferenceAssociation'];
 }
 
 /**
@@ -989,7 +1086,7 @@ function getConnectionsAbleToDraw() {
 };
  */
 
-CPRenderer.$inject = ['eventBus', 'styles', 'pathMap'];
+CPRenderer.$inject = ['eventBus', 'styles', 'pathMap', 'modeling'];
 inherits(CPRenderer, BaseRenderer);
 
 module.exports = CPRenderer;

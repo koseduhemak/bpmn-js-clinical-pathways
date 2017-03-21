@@ -17,48 +17,52 @@ function CPContextPadProvider(eventBus, contextPad, modeling, elementFactory, co
 
     var cached = bind(this.getContextPadEntries, this);
 
+    function startConnect(event, element, autoActivate) {
+        connect.start(event, element, autoActivate);
+    }
+
     this.getContextPadEntries = function (element) {
-
-        var businessObject = element.businessObject;
         var actions = cached(element);
-        var newActions = {};
 
-        function startConnect(event, element, autoActivate) {
-            connect.start(event, element, autoActivate);
-        }
+        if (isCPElement(element)) {
 
-        // we only want the delete action for custom FlowNode elements
-        if (isAny(businessObject, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:AbstractContainerElement', 'cp:Document', 'cp:StructuredDocumentReference'])) {
-            var cachedActions = actions;
-            newActions = {
-                delete: cachedActions.delete
-            };
+            var businessObject = element.businessObject;
+            var newActions = {};
 
-            if (isAny(businessObject, ['cp:UnstructuredDocument', 'cp:CPResource', 'cp:ClinicalStatement'])) {
-                newActions.replace = cachedActions.replace
+
+
+            // we only want the delete action for custom FlowNode elements
+            if (isAny(businessObject, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:AbstractContainerElement', 'cp:Document', 'cp:StructuredDocumentReference', 'cp:Indicator', 'cp:CPGReference'])) {
+                var cachedActions = actions;
+                newActions = {
+                    delete: cachedActions.delete
+                };
+
+                if (isAny(businessObject, ['cp:UnstructuredDocument', 'cp:CPResource', 'cp:ClinicalStatement'])) {
+                    newActions.replace = cachedActions.replace
+                }
+
+                actions = newActions;
             }
 
-            actions = newActions;
-        }
+            // if we have custom elements that should connect to other elements they have to be listed here
+            if (isAny(businessObject, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:ClinicalDocument', 'cp:Document', 'cp:Indicator', 'cp:CPGReference'])) {
 
-        // if we have custom elements that should connect to other elements they have to be listed here
-        if (isAny(businessObject, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:ClinicalDocument', 'cp:Document'])) {
-
-            assign(actions, {
-                'connect': {
-                    group: 'connect',
-                    className: 'bpmn-icon-connection-multi',
-                    title: translate('Connect using custom connection'),
-                    action: {
-                        click: startConnect,
-                        dragstart: startConnect
+                assign(actions, {
+                    'connect': {
+                        group: 'connect',
+                        className: 'bpmn-icon-connection-multi',
+                        title: translate('Connect using custom connection'),
+                        action: {
+                            click: startConnect,
+                            dragstart: startConnect
+                        }
                     }
-                }
-            });
+                });
+            }
         }
-
         return actions;
-    };
+    }
 }
 
 inherits(CPContextPadProvider, ContextPadProvider);
@@ -77,3 +81,7 @@ CPContextPadProvider.$inject = [
 ];
 
 module.exports = CPContextPadProvider;
+
+function isCPElement(element) {
+    return element && /^cp\:/.test(element.type);
+}

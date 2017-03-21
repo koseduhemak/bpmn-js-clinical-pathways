@@ -84,6 +84,15 @@ CPPaletteProvider.prototype.getPaletteEntries = function () {
         ),
         'create-clinical-statement': createAction(
             'cp:Observation', 'cpDocuments', Icons.iconClinicalStatement, 'Create Statement'
+        ),
+        'create-objective': createAction(
+            'cp:Objective', 'cpDocuments', Icons.iconObjective, 'Create Objective'
+        ),
+        'create-quality-indicator': createAction(
+            'cp:QualityIndicator', 'cpDocuments', Icons.iconQualityIndicator, 'Create Quality Indicator'
+        ),
+        'create-cpg-reference': createAction(
+            'cp:CPGReference', 'cpCPGReference', Icons.iconDocument, 'Create CPG Reference'
         )
     });
 

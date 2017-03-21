@@ -75,10 +75,16 @@ var cpPopupMenu = require('./clinical-pathways/popup-menu');
 var cpContextPad = require('./clinical-pathways/context-pad');
 
 // Factory
-var elementFactory = require('./clinical-pathways/modeling');
+//var elementFactory = require('./clinical-pathways/modeling');
 
 // CP Auto-Resize
 var cpAutoResize = require('./clinical-pathways/auto-resize');
+
+// CP Label
+var cpLabel = require('./clinical-pathways/modeling/behavior');
+
+// CP Importer
+var cpImporter = require('./clinical-pathways/import');
 
 // Core modules
 /*var coreModule = require('bpmn-js/lib/core'),
@@ -178,6 +184,8 @@ var modeler = new BpmnModeler({
 
      ],*/
     additionalModules: [
+        cpImporter,
+        cpLabel,
         cpRules,
         cpContextPad,
         propertiesPanelModule,
@@ -190,7 +198,6 @@ var modeler = new BpmnModeler({
         cpPopupMenu,
         //elementFactory,
         cpAutoResize
-
 
     ],
     moddleExtensions: {
@@ -231,7 +238,7 @@ function openDiagram(xml) {
 
             var alreadyProcessed = [];
             modeler.get('elementRegistry').filter(function (element) {
-                console.log(element);
+
                 eventBus.fire({type: 'element.changed'}, {element: element});
                 if (alreadyProcessed.indexOf(element.businessObject.get('id')) == -1) {
                     alreadyProcessed.push(element.businessObject.get('id'));

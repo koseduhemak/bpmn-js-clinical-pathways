@@ -126,8 +126,17 @@
     },
     /* Properties */
     {
-      "name": "EvidenceIndicator",
+      "name": "Indicator",
+      "superClass": [
+        "bpmn:FlowNode"
+        ],
       "extends": [
+        "bpmn:Property"
+      ]
+    },
+    {
+      "name": "EvidenceIndicator",
+      "superClass": [
         "bpmn:Property"
       ],
       "properties": [
@@ -140,33 +149,22 @@
     },
     {
       "name": "QualityIndicator",
-      "extends": [
-        "bpmn:Property"
-      ],
-      "properties": [
-        {
-          "name": "quality",
-          "isAttr": true,
-          "type": "Integer"
-        }
+      "superClass": [
+        "Indicator"
       ]
     },
     {
       "name": "Objective",
-      "extends": [
-        "bpmn:Property"
-      ],
-      "properties": [
-        {
-          "name": "objective",
-          "isAttr": true,
-          "type": "String"
-        }
+      "superClass": [
+        "Indicator"
       ]
     },
     /* CPG Reference */
     {
       "name": "CPGReference",
+      "superClass": [
+        "bpmn:FlowNode"
+      ],
       "properties": [
         {
           "name": "pageFrom",
@@ -542,6 +540,27 @@
     /* Relation between unstructured or structured documents with activities or gateways */
     {
       "name": "DocumentAssociation",
+      "superClass": [
+        "bpmn:Association"
+      ]
+    },
+    /* Relation between objective and other elements */
+    {
+      "name": "ObjectiveAssociation",
+      "superClass": [
+        "bpmn:Association"
+      ]
+    },
+    /* Relation between quality indicator and other elements */
+    {
+      "name": "QualityIndicatorAssociation",
+      "superClass": [
+        "bpmn:Association"
+      ]
+    },
+    /* Relation between cpg reference and other elements */
+    {
+      "name": "CPGReferenceAssociation",
       "superClass": [
         "bpmn:Association"
       ]

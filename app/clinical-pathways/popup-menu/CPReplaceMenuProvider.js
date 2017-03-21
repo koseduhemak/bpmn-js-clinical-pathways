@@ -39,10 +39,10 @@ CPReplaceMenuProvider.prototype.getEntries = function (element) {
     var entries;
 
     var differentType = isDifferentType(element);
+    console.log(businessObject);
 
     // flow nodes
     if (is(businessObject, 'bpmn:Task')) {
-        console.log("subtask");
         entries = filter(replaceCPOptions.TASK, differentType);
 
         // collapsed SubProcess can not be replaced with itself

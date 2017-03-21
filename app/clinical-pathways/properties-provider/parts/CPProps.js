@@ -17,6 +17,8 @@ var getBusinessObject = require('bpmn-js/lib/util/ModelUtil').getBusinessObject;
 
 var cmdHelper = require('bpmn-js-properties-panel/lib/helper/CmdHelper');
 
+var ElFinderHelper = require('../../../elfinder/ElFinderHelper');
+
 //var newDMNXML = require('../../../../resources/newDMN.dmn');
 
 
@@ -26,6 +28,7 @@ module.exports = function (group, element) {
     // element is a start event.
 
     if (isAny(element, ['bpmn:Activity', 'bpmn:Gateway', 'bpmn:Process']) && !is(element, 'cp:AbstractContainerElement')) {
+
         group.entries.push(entryFactory.selectBox({
             id: 'evidenceIndicator',
             description: 'Evidence Level of the task/gateway',
@@ -150,33 +153,53 @@ function createDMN(element, file) {
     // @todo do something about file variable: integrate ElFinder...
     var xml = getNewXML();
 
+    openDiagram(xml);
 
-    dmnModeler.importXML(xml, function (err) {
+    if (file) {
+        $.get('/diagram/get/'+encodeURI(file), function(json) {
+            if (json.result) {
+                openDiagram(json.xml);
+            }
+        });
+    }
 
-        if (err) {
-            console.log('error rendering', err);
-        } else {
-            console.log('rendered');
-        }
-    });
+    function openDiagram(xml) {
+        dmnModeler.importXML(xml, function (err) {
 
+            if (err) {
+                console.log('error rendering', err);
+            } else {
+                console.log('dmn rendered');
+            }
+        });
+    }
 
     downloadLink.on('click', function () {
         originalXML = latestXML;
         dirty = false;
 
-        do {
-            diagramName = prompt('Specify name');
-        } while (!diagramName || diagramName == "");
+        if (!file) {
+            do {
+                diagramName = prompt('Where should I save your diagram? Specify a path, please! New folders will be automatically created. [Current dir: workspace]', '/my_dir/newDiagram.dmn');
+            } while (!diagramName || diagramName == "");
 
-        if (diagramName.substr(diagramName.lastIndexOf('.') + 1) !== "dmn") {
-            diagramName += ".dmn";
+            if (diagramName.substr(diagramName.lastIndexOf('.') + 1) !== "dmn") {
+                diagramName += ".dmn";
+            }
+        } else {
+            diagramName = file;
         }
 
         exportArtifacts();
 
+        $.post('/diagram/save/'+encodeURI(diagramName), {xml: originalXML}).done(function(json) {
+            console.log(json);
+        });
+
         element.businessObject.set('dmn', diagramName);
         dmnContainer.remove();
+
+        return false;
     });
 
     cancelLink.on('click', function (ev) {
@@ -219,6 +242,51 @@ function createDMN(element, file) {
     };
 
     dmnModeler.on('commandStack.changed', exportArtifacts);
+
+    function registerFileDrop(container, callback) {
+
+        function handleFileSelect(e) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            var files = e.dataTransfer.files;
+
+            var file = files[0];
+
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+
+                var xml = e.target.result;
+
+                callback(xml);
+            };
+
+            reader.readAsText(file);
+        }
+
+        function handleDragOver(e) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            e.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+        }
+
+        container.get(0).addEventListener('dragover', handleDragOver, false);
+        container.get(0).addEventListener('drop', handleFileSelect, false);
+    }
+
+
+////// file drag / drop ///////////////////////
+
+// check file api availability
+    if (!window.FileList || !window.FileReader) {
+        window.alert(
+            'Looks like you use an older browser that does not support drag and drop. ' +
+            'Try using Chrome, Firefox or the Internet Explorer > 10.');
+    } else {
+        registerFileDrop(dmnContainer, openDiagram);
+    }
 
 }
 

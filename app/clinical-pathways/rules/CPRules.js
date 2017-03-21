@@ -24,18 +24,19 @@ var HIGH_PRIORITY = 1500;
  * @param {EventBus} eventBus
  */
 var remove = false;
-function CPRules(eventBus, overlays, elementFactory) {
+function CPRules(eventBus, overlays, elementFactory, modeling) {
     RuleProvider.call(this, eventBus);
     this._eventBus = eventBus;
     this._overlays = overlays;
     this._elementFactory = elementFactory;
+    this._modeling = modeling;
 
     this.registerEventListener();
 }
 
 inherits(CPRules, RuleProvider);
 
-CPRules.$inject = ['eventBus', 'overlays', 'elementFactory'];
+CPRules.$inject = ['eventBus', 'overlays', 'elementFactory', 'modeling'];
 
 module.exports = CPRules;
 
@@ -90,7 +91,7 @@ CPRules.prototype.init = function () {
         }
 
         if (is(shape, 'cp:CPResource')) {
-            return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'cp:ResourceBundle');
+            return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'bpmn:SubProcess') || is(target, 'cp:ResourceBundle');
         }
 
         if (is(shape, 'cp:Segment')) {
@@ -106,11 +107,11 @@ CPRules.prototype.init = function () {
         }
 
         if (is(shape, 'cp:ClinicalDocument')) {
-            return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'cp:CaseChart');
+            return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'bpmn:SubProcess') || is(target, 'cp:CaseChart');
         }
 
 
-        return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant');
+        return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'bpmn:SubProcess');
     }
 
     function getConnection(source, target) {
@@ -145,7 +146,19 @@ CPRules.prototype.init = function () {
             if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway'])) {
                 return {type: 'cp:DocumentAssociation'};
             }
+        } else if (is(source, 'cp:QualityIndicator')) {
+            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway', 'bpmn:Process'])) {
+                return {type: 'cp:QualityIndicatorAssociation'};
+            }
+        } else if (is(source, 'cp:Objective')) {
+            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway', 'bpmn:Process'])) {
+                return {type: 'cp:ObjectiveAssociation'};
+            }
+        } else if (is(source, 'cp:CPGReference')) {
+        if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway', 'bpmn:Process'])) {
+            return {type: 'cp:ObjectiveAssociation'};
         }
+    }
         return false;
     }
 
@@ -153,7 +166,7 @@ CPRules.prototype.init = function () {
      * Can source and target be connected?
      */
     function canConnect(source, target) {
-        var cpElementsWithCustomConnections = ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:ClinicalDocument'];
+        var cpElementsWithCustomConnections = ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:ClinicalDocument', 'cp:Indicator', 'cp:CPGReference'];
 
         // first two statements check only bi-directional connections!
         // last n statements check uni-directional connections!

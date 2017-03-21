@@ -28,6 +28,11 @@ var iconDecisionLogic = fs.readFileSync(__dirname + '/decision-logic/dmn.png', '
 var iconResource =  fs.readFileSync(__dirname + '/resource/resource.png', 'base64');
 var iconResourceBundle =  fs.readFileSync(__dirname + '/resource/icon-resource-bundle.png', 'base64');
 
+// Indicators
+var iconObjective =  fs.readFileSync(__dirname + '/indicators/icon-objective.png', 'base64');
+var iconQualityIndicator =  fs.readFileSync(__dirname + '/indicators/icon-quality-indicator.png', 'base64');
+
+
 module.exports.iconTherapyTask = 'data:image/png;base64,' + iconTherapyTask;
 module.exports.iconSupportingTask = 'data:image/png;base64,' + iconSupportingTask;
 module.exports.iconDiagnosisTask = 'data:image/png;base64,' + iconDiagnosisTask;
@@ -45,3 +50,5 @@ module.exports.iconSegment = 'data:image/png;base64,' +iconSegment;
 module.exports.iconOrganizer = 'data:image/png;base64,' +iconOrganizer;
 module.exports.iconCaseChart = 'data:image/png;base64,' +iconCaseChart;
 module.exports.iconClinicalStatement = 'data:image/png;base64,' +iconClinicalStatement;
+module.exports.iconObjective = 'data:image/png;base64,' +iconObjective;
+module.exports.iconQualityIndicator = 'data:image/png;base64,' +iconQualityIndicator;
