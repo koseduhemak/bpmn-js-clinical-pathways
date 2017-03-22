@@ -120,7 +120,7 @@ CPRules.prototype.init = function () {
         }
 
         if (is(source, 'cp:CPResource')) {
-            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway'])) {
+            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway']) && !is(target, 'cp:AbstractContainerElement')) {
                 return {type: 'cp:ResourceAssociation'};
             } else if (is(target, 'cp:CPResource')) {
                 return {type: 'cp:ResourceRelation'}
@@ -128,7 +128,7 @@ CPRules.prototype.init = function () {
                 return false;
             }
         } else if (is(source, 'cp:ResourceBundle')) {
-            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway'])) {
+            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway']) && !is(target, 'cp:AbstractContainerElement')) {
                 return {type: 'cp:ResourceAssociation'};
             }
             return false;
@@ -139,26 +139,26 @@ CPRules.prototype.init = function () {
                 return false;
             }
         } else if (is(source, 'cp:CaseChart')) {
-            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway'])) {
+            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway']) && !is(target, 'cp:AbstractContainerElement')) {
                 return {type: 'cp:CaseChartAssociation'};
             }
         } else if (is(source, 'cp:ClinicalDocument')) {
-            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway'])) {
+            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway']) && !is(target, 'cp:AbstractContainerElement')) {
                 return {type: 'cp:DocumentAssociation'};
             }
         } else if (is(source, 'cp:QualityIndicator')) {
-            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway', 'bpmn:Process'])) {
+            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway', 'bpmn:Process']) && !is(target, 'cp:AbstractContainerElement')) {
                 return {type: 'cp:QualityIndicatorAssociation'};
             }
         } else if (is(source, 'cp:Objective')) {
+            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway', 'bpmn:Process']) && !is(target, 'cp:AbstractContainerElement')) {
+                return {type: 'cp:ObjectiveAssociation'};
+            }
+        } else if (is(source, 'cp:CPGReference') && !is(target, 'cp:AbstractContainerElement')) {
             if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway', 'bpmn:Process'])) {
                 return {type: 'cp:ObjectiveAssociation'};
             }
-        } else if (is(source, 'cp:CPGReference')) {
-        if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway', 'bpmn:Process'])) {
-            return {type: 'cp:ObjectiveAssociation'};
         }
-    }
         return false;
     }
 
@@ -174,12 +174,12 @@ CPRules.prototype.init = function () {
             return getConnection(source, target);
         } else if (isAny(target, cpElementsWithCustomConnections)) {
             return getConnection(target, source);
-        } else  if (isAny(source, [ 'cp:Document' ]) &&
-            isAny(target, [ 'bpmn:Activity', 'bpmn:ThrowEvent' ])) {
-            return { type: 'bpmn:DataInputAssociation' };
-        } else if (isAny(target, [ 'cp:Document' ]) &&
-            isAny(source, [ 'bpmn:Activity', 'bpmn:CatchEvent' ])) {
-            return { type: 'bpmn:DataOutputAssociation' };
+        } else if (isAny(source, ['cp:Document']) &&
+            isAny(target, ['bpmn:Activity', 'bpmn:ThrowEvent'])) {
+            return {type: 'bpmn:DataInputAssociation'};
+        } else if (isAny(target, ['cp:Document']) &&
+            isAny(source, ['bpmn:Activity', 'bpmn:CatchEvent'])) {
+            return {type: 'bpmn:DataOutputAssociation'};
         }
 
         return;
@@ -219,6 +219,8 @@ CPRules.prototype.init = function () {
             shape.isExpanded = true;
             shape.businessObject.di.isExpanded = true;
         }
+
+        console.log(context);
 
         return canCreate(shape, target);
     });

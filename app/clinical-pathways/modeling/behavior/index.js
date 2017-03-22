@@ -1,4 +1,4 @@
 module.exports = {
     __init__: ['labelBehavior'],
-    labelBehavior: [ 'type', require('./CPLabelSupport') ]
+    cpLabelSupport: [ 'type', require('./CPLabelSupport') ]
 };

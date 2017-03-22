@@ -32,7 +32,7 @@ function CPContextPadProvider(eventBus, contextPad, modeling, elementFactory, co
 
 
             // we only want the delete action for custom FlowNode elements
-            if (isAny(businessObject, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:AbstractContainerElement', 'cp:Document', 'cp:StructuredDocumentReference', 'cp:Indicator', 'cp:CPGReference'])) {
+            if (isAny(businessObject, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:AbstractContainerElement', 'cp:ClinicalDocument', 'cp:Document', 'cp:StructuredDocumentReference', 'cp:Indicator', 'cp:CPGReference'])) {
                 var cachedActions = actions;
                 newActions = {
                     delete: cachedActions.delete

@@ -34,6 +34,6 @@ function CPImporter(eventBus, canvas, elementFactory, elementRegistry, translate
 
 inherits(CPImporter, BpmnImporter);
 
-CPImporter.$inject = [ 'eventBus', 'canvas', 'elementFactory', 'elementRegistry', 'translate', 'labelBehavior' ];
+CPImporter.$inject = [ 'eventBus', 'canvas', 'elementFactory', 'elementRegistry', 'translate', 'cpLabelSupport' ];
 
 module.exports = CPImporter;

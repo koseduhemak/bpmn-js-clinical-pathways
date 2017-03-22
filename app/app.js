@@ -81,7 +81,7 @@ var cpContextPad = require('./clinical-pathways/context-pad');
 var cpAutoResize = require('./clinical-pathways/auto-resize');
 
 // CP Label
-var cpLabel = require('./clinical-pathways/modeling/behavior');
+var cpBehavior = require('./clinical-pathways/modeling/behavior');
 
 // CP Importer
 var cpImporter = require('./clinical-pathways/import');
@@ -185,11 +185,11 @@ var modeler = new BpmnModeler({
      ],*/
     additionalModules: [
         cpImporter,
-        cpLabel,
+        cpBehavior,
         cpRules,
         cpContextPad,
         propertiesPanelModule,
-        //propertiesProviderModule,
+       // propertiesProviderModule,
         CliModule,
         CPpropertiesProviderModule,
         cpPaletteModule,
@@ -213,6 +213,10 @@ function createNewDiagram() {
     openDiagram(newDiagramXML);
 }
 
+function isCP(element) {
+    return element && /cp\:/.test(element.type);
+}
+
 function openDiagram(xml) {
 
     modeler.importXML(xml, function (err) {
@@ -231,6 +235,14 @@ function openDiagram(xml) {
                 .addClass('with-diagram');
 
             var eventBus = modeler.get('eventBus');
+
+            var cpElements = modeler.get('elementRegistry').filter(function (element) {
+                if (isCP(element)) {
+                    return true;
+                }
+            });
+
+            console.log(cpElements);
 
 
             // @todo auslagern in module?

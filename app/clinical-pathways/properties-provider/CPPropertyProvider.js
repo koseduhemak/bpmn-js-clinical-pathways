@@ -76,7 +76,7 @@ function CPPropertiesProvider(eventBus, bpmnFactory, elementRegistry) {
         return [
             CPGroup
         ];
-    }
+    };
 
     this.getTabs = function (element) {
 

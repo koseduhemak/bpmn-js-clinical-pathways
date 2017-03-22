@@ -32,19 +32,6 @@
           "isAttr": true,
           "type": "EvidenceIndicator"
         },
-        {
-          "name": "objective",
-          "default": "",
-          "isAttr": true,
-          "type": "Objective"
-        },
-        {
-          "name": "qualityIndicator",
-          "default": "",
-          "isAttr": true,
-          "isMany": true,
-          "type": "QualityIndicator"
-        }
       ]
     },
     {
@@ -126,12 +113,17 @@
     },
     /* Properties */
     {
-      "name": "Indicator",
-      "superClass": [
-        "bpmn:FlowNode"
-        ],
+      "name": "Property",
       "extends": [
         "bpmn:Property"
+      ]
+    },
+    {
+      "name": "Indicator",
+      "isAbstract": true,
+      "superClass": [
+        "bpmn:FlowNode",
+        "Property"
       ]
     },
     {
@@ -216,24 +208,6 @@
           "name": "statementContent",
           "isAttr": true,
           "type": "String"
-        },
-        {
-          "name": "guidelineReference",
-          "isAttr": true,
-          "type": "CPGReference",
-          "isReference": true
-        },
-        {
-          "name": "section",
-          "isAttr": true,
-          "type": "Segment",
-          "isReference": true
-        },
-        {
-          "name": "organizer",
-          "isAttr": true,
-          "type": "Organizer",
-          "isReference": true
         }
       ]
     },
@@ -285,11 +259,13 @@
         "ClinicalStatement"
       ]
     },
+    /* AbstractContainerElement for easy handling of Containers (f.e. Organizer, Segment, etc.) */
     {
       "name": "AbstractContainerElement",
+      "isAbstract": true,
       "superClass": [
         "bpmn:SubProcess"
-        ]
+      ]
     },
     /* Organizer */
     {
@@ -327,6 +303,7 @@
     /* ClinicalDocument */
     {
       "name": "ClinicalDocument",
+      "isAbstract": true,
       "superClass": [
         "bpmn:DataObject"
       ],
@@ -347,6 +324,7 @@
     /* UnstructuredDocument */
     {
       "name": "UnstructuredDocument",
+      "isAbstract": true,
       "superClass": [
         "ClinicalDocument",
         "bpmn:FlowNode"
@@ -421,12 +399,16 @@
     },
     /* Resources */
     {
-      "name": "CPResource",
-      "superClass": [
-        "bpmn:FlowNode"
-      ],
+      "name": "Resource",
       "extends": [
         "bpmn:Resource"
+      ]
+    },
+    {
+      "name": "CPResource",
+      "superClass": [
+        "bpmn:FlowNode",
+        "Resource"
       ]
     },
     {
@@ -442,14 +424,6 @@
       "name": "HumanResource",
       "superClass": [
         "CPResource"
-      ],
-      "properties": [
-        {
-          "name": "organizer",
-          "isMany": true,
-          "type": "Organizer",
-          "isReference": true
-        }
       ]
     },
     {
@@ -494,13 +468,6 @@
       "name": "StatementRelation",
       "superClass": [
         "bpmn:Association"
-      ],
-      "properties": [
-        {
-          "name": "name",
-          "type": "String",
-          "isAttr": true
-        }
       ]
     },
     /* Relation between BPMN-Elements and Case Charts */
@@ -508,13 +475,6 @@
       "name": "CaseChartAssociation",
       "superClass": [
         "bpmn:Association"
-      ],
-      "properties": [
-        {
-          "name": "name",
-          "type": "String",
-          "isAttr": true
-        }
       ]
     },
     /* Relation between two CPResources / ResourceBundles */

@@ -92,7 +92,7 @@ CPPaletteProvider.prototype.getPaletteEntries = function () {
             'cp:QualityIndicator', 'cpDocuments', Icons.iconQualityIndicator, 'Create Quality Indicator'
         ),
         'create-cpg-reference': createAction(
-            'cp:CPGReference', 'cpCPGReference', Icons.iconDocument, 'Create CPG Reference'
+            'cp:CPGReference', 'cpCPGReference', Icons.iconCPGReference, 'Create CPG Reference'
         )
     });
 
