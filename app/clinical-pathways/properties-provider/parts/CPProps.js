@@ -22,6 +22,17 @@ var ElFinderHelper = require('../../../elfinder/ElFinderHelper');
 //var newDMNXML = require('../../../../resources/newDMN.dmn');
 
 
+var currentDMNElement;
+var dmnWindow;
+window.notifyDMNSave = function(diagramName) {
+    currentDMNElement.businessObject.set('dmn', diagramName);
+
+    window.setTimeout(function(){
+        dmnWindow.close();
+    }, 3000);
+};
+
+
 module.exports = function (group, element) {
 
     // Only return an entry, if the currently selected
@@ -56,7 +67,9 @@ module.exports = function (group, element) {
                 getClickableElement: function () {
                     // display DMN stuff
                     var bo = getBusinessObject(element);
-                    createDMN(element, bo.get('dmn'));
+
+                    currentDMNElement = element;
+                    createDMNWindow(bo.get('dmn'));
                 }
             }));
         }
@@ -67,7 +80,12 @@ module.exports = function (group, element) {
             label: 'Create new DMN',
             getClickableElement: function () {
                 // display DMN stuff
-                createDMN(element);
+                //createDMN(element);
+
+                currentDMNElement = element;
+                createDMNWindow();
+
+
             }
         }));
     }
@@ -113,6 +131,14 @@ module.exports = function (group, element) {
         }));
     }
 };
+
+function createDMNWindow(file) {
+    var url = "/dmn/index.html";
+    if (file) {
+        url += "?file="+encodeURIComponent(file);
+    }
+    dmnWindow = window.open(url, "DMN");
+}
 
 function createDMN(element, file) {
     var dirty = false;
@@ -305,4 +331,3 @@ function readEnumAndGenerateSelectOptions(array) {
 
     return arr;
 }
-

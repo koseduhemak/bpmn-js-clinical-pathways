@@ -16,4 +16,11 @@ class IndexController extends AbstractActionController
     {
         return new ViewModel();
     }
+
+    public function indexDMNAction()
+    {
+        $vm = new ViewModel();
+        $vm->setTemplate('application/index/index-dmn');
+        return $vm;
+    }
 }

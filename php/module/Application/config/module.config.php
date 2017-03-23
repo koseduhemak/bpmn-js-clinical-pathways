@@ -34,6 +34,16 @@ return [
                     ],
                 ],
             ],
+            'home-dmn' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/dmn/index.html',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action'     => 'indexDMN',
+                    ],
+                ],
+            ],
             'elFinderFolder' => [
                 'type'    => Segment::class,
                 'options' => [

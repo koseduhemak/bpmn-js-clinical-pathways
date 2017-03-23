@@ -63,12 +63,14 @@ module.exports = function (grunt) {
                     watch: true
                 },
                 files: {
-                    '<%= config.dist %>/app.js': ['<%= config.sources %>/app.js']
+                    '<%= config.dist %>/app.js': ['<%= config.sources %>/app.js'],
+                    '<%= config.dist %>/dmn/app.js': ['<%= config.sources %>/dmn/app.js']
                 }
             },
             app: {
                 files: {
-                    '<%= config.dist %>/app.js': ['<%= config.sources %>/app.js']
+                    '<%= config.dist %>/app.js': ['<%= config.sources %>/app.js'],
+                    '<%= config.dist %>/dmn/app.js': ['<%= config.sources %>/dmn/app.js']
                 }
             }
         },
