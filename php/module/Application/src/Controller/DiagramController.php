@@ -46,6 +46,7 @@ class DiagramController extends AbstractActionController
 
         if ($folder !== ".") {
             $folder = 'public/workspace/'.$folder;
+
             if (!is_dir($folder)) {
                 mkdir($folder, null, true);
             }

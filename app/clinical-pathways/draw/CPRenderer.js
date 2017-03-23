@@ -253,7 +253,6 @@ function CPRenderer(eventBus, styles, pathMap, modeling) {
             });
 
             var gfx = svgAppend(parent, createLine(element.waypoints, attrs));
-            renderExternalLabel(parent, element);
 
             return gfx;
         },
@@ -266,7 +265,6 @@ function CPRenderer(eventBus, styles, pathMap, modeling) {
             });
 
             var gfx = svgAppend(parent, createLine(element.waypoints, attrs));
-            renderExternalLabel(parent, element);
 
             return gfx;
         },

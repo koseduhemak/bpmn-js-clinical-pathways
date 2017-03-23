@@ -120,6 +120,7 @@ function createDMN(element, file) {
     var latestXML = '';
     var diagramName = 'newDMN.dmn';
 
+    var isWebserver = window.location.href.indexOf("localhost:9013") == -1;
 
     $("body").append($('<div id="dmn-container">'));
 
@@ -147,7 +148,10 @@ function createDMN(element, file) {
         container: dmnContainer,
         keyboard: {bindTo: document},
         minColWidth: 200,
-        tableName: 'DMN Table'
+        table: {
+            minColWidth: 200,
+            tableName: 'DMN Table'
+        }
     });
 
     // @todo do something about file variable: integrate ElFinder...
@@ -175,10 +179,8 @@ function createDMN(element, file) {
     }
 
     downloadLink.on('click', function () {
-        originalXML = latestXML;
-        dirty = false;
 
-        if (!file) {
+        if (!file && isWebserver) {
             do {
                 diagramName = prompt('Where should I save your diagram? Specify a path, please! New folders will be automatically created. [Current dir: workspace]', '/my_dir/newDiagram.dmn');
             } while (!diagramName || diagramName == "");
@@ -192,14 +194,18 @@ function createDMN(element, file) {
 
         exportArtifacts();
 
-        $.post('/diagram/save/'+encodeURI(diagramName), {xml: originalXML}).done(function(json) {
+        originalXML = latestXML;
+        dirty = false;
+
+        $.post('/diagram/save/'+encodeURI(diagramName), {xml: latestXML}).done(function(json) {
             console.log(json);
         });
 
         element.businessObject.set('dmn', diagramName);
         dmnContainer.remove();
 
-        return false;
+        // if running on webserver prevent download, else download diagram
+        return !isWebserver;
     });
 
     cancelLink.on('click', function (ev) {
