@@ -113,6 +113,16 @@ module.exports = function (grunt) {
                     }
                 ]
             },
+            sweetalert: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'node_modules/sweetalert/dist',
+                        src: ['sweetalert.css'],
+                        dest: '<%= config.dist %>/vendor/sweetalert'
+                    }
+                ]
+            },
             app: {
                 files: [
                     {
@@ -216,6 +226,7 @@ module.exports = function (grunt) {
         'copy:bpmn_js',
         'copy:dmn_js',
         'copy:fontawesome',
+        'copy:sweetalert',
         'copy:app',
         'less',
         'browserify:watch',
@@ -228,6 +239,7 @@ module.exports = function (grunt) {
         'copy:bpmn_js',
         'copy:dmn_js',
         'copy:fontawesome',
+        'copy:sweetalert',
         'copy:app',
         'less',
         'browserify:watch',

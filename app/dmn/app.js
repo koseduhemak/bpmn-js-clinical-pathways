@@ -3,6 +3,7 @@
 var $ = require('jquery'),
     DmnModeler = require('dmn-js/lib/Modeler');
 
+var swal = require('sweetalert');
 var fs = require('fs');
 
 var dirty = false;
@@ -70,6 +71,8 @@ function openTable(xml) {
                 .removeClass('with-error')
                 .addClass('with-table');
 
+            swal.close();
+
             saveTable(function (err, xml) {
                 originalXML = xml;
                 setEncoded(downloadLink, 'table.dmn', err ? null : xml);
@@ -136,21 +139,26 @@ if (!window.FileList || !window.FileReader) {
     registerFileDrop(container, openTable);
 }
 
-// bootstrap table functions
-
 $(document).ready(function () {
     // init document
     var file = getParameterByName("file");
 
     if (file) {
-        $.get('/diagram/get/'+encodeURI(file), function(json) {
+        swal({
+            title: "Loading your DMN...",
+            text: '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Loading...</span>',
+            html: true,
+            showConfirmButton: false
+        });
+
+        $.get('/diagram/get/' + encodeURI(file), function (json) {
             if (json.result) {
                 openTable(json.xml);
             } else {
                 createNewTable();
                 console.error("Could not load your DMN!");
             }
-        }).fail(function() {
+        }).fail(function () {
             console.error("Could not load your DMN!");
         });
     } else {
@@ -193,29 +201,71 @@ $(document).ready(function () {
 
         if (isWebserver()) {
             if (!file) {
-                do {
-                    diagramName = prompt('Where should I save your diagram? Specify a path, please! New folders will be automatically created. [Current dir: workspace]', '/my_dir/newDiagram.dmn');
-                } while (!diagramName || diagramName == "");
 
-                if (diagramName.substr(diagramName.lastIndexOf('.') + 1) !== "dmn") {
-                    diagramName += ".dmn";
-                }
+                swal({
+                        title: "Where should I save your diagram?",
+                        text: "Specify a path, please! New folders will be automatically created. [Current dir: workspace]",
+                        type: "input",
+                        showCancelButton: true,
+                        closeOnConfirm: false,
+                        animation: "slide-from-top",
+                        inputPlaceholder: "my_dir/new.dmn"
+                    },
+                    function (inputValue) {
+                        if (inputValue === false) return false;
+
+                        if (inputValue === "") {
+                            swal.showInputError("Please specify a path!");
+                            return false
+                        }
+
+                        diagramName = inputValue;
+
+                        if (diagramName.substr(diagramName.lastIndexOf('.') + 1) !== "dmn") {
+                            diagramName += ".dmn";
+                        }
+
+                        saveDiagramToDisk(diagramName, latestXML);
+                    });
+
+                return false;
             } else {
                 diagramName = file;
+                saveDiagramToDisk(diagramName, latestXML);
             }
 
-            $.post('/diagram/save/' + encodeURI(diagramName), {xml: latestXML}).done(function (json) {
-                opener.notifyDMNSave(diagramName);
-            });
+
             return false;
         } else {
-            opener.notifyDMNSave(diagramName);
+            openerCallback(diagramName);
         }
     });
 
     renderer.on('commandStack.changed', exportArtifacts);
     renderer.table.on('commandStack.changed', exportArtifacts);
 });
+
+function saveDiagramToDisk(diagramName, latestXML) {
+    $.post('/diagram/save/' + encodeURI(diagramName), {xml: latestXML}).done(function (json) {
+        if (json.result) {
+            openerCallback(diagramName);
+        } else {
+            swal({
+                title: "DMN not saved!",
+                text: "Your DMN model was NOT saved. Something is wrong. Please check your POST data via browsers console window!",
+                type: "error",
+                showConfirmButton: false
+            });
+        }
+    }).fail(function () {
+        swal({
+            title: "DMN not saved!",
+            text: "Your DMN model was NOT saved. Something is wrong. Please check your POST data via browsers console window!",
+            type: "error",
+            showConfirmButton: false
+        });
+    });
+}
 
 function getParameterByName(name, url) {
     if (!url) {
@@ -231,4 +281,16 @@ function getParameterByName(name, url) {
 
 function isWebserver() {
     return window.location.href.indexOf("localhost:9013") == -1;
+}
+
+function openerCallback(diagramName) {
+    opener.notifyDMNSave(diagramName);
+
+    // display message that modeler is closed after download is executed... This is a workaround due browsers insufficiency
+    swal({
+        title: "DMN saved!",
+        text: "Your DMN model was saved. You will return to your BPMN diagram in 3 seconds.",
+        type: "success",
+        showConfirmButton: false
+    });
 }

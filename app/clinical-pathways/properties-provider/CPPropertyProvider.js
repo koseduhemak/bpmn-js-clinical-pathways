@@ -18,6 +18,8 @@ var processProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/Pro
 // Require your custom property entries.
 var cpProps = require('./parts/CPProps');
 
+//var cpDmnHelper = require('../helper');
+
 // The general tab contains all bpmn relevant properties.
 // The properties are organized in groups.
 function createGeneralTabGroups(element, bpmnFactory, elementRegistry) {
@@ -55,8 +57,7 @@ function createGeneralTabGroups(element, bpmnFactory, elementRegistry) {
 }
 
 
-function CPPropertiesProvider(eventBus, bpmnFactory, elementRegistry) {
-
+function CPPropertiesProvider(eventBus, bpmnFactory, elementRegistry, modeling) {
     PropertiesActivator.call(this, eventBus);
 
 
@@ -71,7 +72,7 @@ function CPPropertiesProvider(eventBus, bpmnFactory, elementRegistry) {
         };
 
         // Add the cp props to the clinical-pathways group.
-        cpProps(CPGroup, element);
+        cpProps(CPGroup, element, modeling);
 
         return [
             CPGroup
