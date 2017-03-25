@@ -22,7 +22,6 @@ var ElFinderHelper = require('../../../elfinder/ElFinderHelper');
 //var newDMNXML = require('../../../../resources/newDMN.dmn');
 var extensionUtil = require('../../util/ExtensionElementUtil');
 
-
 var currentDMNElement;
 var dmnWindow;
 window.notifyDMNSave = function (diagramName) {
@@ -40,51 +39,8 @@ module.exports = function (group, element, modeling, moddle) {
     // this is needed for the window.notifyDMNSave function which will be called from a popup window...
     window.modeling = modeling;
 
-    // Only return an entry, if the currently selected
-    // element is a start event.
-
-    if (isAny(element, ['bpmn:Activity', 'bpmn:Gateway', 'bpmn:Process']) && !is(element, 'cp:AbstractContainerElement')) {
-
-        var setValue = function (businessObject) {
-            return function (element, values) {
-                var extensionElements = [];
-
-                if (typeof values.evidenceIndicator !== 'undefined' && values.evidenceIndicator !== '') {
-                    var evidenceIndicator = moddle.create('cp:EvidenceIndicator', { evidenceLevel: values.evidenceIndicator});
-                    extensionElements = moddle.create('bpmn:ExtensionElements', {
-                        values: [evidenceIndicator]
-                    });
-
-                }
-
-                return cmdHelper.updateProperties(element, {'extensionElements': extensionElements});
-            };
-        };
-
-        var getValue = function (businessObject) {
-            return function (element) {
-
-                var evidenceIndicator = extensionUtil.getExtensionElement('cp:EvidenceIndicator', businessObject);
-                if (evidenceIndicator) {
-                    return {evidenceIndicator: evidenceIndicator.evidenceLevel}
-                }
-
-                return {evidenceIndicator: ""};
-            };
-        };
-
-        group.entries.push(entryFactory.selectBox({
-            id: 'evidenceIndicator',
-            description: 'Evidence Level of the task/gateway',
-            label: 'Evidence Level',
-            modelProperty: 'evidenceIndicator',
-            selectOptions: readEnumAndGenerateSelectOptions(require('../../enums/EvidenceLevel.json')),
-            set: setValue(getBusinessObject(element)),
-            get: getValue(getBusinessObject(element))
-        }));
 
 
-    }
 
     if (is(element, 'cp:EvidenceBasedGateway')) {
         group.entries.push(entryFactory.textField({

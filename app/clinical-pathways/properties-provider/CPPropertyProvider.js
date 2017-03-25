@@ -17,6 +17,7 @@ var processProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/Pro
 
 // Require your custom property entries.
 var cpProps = require('./parts/CPProps');
+var evidenceIndiactorProps = require('./parts/CPEvidenceIndicatorProps');
 
 //var cpDmnHelper = require('../helper');
 
@@ -73,6 +74,7 @@ function CPPropertiesProvider(eventBus, bpmnFactory, elementRegistry, modeling, 
 
         // Add the cp props to the clinical-pathways group.
         cpProps(CPGroup, element, modeling, moddle);
+        evidenceIndiactorProps(CPGroup, element, moddle);
 
         return [
             CPGroup

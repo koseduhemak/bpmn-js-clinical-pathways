@@ -20,9 +20,6 @@ var iconCPGReference = fs.readFileSync(__dirname + '/documents/icon-cpg-referenc
 var iconSimultanParallelGateway = fs.readFileSync(__dirname + '/gateways/simultan-parallel-gateway.png', 'base64');
 var iconEvidenceBasedGateway = fs.readFileSync(__dirname + '/gateways/evidence-gateway.png', 'base64');
 
-// marker
-var iconEvidenceMarker = fs.readFileSync(__dirname + '/indicators/evidence-marker.png', 'base64');
-
 // decision logic
 var iconDecisionLogic = fs.readFileSync(__dirname + '/decision-logic/dmn.png', 'base64');
 
@@ -33,6 +30,7 @@ var iconResourceBundle =  fs.readFileSync(__dirname + '/resource/icon-resource-b
 // Indicators
 var iconObjective =  fs.readFileSync(__dirname + '/indicators/icon-objective.png', 'base64');
 var iconQualityIndicator =  fs.readFileSync(__dirname + '/indicators/icon-quality-indicator.png', 'base64');
+var iconEvidenceMarker = fs.readFileSync(__dirname + '/indicators/icon-evidence-marker.png', 'base64');
 
 
 module.exports.iconTherapyTask = 'data:image/png;base64,' + iconTherapyTask;

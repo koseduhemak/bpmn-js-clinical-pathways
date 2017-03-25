@@ -57,8 +57,8 @@ CPRules.prototype.registerEventListener = function () {
         // process only Task and Gateway, no overlay for processes!
         if (isAny(bo, ['bpmn:Task', 'bpmn:Gateway']) && element.type != "label") {
 
-            var evidenceIndicator = extensionUtil.getExtensionElement('cp:EvidenceIndicator', bo);
-            console.log(evidenceIndicator);
+            var evidenceIndicator = bo.evidenceIndicator;
+
             if (evidenceIndicator && evidenceIndicator.evidenceLevel && evidenceIndicator.evidenceLevel.toUpperCase()) {
                 //bo.set('cp:EvidenceLevel', bo.get('evidenceIndicator').toUpperCase());
 

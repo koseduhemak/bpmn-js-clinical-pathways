@@ -123,8 +123,7 @@
     {
       "name": "EvidenceIndicator",
       "superClass": [
-        "bpmn:Property",
-        "Element"
+        "bpmn:Property"
       ],
       "properties": [
         {
@@ -149,7 +148,7 @@
     /* CPG Reference */
     {
       "name": "CPGReference",
-      "superClass": [
+      "extends": [
         "bpmn:FlowNode"
       ],
       "properties": [
@@ -525,22 +524,32 @@
       "name": "EvidenceLevel",
       "literalValues": [
         {
-          "name": "A"
+          "name": "",
+          "value": ""
         },
         {
-          "name": "B"
+          "name": "A",
+          "value": "A"
         },
         {
-          "name": "C"
+          "name": "B",
+          "value": "B"
         },
         {
-          "name": "D"
+          "name": "C",
+          "value": "C"
         },
         {
-          "name": "E"
+          "name": "D",
+          "value": "D"
         },
         {
-          "name": "F"
+          "name": "E",
+          "value": "E"
+        },
+        {
+          "name": "F",
+          "value": "F"
         }
       ]
     },
