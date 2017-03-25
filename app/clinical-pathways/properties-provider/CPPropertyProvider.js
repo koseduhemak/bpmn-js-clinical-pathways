@@ -57,7 +57,7 @@ function createGeneralTabGroups(element, bpmnFactory, elementRegistry) {
 }
 
 
-function CPPropertiesProvider(eventBus, bpmnFactory, elementRegistry, modeling) {
+function CPPropertiesProvider(eventBus, bpmnFactory, elementRegistry, modeling, moddle) {
     PropertiesActivator.call(this, eventBus);
 
 
@@ -72,7 +72,7 @@ function CPPropertiesProvider(eventBus, bpmnFactory, elementRegistry, modeling) 
         };
 
         // Add the cp props to the clinical-pathways group.
-        cpProps(CPGroup, element, modeling);
+        cpProps(CPGroup, element, modeling, moddle);
 
         return [
             CPGroup

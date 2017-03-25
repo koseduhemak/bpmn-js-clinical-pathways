@@ -12,6 +12,8 @@ var $ = require('jquery');
 
 var evidenceLevel = require('../enums/EvidenceLevel.json');
 
+var extensionUtil = require('../util/ExtensionElementUtil');
+
 var HIGH_PRIORITY = 1500;
 
 /**
@@ -52,11 +54,13 @@ CPRules.prototype.registerEventListener = function () {
         var element = event.element,
             bo = element.businessObject;
 
+        // process only Task and Gateway, no overlay for processes!
         if (isAny(bo, ['bpmn:Task', 'bpmn:Gateway']) && element.type != "label") {
 
-            if (evidenceLevel.includes(bo.get('evidenceIndicator').toUpperCase())) {
+            var evidenceIndicator = extensionUtil.getExtensionElement('cp:EvidenceIndicator', bo);
+            console.log(evidenceIndicator);
+            if (evidenceIndicator && evidenceIndicator.evidenceLevel && evidenceIndicator.evidenceLevel.toUpperCase()) {
                 //bo.set('cp:EvidenceLevel', bo.get('evidenceIndicator').toUpperCase());
-
 
                 try {
                     var overlay_id = overlays.add(element.id, {
@@ -64,7 +68,7 @@ CPRules.prototype.registerEventListener = function () {
                             top: -20,
                             left: element.width - 10
                         },
-                        html: $('<div class="cp-evidence-marker">').text(bo.get('evidenceIndicator'))
+                        html: $('<div class="cp-evidence-marker">').text(evidenceIndicator.evidenceLevel)
                     });
                 } catch (e) {
                     // this will break if element was removed... No one knows how to properly do that.
@@ -72,7 +76,9 @@ CPRules.prototype.registerEventListener = function () {
 
             } else {
                 overlays.remove({element: element.id});
-                bo.set('evidenceIndicator', '');
+                /*if (bo.get('evidenceIndicator')) {
+                    bo.get('evidenceIndicator')[0].evidenceLevel = '';
+                }*/
             }
 
         }
@@ -219,8 +225,6 @@ CPRules.prototype.init = function () {
             shape.isExpanded = true;
             shape.businessObject.di.isExpanded = true;
         }
-
-        console.log(context);
 
         return canCreate(shape, target);
     });

@@ -14,8 +14,6 @@
       "properties": [
         {
           "name": "evidenceIndicator",
-          "default": "",
-          "isAttr": true,
           "type": "EvidenceIndicator"
         }
       ]
@@ -28,8 +26,6 @@
       "properties": [
         {
           "name": "evidenceIndicator",
-          "default": "",
-          "isAttr": true,
           "type": "EvidenceIndicator"
         }
       ]
@@ -85,8 +81,6 @@
       "properties": [
         {
           "name": "evidenceIndicator",
-          "default": "",
-          "isAttr": true,
           "type": "EvidenceIndicator"
         }
       ]
@@ -129,13 +123,14 @@
     {
       "name": "EvidenceIndicator",
       "superClass": [
-        "bpmn:Property"
+        "bpmn:Property",
+        "Element"
       ],
       "properties": [
         {
           "name": "evidenceLevel",
           "isAttr": true,
-          "type": "EvidenceLevel"
+          "type": "String"
         }
       ]
     },
@@ -189,8 +184,7 @@
           "type": "String"
         },
         {
-          "name": "evidenceIndicators",
-          "isMany": true,
+          "name": "evidenceIndicator",
           "type": "EvidenceIndicator"
         }
       ]
