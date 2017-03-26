@@ -23,20 +23,14 @@ module.exports = function (group, element, moddle) {
                     var attrs = {};
                     attrs[property] = values[property];
 
-                    if (businessObject.extensionElements) {
-                        extensionElements = businessObject.extensionElements;
-
-                        forEach(extensionElements.values, function(extensionElement, key) {
-                            if (is(extensionElement, 'cp:CPGReference')) {
-                                extensionElements.values[key][property] = values[property];
-                            }
-                        });
+                    var cpgReferenceElement = extensionUtil.getExtensionElement('cp:CPGReference', businessObject);
+                    if (cpgReferenceElement) {
+                        cpgReferenceElement[property] = attrs[property];
                     } else {
-                        var cpgReference = moddle.create('cp:CPGReference', attrs);
-                        extensionElements = moddle.create('bpmn:ExtensionElements', {
-                            values: [cpgReference]
-                        });
+                        cpgReferenceElement = moddle.create('cp:CPGReference', attrs);
                     }
+
+                    var extensionElements = extensionUtil.createOrReplaceElement(moddle, businessObject, 'cp:CPGReference', cpgReferenceElement);
 
                 } else {
                     extensionElements = extensionUtil.deleteProperty(businessObject.extensionElements, 'cp:CPGReference', property);

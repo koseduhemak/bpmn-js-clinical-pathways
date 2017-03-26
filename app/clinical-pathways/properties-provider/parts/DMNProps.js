@@ -12,26 +12,19 @@ var currentDMNElement;
 var dmnWindow;
 
 // save dmn inline
-window.notifyDMNSave = function (diagramName) {
+window.notifyDMNSave = function (xml) {
     var businessObject = getBusinessObject(currentDMNElement);
-    var extensionElements = [];
 
-    if (businessObject.extensionElements) {
-        extensionElements = businessObject.extensionElements;
-
-        forEach(extensionElements.values, function(extensionElement, key) {
-            if (is(extensionElement, 'cp:Dmn')) {
-                extensionElements.values[key]["diagram"] = diagramName;
-            }
-        });
+    var dmnElement = extensionUtil.getExtensionElement('cp:Dmn', businessObject);
+    if (dmnElement) {
+        dmnElement.diagram = xml;
     } else {
-        var cpgReference = moddle.create('cp:Dmn', {
-            diagram: diagramName
-        });
-        extensionElements = moddle.create('bpmn:ExtensionElements', {
-            values: [cpgReference]
+        dmnElement = moddle.create('cp:Dmn', {
+            diagram: xml
         });
     }
+
+    var extensionElements = extensionUtil.createOrReplaceElement(moddle, businessObject, 'cp:Dmn', dmnElement);
 
     modeling.updateProperties(currentDMNElement, {extensionElements: extensionElements});
 
