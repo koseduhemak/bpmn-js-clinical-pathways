@@ -160,10 +160,6 @@ CPRules.prototype.init = function () {
             if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway', 'bpmn:Process']) && !is(target, 'cp:AbstractContainerElement')) {
                 return {type: 'cp:ObjectiveAssociation'};
             }
-        } else if (is(source, 'cp:CPGReference') && !is(target, 'cp:AbstractContainerElement')) {
-            if (isAny(target, ['bpmn:Activity', 'bpmn:Gateway', 'bpmn:Process'])) {
-                return {type: 'cp:ObjectiveAssociation'};
-            }
         }
         return false;
     }
@@ -172,7 +168,7 @@ CPRules.prototype.init = function () {
      * Can source and target be connected?
      */
     function canConnect(source, target) {
-        var cpElementsWithCustomConnections = ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:ClinicalDocument', 'cp:Indicator', 'cp:CPGReference'];
+        var cpElementsWithCustomConnections = ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:ClinicalDocument', 'cp:Indicator'];
 
         // first two statements check only bi-directional connections!
         // last n statements check uni-directional connections!

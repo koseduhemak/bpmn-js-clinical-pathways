@@ -90,9 +90,6 @@ CPPaletteProvider.prototype.getPaletteEntries = function () {
         ),
         'create-quality-indicator': createAction(
             'cp:QualityIndicator', 'cpDocuments', Icons.iconQualityIndicator, 'Create Quality Indicator'
-        ),
-        'create-cpg-reference': createAction(
-            'cp:CPGReference', 'cpCPGReference', Icons.iconCPGReference, 'Create CPG Reference'
         )
     });
 

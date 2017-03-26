@@ -541,13 +541,6 @@
         "bpmn:Association"
       ]
     },
-    /* Relation between cpg reference and other elements */
-    {
-      "name": "CPGReferenceAssociation",
-      "superClass": [
-        "bpmn:Association"
-      ]
-    }
   ],
   "enumerations": [
     {

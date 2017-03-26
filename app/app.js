@@ -46,9 +46,6 @@ var elFinderHelper = new ElFinderHelper(modeler, openDiagram);
 
 // property panel
 var propertiesPanelModule = require('bpmn-js-properties-panel');
-// providing camunda executable properties, too
-var propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
-    camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda');
 
 // CLI Module
 // @TODO implement window.cli.undo() and window.cli.redo() -> Buttons
@@ -66,16 +63,12 @@ var cpMetamodel = require('./clinical-pathways/ext-metamodel/CPMetamodel.json');
 
 // CP Rules
 var cpRules = require('./clinical-pathways/rules');
-//var resizeRules = require('./clinical-pathways/rules');
 
 // CP POPMENU
 var cpPopupMenu = require('./clinical-pathways/popup-menu');
 
 // CP ContextPad
 var cpContextPad = require('./clinical-pathways/context-pad');
-
-// Factory
-//var elementFactory = require('./clinical-pathways/modeling');
 
 // CP Auto-Resize
 var cpAutoResize = require('./clinical-pathways/auto-resize');
@@ -85,33 +78,9 @@ var cpBehavior = require('./clinical-pathways/modeling/behavior');
 
 // CP Importer
 var cpImporter = require('./clinical-pathways/import');
-
-// Core modules
-/*var coreModule = require('bpmn-js/lib/core'),
- bpmnPaletteModule = require('bpmn-js/lib/features/palette'),
- modelingModule = require('bpmn-js/lib/features/modeling'),
- overlays = require('diagram-js/lib/features/overlays'),
- contextPad = require('bpmn-js/lib/features/context-pad'),
- copyPaste = require('bpmn-js/lib/features/copy-paste'),
- distributeElements = require('bpmn-js/lib/features/distribute-elements'),
- editorActions = require('bpmn-js/lib/features/editor-actions'),
- globalConnect = require('bpmn-js/lib/features/global-connect'),
- keyboard = require('bpmn-js/lib/features/keyboard'),
- labelEditing = require('bpmn-js/lib/features/label-editing'),
- ordering = require('bpmn-js/lib/features/ordering'),
- popupMenu = require('bpmn-js/lib/features/popup-menu'),
- replace = require('bpmn-js/lib/features/replace'),
- replacePreview = require('bpmn-js/lib/features/replace-preview'),
- rules = require('bpmn-js/lib/features/rules'),
- search = require('bpmn-js/lib/features/search'),
- snapping = require('bpmn-js/lib/features/snapping'),
- resize = require('diagram-js/lib/features/resize'),
- autoResize = require('bpmn-js/lib/features/auto-resize'),
- bendingPoints = require('diagram-js/lib/features/bendpoints');*/
-
+/*
 var modelingModules = [
 
-    //require('./clinical-pathways/rules'),
     // core
     require('bpmn-js/lib/core'),
     require('diagram-js/lib/i18n/translate'),
@@ -145,7 +114,7 @@ var interactionModules = [
 var modules = [].concat(
     modelingModules,
     interactionModules
-);
+);*/
 
 var modeler = new BpmnModeler({
     container: canvas, keyboard: {bindTo: document},
@@ -153,36 +122,7 @@ var modeler = new BpmnModeler({
     propertiesPanel: {
         parent: '#js-properties-panel'
     },
-    //modules: modules,
-    /*[
-     // if we have custom rules, place them before core modules!
-     cpRules,
 
-
-     // core modules
-     coreModule,
-     bpmnPaletteModule,
-     modelingModule,
-     overlays,
-     contextPad,
-     copyPaste,
-     distributeElements,
-     editorActions,
-     globalConnect,
-     keyboard,
-     labelEditing,
-     ordering,
-     //popupMenu,
-     replace,
-     replacePreview,
-     rules,
-     search,
-     snapping,
-     resize,
-     autoResize,
-     bendingPoints
-
-     ],*/
     additionalModules: [
         cpImporter,
         cpBehavior,
@@ -201,8 +141,7 @@ var modeler = new BpmnModeler({
 
     ],
     moddleExtensions: {
-        cp: cpMetamodel,
-        camunda: camundaModdleDescriptor
+        cp: cpMetamodel
     }
 });
 

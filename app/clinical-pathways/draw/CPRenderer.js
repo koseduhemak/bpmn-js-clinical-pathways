@@ -313,15 +313,6 @@ function CPRenderer(eventBus, styles, pathMap, modeling) {
 
             return svgAppend(parent, createLine(element.waypoints, attrs));
         },
-        'cp:CPGReferenceAssociation': function (parent, element) {
-            var attrs = computeStyle(attrs, {
-                stroke: '#000',
-                strokeWidth: 2,
-                strokeDasharray: "3, 3"
-            });
-
-            return svgAppend(parent, createLine(element.waypoints, attrs));
-        },
         /** CUSTOM CONNECTIONS / RELATIONS END **/
         'cp:SimultanParallelGateway': function (parent, element) {
             var url = Icons.iconSimultanParallelGateway;
@@ -593,31 +584,6 @@ function CPRenderer(eventBus, styles, pathMap, modeling) {
 
             createMaterialIcon('text_fields', parent);
             return docShape;
-        },
-        /**
-         * CPG Reference
-         */
-        'cp:CPGReference': function (parent, element) {
-
-            element.width = 40;
-            element.height = 50;
-
-            var pathData = pathMap.getScaledPath('DATA_OBJECT_PATH', {
-                xScaleFactor: 1,
-                yScaleFactor: 1,
-                containerWidth: element.width,
-                containerHeight: element.height,
-                position: {
-                    mx: 0.474,
-                    my: 0.296
-                }
-            });
-
-            var elementObject = drawPath(parent, pathData, {fill: 'white'});
-
-            createFontawesomeIcon('\uf02d', parent);
-
-            return elementObject;
         },
         /**
          * Objective and Quality Indicators
@@ -1056,7 +1022,7 @@ function CPRenderer(eventBus, styles, pathMap, modeling) {
 }
 
 function getConnectionsAbleToDraw() {
-    return ['cp:ResourceAssociation', 'cp:ResourceRelation', 'cp:StatementRelation', 'cp:CaseChartAssociation', 'cp:DocumentAssociation', 'cp:QualityIndicatorAssociation', 'cp:ObjectiveAssociation', 'cp:CPGReferenceAssociation'];
+    return ['cp:ResourceAssociation', 'cp:ResourceRelation', 'cp:StatementRelation', 'cp:CaseChartAssociation', 'cp:DocumentAssociation', 'cp:QualityIndicatorAssociation', 'cp:ObjectiveAssociation'];
 }
 
 /**

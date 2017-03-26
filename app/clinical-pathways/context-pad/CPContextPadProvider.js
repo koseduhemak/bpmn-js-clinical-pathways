@@ -32,7 +32,7 @@ function CPContextPadProvider(eventBus, contextPad, modeling, elementFactory, co
 
 
             // we only want the delete action for custom FlowNode elements
-            if (isAny(businessObject, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:AbstractContainerElement', 'cp:ClinicalDocument', 'cp:Document', 'cp:StructuredDocumentReference', 'cp:Indicator', 'cp:CPGReference'])) {
+            if (isAny(businessObject, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:AbstractContainerElement', 'cp:ClinicalDocument', 'cp:Document', 'cp:StructuredDocumentReference', 'cp:Indicator'])) {
                 var cachedActions = actions;
                 newActions = {
                     delete: cachedActions.delete
@@ -46,7 +46,7 @@ function CPContextPadProvider(eventBus, contextPad, modeling, elementFactory, co
             }
 
             // if we have custom elements that should connect to other elements they have to be listed here
-            if (isAny(businessObject, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:ClinicalDocument', 'cp:Document', 'cp:Indicator', 'cp:CPGReference'])) {
+            if (isAny(businessObject, ['cp:CPResource', 'cp:ClinicalStatement', 'cp:CaseChart', 'cp:ResourceBundle', 'cp:ClinicalDocument', 'cp:Document', 'cp:Indicator'])) {
 
                 assign(actions, {
                     'connect': {

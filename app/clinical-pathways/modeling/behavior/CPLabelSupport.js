@@ -11,7 +11,7 @@ function CPLabelSupport(eventBus, modeling, bpmnFactory) {
     CommandInterceptor.call(this, eventBus);
 
     this.hasExternalLabel = hasExternalLabel = function(bo) {
-        return isAny(bo, ['cp:Objective', 'cp:QualityIndicator', 'cp:CPGReference', 'cp:ParallelGateway', 'cp:EvidenceGateway']);
+        return isAny(bo, ['cp:Objective', 'cp:QualityIndicator', 'cp:ParallelGateway', 'cp:EvidenceGateway']);
     };
 
     this.labelCreate = function(e) {

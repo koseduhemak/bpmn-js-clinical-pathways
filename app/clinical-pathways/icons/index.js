@@ -14,8 +14,6 @@ var iconOrganizer = fs.readFileSync(__dirname + '/documents/icon-organizer.png',
 var iconCaseChart = fs.readFileSync(__dirname + '/documents/icon-case-chart.png', 'base64');
 var iconClinicalStatement = fs.readFileSync(__dirname + '/documents/icon-clinical-statement.png', 'base64');
 
-var iconCPGReference = fs.readFileSync(__dirname + '/documents/icon-cpg-reference.png', 'base64');
-
 // gateways
 var iconSimultanParallelGateway = fs.readFileSync(__dirname + '/gateways/simultan-parallel-gateway.png', 'base64');
 var iconEvidenceBasedGateway = fs.readFileSync(__dirname + '/gateways/evidence-gateway.png', 'base64');
@@ -50,6 +48,5 @@ module.exports.iconSegment = 'data:image/png;base64,' +iconSegment;
 module.exports.iconOrganizer = 'data:image/png;base64,' +iconOrganizer;
 module.exports.iconCaseChart = 'data:image/png;base64,' +iconCaseChart;
 module.exports.iconClinicalStatement = 'data:image/png;base64,' +iconClinicalStatement;
-module.exports.iconCPGReference = 'data:image/png;base64,' +iconCPGReference;
 module.exports.iconObjective = 'data:image/png;base64,' +iconObjective;
 module.exports.iconQualityIndicator = 'data:image/png;base64,' +iconQualityIndicator;
