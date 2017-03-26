@@ -150,6 +150,8 @@ $(document).ready(function () {
             html: true,
             showConfirmButton: false
         });
+        openTable(file);
+        /*
 
         $.get('/diagram/get/' + encodeURI(file), function (json) {
             if (json.result) {
@@ -160,7 +162,7 @@ $(document).ready(function () {
             }
         }).fail(function () {
             console.error("Could not load your DMN!");
-        });
+        });*/
     } else {
         createNewTable();
     }
@@ -237,7 +239,7 @@ $(document).ready(function () {
 
             return false;
         } else {
-            openerCallback(diagramName);
+            openerCallback(latestXML);
         }
     });
 
@@ -248,7 +250,7 @@ $(document).ready(function () {
 function saveDiagramToDisk(diagramName, latestXML) {
     $.post('/diagram/save/' + encodeURI(diagramName), {xml: latestXML}).done(function (json) {
         if (json.result) {
-            openerCallback(diagramName);
+            openerCallback(latestXML);
         } else {
             swal({
                 title: "DMN not saved!",
@@ -283,13 +285,15 @@ function isWebserver() {
     return window.location.href.indexOf("localhost:9013") == -1;
 }
 
-function openerCallback(diagramName) {
-    opener.notifyDMNSave(diagramName);
+function openerCallback(xml) {
+    // make sure there is everything properly escaped
+    xml = xml.replace(/[^\]]\]\]\>(?!\<\!\[CDATA\[\>)/g, ']]]]><![CDATA[>');
+    opener.notifyDMNSave(xml);
 
     // display message that modeler is closed after download is executed... This is a workaround due browsers insufficiency
     swal({
         title: "DMN saved!",
-        text: "Your DMN model was saved. You will return to your BPMN diagram in 3 seconds.",
+        text: "Your DMN model was saved. It will be included inline in your bpmn and served as file download / or persisted to your workspace. You will return to your BPMN diagram in 3 seconds.",
         type: "success",
         showConfirmButton: false
     });

@@ -8,7 +8,7 @@ var isAny = require('bpmn-js/lib/features/modeling/util/ModelingUtil').isAny,
 
 var getBusinessObject = require('bpmn-js/lib/util/ModelUtil').getBusinessObject;
 
-var helpers = require('./helpers');
+var helpers = require('../PropertyHelpers');
 var cmdHelper = require('bpmn-js-properties-panel/lib/helper/CmdHelper');
 
 module.exports = function (group, element, moddle) {
@@ -20,7 +20,6 @@ module.exports = function (group, element, moddle) {
                 var extensionElements = [];
 
                 if (typeof values.evidenceIndicator !== 'undefined' && values.evidenceIndicator !== '') {
-                    console.log(values);
                     //var evidenceIndicator = moddle.create('cp:EvidenceIndicator', { evidenceLevel: values.evidenceIndicator});
                     extensionElements = moddle.create('cp:EvidenceIndicator', {
                         evidenceLevel: values.evidenceIndicator
@@ -42,11 +41,11 @@ module.exports = function (group, element, moddle) {
         };
 
         group.entries.push(entryFactory.selectBox({
-            id: 'evidenceIndicator',
+            id: 'evidenceIndicatorProperty',
             description: 'Evidence Level of the task/gateway',
             label: 'Evidence Level',
             modelProperty: 'evidenceIndicator',
-            selectOptions: helpers.getEnumValues(getBusinessObject('EvidenceLevel')),
+            selectOptions: helpers.getEnumValues('cp:EvidenceLevel'),
             set: setValue(getBusinessObject(element)),
             get: getValue(getBusinessObject(element))
         }));

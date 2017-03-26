@@ -99,8 +99,19 @@
       "properties": [
         {
           "name": "dmn",
-          "default": "",
-          "isAttr": true,
+          "type": "Dmn"
+        }
+      ]
+    },
+    {
+      "name": "Dmn",
+      "superClass": [
+        "Element"
+      ],
+      "properties": [
+        {
+          "name": "diagram",
+          "isBody": true,
           "type": "String"
         }
       ]
@@ -147,9 +158,21 @@
     },
     /* CPG Reference */
     {
-      "name": "CPGReference",
+      "name": "DataObject",
       "extends": [
-        "bpmn:FlowNode"
+        "bpmn:DataObject"
+      ],
+      "properties": [
+        {
+          "name": "cpgReference",
+          "type": "CPGReference"
+        }
+      ]
+    },
+    {
+      "name": "CPGReference",
+      "superClass": [
+        "Element"
       ],
       "properties": [
         {
@@ -475,6 +498,13 @@
       "name": "ResourceRelation",
       "superClass": [
         "bpmn:Association"
+      ],
+      "properties": [
+        {
+          "name": "resourceRelationType",
+          "isAttr": true,
+          "type": "ResourceRelationType"
+        }
       ]
     },
     /* Relation between BPMN-Elements and CPResource */
@@ -557,28 +587,57 @@
       "name": "DocumentType",
       "literalValues": [
         {
-          "name": "Patients Chart"
+          "name": "",
+          "value": ""
         },
         {
-          "name": "Treatment Contract"
+          "name": "Patients Chart",
+          "value": "Patients Chart"
         },
         {
-          "name": "Anamnesis"
+          "name": "Treatment Contract",
+          "value": "Treatment Contract"
         },
         {
-          "name": "Accounting Document"
+          "name": "Anamnesis",
+          "value": "Anamnesis"
         },
         {
-          "name": "Result"
+          "name": "Accounting Document",
+          "value": "Accounting Document"
         },
         {
-          "name": "Physican's Letter"
+          "name": "Result",
+          "value": "Result"
         },
         {
-          "name": "Patient File"
+          "name": "Physican's Letter",
+          "value": "Physican's Letter"
         },
         {
-          "name": "Accounting Case"
+          "name": "Patient File",
+          "value": "Patient File"
+        },
+        {
+          "name": "Accounting Case",
+          "value": "Accounting Case"
+        }
+      ]
+    },
+    {
+      "name": "ResourceRelationType",
+      "literalValues": [
+        {
+          "name": "",
+          "value": ""
+        },
+        {
+          "name": "complementary",
+          "value": "complementary"
+        },
+        {
+          "name": "substitutional",
+          "value": "substitutional"
         }
       ]
     }

@@ -16,8 +16,13 @@ var processProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/Pro
 
 
 // Require your custom property entries.
-var cpProps = require('./parts/CPProps');
-var evidenceIndiactorProps = require('./parts/CPEvidenceIndicatorProps');
+var evidenceIndiactorProps = require('./parts/EvidenceIndicator'),
+    cpgReferenceProps = require('./parts/CPGReference'),
+    clinicalStatementProps = require('./parts/ClinicalStatement'),
+    dmnProps = require('./parts/DMNProps'),
+    documentProps = require('./parts/Document'),
+    segmentProps = require('./parts/Segment'),
+    resourceRelationProps = require('./parts/ResourceRelation');
 
 //var cpDmnHelper = require('../helper');
 
@@ -63,21 +68,68 @@ function CPPropertiesProvider(eventBus, bpmnFactory, elementRegistry, modeling, 
 
 
     // Create the custom CP tab
-    this.createCPTabGroups = function(element, elementRegistry) {
+    this.createCPTabGroups = function (element, elementRegistry) {
 
         // Create a group called "Clinical Pathways".
-        var CPGroup = {
-            id: 'clinical-pathways',
-            label: 'Clinical Pathways',
+        var evidenceIndicatorGroup = {
+            id: 'evidence-indicator-group',
+            label: 'Evidence Indicator',
             entries: []
         };
 
-        // Add the cp props to the clinical-pathways group.
-        cpProps(CPGroup, element, modeling, moddle);
-        evidenceIndiactorProps(CPGroup, element, moddle);
+        var cpgReferenceGroup = {
+            id: 'cpgReference-group',
+            label: 'CPG Reference',
+            entries: []
+        };
+
+        var clinicalStatementGroup = {
+            id: 'clinical-statement-group',
+            label: 'Evidence Indicator',
+            entries: []
+        };
+
+        var dmnGroup = {
+            id: 'dmn-group',
+            label: 'DMN',
+            entries: []
+        };
+
+        var segmentGroup = {
+            id: 'segment-group',
+            label: 'Segment Attributes',
+            entries: []
+        };
+
+        var documentGroup = {
+            id: 'document-group',
+            label: 'Document Attributes',
+            entries: []
+        };
+
+        var resourceRelationGroup = {
+            id: 'resource-relation-group',
+            label: 'Resource Relation',
+            entries: []
+        };
+
+        // Add the cp props to their respective group.
+        evidenceIndiactorProps(evidenceIndicatorGroup, element, moddle);
+        cpgReferenceProps(cpgReferenceGroup, element, moddle);
+        clinicalStatementProps(clinicalStatementGroup, element, moddle);
+        dmnProps(dmnGroup, element, moddle, modeling);
+        segmentProps(segmentGroup, element, moddle);
+        documentProps(documentGroup, element, moddle);
+        resourceRelationProps(resourceRelationGroup, element, moddle);
 
         return [
-            CPGroup
+            evidenceIndicatorGroup,
+            cpgReferenceGroup,
+            clinicalStatementGroup,
+            dmnGroup,
+            segmentGroup,
+            documentGroup,
+            resourceRelationGroup
         ];
     };
 
