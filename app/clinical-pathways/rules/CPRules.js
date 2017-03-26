@@ -10,10 +10,6 @@ var isAny = require('bpmn-js/lib/features/modeling/util/ModelingUtil').isAny;
 
 var $ = require('jquery');
 
-var evidenceLevel = require('../enums/EvidenceLevel.json');
-
-var extensionUtil = require('../util/ExtensionElementUtil');
-
 var HIGH_PRIORITY = 1500;
 
 /**
