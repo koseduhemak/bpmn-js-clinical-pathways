@@ -41,16 +41,16 @@ Benutzervariable [PATH] für ###USERNAME###:
 ### app
 Dieser Ordner beinhaltet alle Quelldateien, um die bpmn-js erweitert wurde. Bpmn-js wurde nicht-destruktiv erweitert. Damit ist gemeint, dass die Quelldateien nicht modifiziert worden sind und die Library weiterhin gekapselt ist.
 Das hat den Vorteil, dass bpmn-js unabhängig von diesem Projekt aktualisiert werden kann, um so von neuen Features und Bug-Fixes zu profitieren.
-<br>Im Folgenden wird auf die einzelnen Unterordner kurz eingegangen.
+In der separaten [README](app) wird auf weitere Details eingegangen.
 
 #### clinical-pathways
 In diesem Ordner sind die Erweiterungen gemäß des Ordner-Schemas von bpmn-js organisiert.
 
 #### php
 In diesem Verzeichnis befindet sich das Server-Backend auf Basis des Zend Framework 3. 
-Für weitere Informationen zur Funktionsweise und Struktur des Zend Framework 3 sei auf dessen [Dokumentation](https://framework.zend.com/learn) verwiesen.
+Eine Erläuterung der einzelnen Inhalte kann in der separaten [README](php) im Ordner **./php** gefunden werden.
 
-Eine Erläuterung der einzelnen Inhalte kann in der [README](php) gefunden werden.
+Für weitere Informationen zur Funktionsweise und Struktur des Zend Framework 3 sei auf dessen [Dokumentation](https://framework.zend.com/learn) verwiesen.
 
 ## Ausführung
 Im Folgenden wird erklärt, wie das Projekt in einer lokalen Testumgebung ausgeführt werden kann.
