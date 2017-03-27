@@ -1,21 +1,21 @@
 # bpmn-js-clinical-pathways
 Dieses Projekt ist ein Modellierungseditor zur Abbildung von Konzepten Klinischer Pfade, die in die abstrakte Syntax des Metamodells der BPMN 2.0 integriert wurden.
-Dieser Prototyp entstand während der Masterarbeit mit dem Titel `Konzeption & Implementierung eines webbasierten Modellierungseditors zur Abbildung Klinischer Pfad` von `FÜSSLIN (2017)`.
-Die implementierten Konzepte stützen sich weitestgehend auf die Forschungsarbeiten von `BRAUN ET AL. (2014)`, `BRAUN ET AL. (2015)`, `BRAUN ET AL. (2016)`. 
+Dieser Prototyp entstand während der Masterarbeit mit dem Titel `Konzeption & Implementierung eines webbasierten Modellierungseditors zur Abbildung Klinischer Pfad` von [`FÜSSLIN (2017)`](#literatur).
+Die implementierten Konzepte stützen sich weitestgehend auf die Forschungsarbeiten von [`BRAUN ET AL. (2014)`](#literatur), [`BRAUN ET AL. (2015)`](#literatur), [`BRAUN ET AL. (2016)`](#literatur). 
 Die vollständigen Literaturverweise können im Abschnitt [Literatur](#literatur) eingesehen werden.
 
 Dabei wurde die JavaScript-Library **bpmn-js** als Ausgangsbasis herangezogen und an notwendigen Stellen erweitert.
 
 ## Vorstellung
 
-### Abbildung 1: Modellierungseditor bpmn-js-clinical-pathways. Quelle: `FÜSSLIN (2017), S. 49`
+### Modellierungseditor bpmn-js-clinical-pathways. Quelle: [`FÜSSLIN (2017), S. 49`](#literatur)
 ![Modellierungseditor bpmn-js-clinical-pathways](docs/bpmnjsUeberblick.png "Modellierungseditor bpmn-js-clinical-pathways")
 
-### Abbildung 2: Implementierte Konzepte Klinischer Pfade. Quelle: `FÜSSLIN (2017), S. 56`
+### Implementierte Konzepte Klinischer Pfade. Quelle: [`FÜSSLIN (2017), S. 56`](#literatur)
 ![Implementierte Konzepte Klinischer Pfade](docs/implementedElements.png "Implementierte Konzepte Klinischer Pfade")
 
-
-
+### DMN Beispiel. Quelle: [`FÜSSLIN (2017), S. 62`](#literatur)
+![DMN Beispiel](docs/dmn.png "DMN Beispiel")
 
 
 ## Voraussetzungen
@@ -111,8 +111,6 @@ processes from various angles - amplifying BPMN for integrated hospital manageme
 [BRAUN ET AL. 2016] BRAUN, Richard ; SCHLIETER, Hannes ; BURWITZ, Martin ; ESSWEIN,
 Werner: _BPMN4CP Revised – Extending BPMN for Multi-perspective Modeling of Clinical
 Pathways._ In: Hawaii International Conference on System Sciences (HICSS) 49 (2016), S.
-3249–3258. http://dx.doi.org/doi.ieeecomputersociety.org/10.11
-09/HICSS.2016.407. – DOI doi.ieeecomputersociety.org/10.1109/HICSS.2016.407. –
-ISSN 1530–1605
+3249–3258. – DOI [http://doi.ieeecomputersociety.org/10.1109/HICSS.2016.407](http://doi.ieeecomputersociety.org/10.1109/HICSS.2016.407). – ISSN 1530–1605
 
 [FÜSSLIN 2017] FÜSSLIN, Maximilian: _Konzeption & Implementierung eines webbasierten Modellierungseditors zur Abbildung Klinischer Pfade._ 2017. Technische Universität Dresden
