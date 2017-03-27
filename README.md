@@ -2,7 +2,7 @@
 Dieses Projekt ist ein Modellierungseditor zur Abbildung von Konzepten Klinischer Pfade, die in die abstrakte Syntax des Metamodells der BPMN 2.0 integriert wurden.
 Dieser Prototyp entstand während der Masterarbeit mit dem Titel `Konzeption & Implementierung eines webbasierten Modellierungseditors zur Abbildung Klinischer Pfad` von `FÜSSLIN (2017)`.
 Die implementierten Konzepte stützen sich weitestgehend auf die Forschungsarbeiten von `BRAUN ET AL. (2014)`, `BRAUN ET AL. (2015)`, `BRAUN ET AL. (2016)`. 
-Die vollständigen Literaturverweise können im Abschnitt [Literatur](#Literatur) eingesehen werden.
+Die vollständigen Literaturverweise können im Abschnitt [Literatur](#literatur) eingesehen werden.
 
 Dabei wurde die JavaScript-Library **bpmn-js** als Ausgangsbasis herangezogen und an notwendigen Stellen erweitert.
 
@@ -97,7 +97,7 @@ Im Folgenden wird erklärt, wie das Projekt in einer lokalen Testumgebung ausgef
  ```
  kopiert alle notwendigen Dateien in den Ordner **php/public/cp-modeler** und stellt diese für die Verwendung innerhalb des integrierten Zend Framework 3 bereit.
  
-## Literatur <a name="Literatur"></a>
+## Literatur
 [BRAUN ET AL. 2014] BRAUN, Richard ; SCHLIETER, Hannes ; BURWITZ, Martin ; ESSWEIN,
 Werner: _Bpmn4cp: Design and implementation of a bpmn extension for clinical pathways._
 In: Bioinformatics and Biomedicine (BIBM), 2014 IEEE International Conference on IEEE,
