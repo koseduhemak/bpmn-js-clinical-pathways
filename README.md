@@ -50,6 +50,7 @@ In diesem Ordner sind die Erweiterungen gemäß des Ordner-Schemas von bpmn-js o
 In diesem Verzeichnis befindet sich das Server-Backend auf Basis des Zend Framework 3. 
 Für weitere Informationen zur Funktionsweise und Struktur des Zend Framework 3 sei auf dessen [Dokumentation](https://framework.zend.com/learn) verwiesen.
 
+Eine Erläuterung der einzelnen Inhalte kann in der [README](php) gefunden werden.
 
 ## Ausführung
 Im Folgenden wird erklärt, wie das Projekt in einer lokalen Testumgebung ausgeführt werden kann.
