@@ -430,10 +430,8 @@
     {
       "name": "ResourceBundle",
       "superClass": [
-        "AbstractContainerElement"
-      ],
-      "extends": [
-        "bpmn:Resource"
+        "AbstractContainerElement",
+        "Resource"
       ]
     },
     {

@@ -1,4 +1,4 @@
 module.exports = {
     __init__: ['propertiesProvider'],
-    propertiesProvider: ['type', require('./CPPropertyProvider')],
+    propertiesProvider: ['type', require('./CPPropertiesProvider')]
 };

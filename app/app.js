@@ -1,30 +1,3 @@
-/*'use strict';
-
- // inlined diagram; load it from somewhere else if you like
- var pizzaDiagram = require('../resources/pizza-collaboration.bpmn');
-
- // custom elements JSON; load it from somewhere else if you like
- var customElements = require('./custom-elements.json');
-
- var cpMetamodel = require('./clinical-pathways/ext-metamodel/cp.json');
-
- var $ = require('jquery');
-
-
- // our custom modeler
- var CustomModeler = require('./custom-modeler');
- var Modeler = require('bpmn-js/M')
-
- var cpPaletteModule = require('./clinical-pathways/palette');
- var cpDrawModule = require('./clinical-pathways/draw');
- var modeler = new CustomModeler({ container: '#canvas', keyboard: { bindTo: document }, additionalModules: [
- cpPaletteModule,
- cpDrawModule
- ],
- moddleExtensions: {
- cp: cpMetamodel
- }
- });*/
 'use strict';
 
 var fs = require('fs');
