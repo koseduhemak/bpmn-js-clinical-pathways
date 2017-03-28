@@ -3,16 +3,18 @@ In dieser README wird auf die einzelnen Unterordner **./app/*** kurz eingegangen
 
 ## Table of Contents
 
+[Zurück zur Hauptseite](../)
+
 - [app/clinical-pathways](#appclinical-pathways)
-    - [context-pad/CPContextPadProvider](context-padCPContextPadProvider)
-    - [draw/CPRenderer](#drawcprenderer)
+    - [context-pad/CPContextPadProvider.js](#context-padCPContextPadProvider)
+    - [draw/CPRenderer.js](#drawcprenderer)
     - [ext-metamodel/CPMetamodel.json](#ext-metamodelcpmetamodeljson)
-    - [import/CPImporter](#importcpimporter)
-    - [modeling/behavior/CPLabelSupport](#modelingbehaviorcplabelsupport)
-    - [palette/CPPaletteProvider](#palettecppaletteprovider)
-    - [popup-menu/CPReplaceMenuProvider](#popup-menucpreplacemenuprovider)
-    - [properties-provider/CPPropertiesProvider](#properties-providercppropertiesprovider)
-    - [rules/CPRules](#rulescprules)
+    - [import/CPImporter.js](#importcpimporter)
+    - [modeling/behavior/CPLabelSupport.js](#modelingbehaviorcplabelsupport)
+    - [palette/CPPaletteProvider.js](#palettecppaletteprovider)
+    - [popup-menu/CPReplaceMenuProvider.js](#popup-menucpreplacemenuprovider)
+    - [properties-provider/CPPropertiesProvider.js](#properties-providercppropertiesprovider)
+    - [rules/CPRules.js](#rulescprules)
 - [dmn](#dmn)
 - [elFinder/elFinderHelper.js](#elfinderelfinderhelperjs)
 
@@ -91,24 +93,24 @@ var handlers = this.handlers = {
 ### [ext-metamodel/CPMetamodel.json](clinical-pathways/ext-metamodel/CPMetamodel.json)
 In dieser Datei ist das erweiterte Metamodell der Konzepte Klinischer Pfade abgebildet. 
 
-### [import/CPImporter](clinical-pathways/import/CPImporter.js)
+### [import/CPImporter.js](clinical-pathways/import/CPImporter.js)
 Diese Datei stellt beim Laden eines Modells sicher, dass externe Labels an entsprechend konfigurierte Elemente angehangen werden.
 
-### [modeling/behavior/CPLabelSupport](clinical-pathways/modeling/behavior/CPLabelSupport.js)
+### [modeling/behavior/CPLabelSupport.js](clinical-pathways/modeling/behavior/CPLabelSupport.js)
 In dieser Datei wird zur Laufzeit ermittelt, welche Elemente externe Labels besitzen und diese dementsprechend gerendert.
 
-### [palette/CPPaletteProvider](clinical-pathways/palette/CPPaletteProvider.js)
+### [palette/CPPaletteProvider.js](clinical-pathways/palette/CPPaletteProvider.js)
 In dieser Klasse wird die Palette um Elemente Klinischer Pfade erweitert. Diese können fortan mittels gedrückter Maus auf die Zeichenfläche (bzw. in das bpmn:Process- / bpmn:Collaboration-Element) gezogen werden.
 
-### [popup-menu/CPReplaceMenuProvider](clinical-pathways/popup-menu/CPReplaceMenuProvider.js)
+### [popup-menu/CPReplaceMenuProvider.js](clinical-pathways/popup-menu/CPReplaceMenuProvider.js)
 In dieser Datei wird das Popup-Menü konfiguriert. Im Zusammenspiel mit der Datei [replace/CPReplaceOptions.js](clinical-pathways/replace/CPReplaceOptions.js) wird ermittelt, welche Einträge in das Popup-Menü integriert werden sollen.
 Bspw. werden für ein Element bpmn:Task sinnvollerweise alle dessen Subtypen als Einträge festgelegt. So kann der Modellersteller die Typisierung eines bpmn:Task-Elements vornehmen.
 
-### [properties-provider/CPPropertiesProvider](clinical-pathways/properties-provider/CPPropertiesProvider.js)
+### [properties-provider/CPPropertiesProvider.js](clinical-pathways/properties-provider/CPPropertiesProvider.js)
 In dieser Klasse werden die Optionsgruppen konfiguriert. Dazu wird festgelegt, welche Tabs für ein markiertes Element integriert und welche Attribute modifiziert werden sollen können.
 Für jedes Element bzw. Attribut wurden dazu Dateien im Ordner [properties-provider/parts](clinical-pathways/properties-provider/parts) angelegt, die das jeweilige Attribut entsprechend als Textfeld oder Auswahlliste rendern.
 
-### [rules/CPRules](clinical-pathways/rules/CPRules.js)
+### [rules/CPRules.js](clinical-pathways/rules/CPRules.js)
 In dieser Datei werden Modellierungsregeln formuliert. Dazu werden die Methoden `canCreate()` und `canConnect()` bei der Erstellung eines Elements ausgewertet. Will der Modellersteller ein Element bzw. Assoziation an einer Stelle platzieren, die aus sytaktischen Gründen nicht erlaubt ist, wird das betreffende Element rot hinterlegt.
 Andernfalls wird durch eine grüne Hinterlegung eine valide Möglichkeit der Platzierung suggeriert.
 

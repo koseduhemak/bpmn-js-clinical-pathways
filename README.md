@@ -21,12 +21,13 @@ Dabei wurde die JavaScript-Library **bpmn-js** als Ausgangsbasis herangezogen un
 ## Voraussetzungen
 Das Testsystem bestand aus folgenden Komponenten und wurde unter Windows 10 aufgesetzt:
 * [Apache 2.4.23 (x64)](https://httpd.apache.org/)
+    * inkl. mod_rewrite
 * [PHP 7.1.0 (ZTS MSVC14 (Visual C++ 2015) x64)](http://php.net/)
 * [NodeJS 7.2.0 & NPM 4.0.5](https://nodejs.org/)
 
 **!Wichtig!**
 
-Die Pfade der Programme `npm` und `php` müssen in der Windows PATH-Variable vorhanden sein, um Befehle über die Kommandozeile ausführen zu können.
+Die Pfade der Programme `node`, `npm` und `php` müssen in der Windows PATH-Variable vorhanden sein, um Befehle über die Kommandozeile ausführen zu können.
 Zum Beispiel:
 
 Benutzervariable [PATH] für ###USERNAME###:
@@ -35,18 +36,19 @@ Benutzervariable [PATH] für ###USERNAME###:
  Systemvariable [PATH]:
 `C:\Users\###USERNAME###\scoop\apps\php\current`
 
-(PHP unter Systemvariablen anlegen, da der WebServer meistens unter einem anderen User ausgeführt wird und daher die Systemvariablen des Nutzers ###USERNAME### keine Gültigkeit besitzen.)
+(PHP unter Systemvariablen anlegen, da der WebServer meistens unter einem anderen User ausgeführt wird und daher die Systemvariablen des Nutzers ###USERNAME### keine Gültigkeit besitzen.) Die korrekte funktionsweise kann in der Kommandozeile z. B. via `node -v`, `npm -v` bzw. `php -v`überprüft werden. 
+
+**Konfiguration des WebServers**
+
+Der Webserver muss so konfiguriert werden, dass der Document-Root auf das Verzeichnis `php/public` zeigt. 
 
 ## Struktur
 ### app
 Dieser Ordner beinhaltet alle Quelldateien, um die bpmn-js erweitert wurde. Bpmn-js wurde nicht-destruktiv erweitert. Damit ist gemeint, dass die Quelldateien nicht modifiziert worden sind und die Library weiterhin gekapselt ist.
 Das hat den Vorteil, dass bpmn-js unabhängig von diesem Projekt aktualisiert werden kann, um so von neuen Features und Bug-Fixes zu profitieren.
-In der separaten [README](app) wird auf weitere Details eingegangen.
+In der separaten [README](app) im Ordner **./app** wird auf weitere Details eingegangen.
 
-#### clinical-pathways
-In diesem Ordner sind die Erweiterungen gemäß des Ordner-Schemas von bpmn-js organisiert.
-
-#### php
+### php
 In diesem Verzeichnis befindet sich das Server-Backend auf Basis des Zend Framework 3. 
 Eine Erläuterung der einzelnen Inhalte kann in der separaten [README](php) im Ordner **./php** gefunden werden.
 
@@ -55,17 +57,24 @@ Für weitere Informationen zur Funktionsweise und Struktur des Zend Framework 3 
 ## Ausführung
 Im Folgenden wird erklärt, wie das Projekt in einer lokalen Testumgebung ausgeführt werden kann.
 
-### Abhängigkeiten installieren
+### Abhängigkeiten installieren (einmalig ausführen)
  ```
  npm install
  ```
+ 
+ ### Abhängigkeiten des PHP-Moduls installieren (einmalig ausführen)
+ **HINWEIS**: PHP muss dazu in der PATH-Variable sein und über die Kommandozeile z. B. per `php -v` erreichbar sein.
+  ```
+  npm run php-dependencies
+  ```
+  
 ### Ausführen des Projektes (ohne PHP Funktionalitäten)
  Der Befehl
  ```
  grunt auto-build
  ```
  kopiert alle notwendigen Dateien in den **"dist"** Ordner, führt den integrierten WebServer **Karma** aus und lädt das Projekt im Browser
- unter **http://localhost:9013**.
+ unter [http://localhost:9013](http://localhost:9013).
  
  ### Produktiv-Version erzeugen (inkl. PHP Funktionalitäten)
  Der Befehl

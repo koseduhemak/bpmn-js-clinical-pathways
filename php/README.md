@@ -1,6 +1,7 @@
 # Struktur der PHP-Komponente
 ![Ordnerinhalt 'php'](../docs/folder-php.png "Ordnerinhalt 'php'")
 
+Für weitere Informationen zur Funktionsweise und Struktur des Zend Framework 3 sei auf dessen [Dokumentation](https://framework.zend.com/learn) verwiesen.
 
 ##### config/autoload/elFinder.global.php
  Diese Datei enthält die Konfiguration für das Dateibrowser-Modul **"ElFinder"**.
