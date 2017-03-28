@@ -34,6 +34,7 @@ Das Testsystem bestand aus folgenden Komponenten und wurde unter Windows 10 aufg
     * inkl. mod_rewrite
 * [PHP 7.1.0 (ZTS MSVC14 (Visual C++ 2015) x64)](http://php.net/)
 * [NodeJS 7.2.0 & NPM 4.0.5](https://nodejs.org/)
+    * grunt `npm install --global grunt`
 
 Die Anwendung wurde mit Mozilla Firefox und Google Chrome getestet.
 
