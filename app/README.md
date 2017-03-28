@@ -1,10 +1,25 @@
 # app - Struktur und Erläuterungen der Komponenten
 In dieser README wird auf die einzelnen Unterordner **./app/*** kurz eingegangen. Dazu ist folgende Abbildung hilfreich, um die verwendeten Fachbegriffe zuordnen zu können.
 
-### Modellierungseditor bpmn-js-clinical-pathways. Quelle: [`FÜSSLIN (2017), S. 49`](#literatur)
+## Table of Contents
+
+- [app/clinical-pathways](#appclinical-pathways)
+    - [context-pad/CPContextPadProvider](context-padCPContextPadProvider)
+    - [draw/CPRenderer](#drawcprenderer)
+    - [ext-metamodel/CPMetamodel.json](#ext-metamodelcpmetamodeljson)
+    - [import/CPImporter](#importcpimporter)
+    - [modeling/behavior/CPLabelSupport](#modelingbehaviorcplabelsupport)
+    - [palette/CPPaletteProvider](#palettecppaletteprovider)
+    - [popup-menu/CPReplaceMenuProvider](#popup-menucpreplacemenuprovider)
+    - [properties-provider/CPPropertiesProvider](#properties-providercppropertiesprovider)
+    - [rules/CPRules](#rulescprules)
+- [dmn](#dmn)
+- [elFinder/elFinderHelper.js](#elfinderelfinderhelperjs)
+
+## Modellierungseditor bpmn-js-clinical-pathways. Quelle: [`FÜSSLIN (2017), S. 49`](#literatur)
 ![Modellierungseditor bpmn-js-clinical-pathways](../docs/bpmnjsUeberblick.png "Modellierungseditor bpmn-js-clinical-pathways")
 
-## app/clinical-pathways
+## [app/clinical-pathways](app/clinical-pathways)
 In diesem Ordner befinden sich die Erweiterungen der Konzepte Klinischer Pfade, die in bpmn-js integriert wurden.
 
 ### [context-pad/CPContextPadProvider](clinical-pathways/context-pad/CPContextPadProvider.js)
