@@ -70,22 +70,9 @@ function CPPropertiesProvider(eventBus, bpmnFactory, elementRegistry, modeling, 
     // Create the custom CP tab
     this.createCPTabGroups = function (element, elementRegistry) {
 
-        // Create a group called "Clinical Pathways".
-        var evidenceIndicatorGroup = {
-            id: 'evidence-indicator-group',
-            label: 'Evidence Indicator',
-            entries: []
-        };
-
-        var cpgReferenceGroup = {
-            id: 'cpgReference-group',
-            label: 'CPG Reference',
-            entries: []
-        };
-
         var clinicalStatementGroup = {
             id: 'clinical-statement-group',
-            label: 'Evidence Indicator',
+            label: 'Clinical Statement',
             entries: []
         };
 
@@ -113,6 +100,19 @@ function CPPropertiesProvider(eventBus, bpmnFactory, elementRegistry, modeling, 
             entries: []
         };
 
+        var evidenceIndicatorGroup = {
+            id: 'evidence-indicator-group',
+            label: 'Evidence Indicator',
+            entries: []
+        };
+
+
+        var cpgReferenceGroup = {
+            id: 'cpgReference-group',
+            label: 'CPG Reference',
+            entries: []
+        };
+
         // Add the cp props to their respective group.
         evidenceIndiactorProps(evidenceIndicatorGroup, element, moddle);
         cpgReferenceProps(cpgReferenceGroup, element, moddle);
@@ -123,13 +123,13 @@ function CPPropertiesProvider(eventBus, bpmnFactory, elementRegistry, modeling, 
         resourceRelationProps(resourceRelationGroup, element, moddle);
 
         return [
-            evidenceIndicatorGroup,
-            cpgReferenceGroup,
             clinicalStatementGroup,
             dmnGroup,
             segmentGroup,
             documentGroup,
-            resourceRelationGroup
+            resourceRelationGroup,
+            evidenceIndicatorGroup,
+            cpgReferenceGroup
         ];
     };
 

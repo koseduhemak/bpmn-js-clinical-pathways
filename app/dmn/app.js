@@ -26,17 +26,12 @@ var renderer = new DmnModeler({
 });
 
 var newTableXML = fs.readFileSync('./resources/newTable.dmn', 'utf-8');
-var example = fs.readFileSync('./resources/di.dmn', 'utf-8');
 
 var diagramName = "newDiagram.dmn";
 
 function createNewTable() {
     openTable(newTableXML);
 }
-function createDemoTable() {
-    openTable(exampleXML);
-}
-
 
 function setEncoded(link, name, data) {
     var encodedData = encodeURIComponent(data);
@@ -141,28 +136,28 @@ if (!window.FileList || !window.FileReader) {
 
 $(document).ready(function () {
     // init document
-    var file = getParameterByName("file");
+    var dmnXML = getParameterByName("file");
 
-    if (file) {
+    if (dmnXML) {
         swal({
             title: "Loading your DMN...",
             text: '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Loading...</span>',
             html: true,
             showConfirmButton: false
         });
-        openTable(file);
+        openTable(dmnXML);
         /*
 
-        $.get('/diagram/get/' + encodeURI(file), function (json) {
-            if (json.result) {
-                openTable(json.xml);
-            } else {
-                createNewTable();
-                console.error("Could not load your DMN!");
-            }
-        }).fail(function () {
-            console.error("Could not load your DMN!");
-        });*/
+         $.get('/diagram/get/' + encodeURI(file), function (json) {
+         if (json.result) {
+         openTable(json.xml);
+         } else {
+         createNewTable();
+         console.error("Could not load your DMN!");
+         }
+         }).fail(function () {
+         console.error("Could not load your DMN!");
+         });*/
     } else {
         createNewTable();
     }
@@ -183,8 +178,6 @@ $(document).ready(function () {
     var href = window.location.href;
     if (href.indexOf('?new') !== -1) {
         createNewTable();
-    } else if (href.indexOf('?example') !== -1) {
-        createDemoTable();
     }
 
     window.onbeforeunload = checkDirty;
@@ -202,42 +195,35 @@ $(document).ready(function () {
         dirty = false;
 
         if (isWebserver()) {
-            if (!file) {
 
-                swal({
-                        title: "Where should I save your diagram?",
-                        text: "Specify a path, please! New folders will be automatically created. [Current dir: workspace]",
-                        type: "input",
-                        showCancelButton: true,
-                        closeOnConfirm: false,
-                        animation: "slide-from-top",
-                        inputPlaceholder: "my_dir/new.dmn"
-                    },
-                    function (inputValue) {
-                        if (inputValue === false) return false;
+            swal({
+                    title: "Where should I save your diagram?",
+                    text: "Specify a path, please! New folders will be automatically created. [Current dir: workspace]",
+                    type: "input",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top",
+                    inputPlaceholder: "my_dir/new.dmn"
+                },
+                function (inputValue) {
+                    if (inputValue === false) return false;
 
-                        if (inputValue === "") {
-                            swal.showInputError("Please specify a path!");
-                            return false
-                        }
+                    if (inputValue === "") {
+                        swal.showInputError("Please specify a path!");
+                        return false
+                    }
 
-                        diagramName = inputValue;
+                    diagramName = inputValue;
 
-                        if (diagramName.substr(diagramName.lastIndexOf('.') + 1) !== "dmn") {
-                            diagramName += ".dmn";
-                        }
+                    if (diagramName.substr(diagramName.lastIndexOf('.') + 1) !== "dmn") {
+                        diagramName += ".dmn";
+                    }
 
-                        saveDiagramToDisk(diagramName, latestXML);
-                    });
-
-                return false;
-            } else {
-                diagramName = file;
-                saveDiagramToDisk(diagramName, latestXML);
-            }
-
+                    saveDiagramToDisk(diagramName, latestXML);
+                });
 
             return false;
+
         } else {
             openerCallback(latestXML);
         }
@@ -246,7 +232,11 @@ $(document).ready(function () {
     renderer.on('commandStack.changed', exportArtifacts);
     renderer.table.on('commandStack.changed', exportArtifacts);
 });
-
+/**
+ * This function saves latestXML to a file diagramName.
+ * @param diagramName
+ * @param latestXML
+ */
 function saveDiagramToDisk(diagramName, latestXML) {
     $.post('/diagram/save/' + encodeURI(diagramName), {xml: latestXML}).done(function (json) {
         if (json.result) {

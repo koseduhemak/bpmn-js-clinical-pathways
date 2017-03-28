@@ -113,7 +113,7 @@ CPRules.prototype.init = function () {
         }
 
 
-        return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'bpmn:SubProcess');
+        return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'bpmn:SubProcess') && !is(target, 'cp:AbstractContainerElement');
     }
 
     function getConnection(source, target) {

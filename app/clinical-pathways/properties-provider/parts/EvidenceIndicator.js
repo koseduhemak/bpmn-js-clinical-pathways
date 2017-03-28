@@ -42,7 +42,7 @@ module.exports = function (group, element, moddle) {
 
         group.entries.push(entryFactory.selectBox({
             id: 'evidenceIndicatorProperty',
-            description: 'Evidence Level of the task/gateway',
+            description: 'Evidence Level of the current element',
             label: 'Evidence Level',
             modelProperty: 'evidenceIndicator',
             selectOptions: helpers.getEnumValues('cp:EvidenceLevel'),

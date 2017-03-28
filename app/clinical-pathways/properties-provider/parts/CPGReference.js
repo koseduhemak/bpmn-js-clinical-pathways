@@ -56,6 +56,21 @@ module.exports = function (group, element, moddle) {
                 return attrs;
             };
         };
+        group.entries.push(entryFactory.textField({
+            id: 'cpgName',
+            label: 'Name',
+            modelProperty: 'cpgName',
+            set: setValue(getBusinessObject(element), 'cpgName'),
+            get: getValue(getBusinessObject(element), 'cpgName')
+        }));
+
+        group.entries.push(entryFactory.textField({
+            id: 'url',
+            label: 'URL',
+            modelProperty: 'url',
+            set: setValue(getBusinessObject(element), 'url'),
+            get: getValue(getBusinessObject(element), 'url')
+        }));
 
         group.entries.push(entryFactory.textField({
             id: 'pageFrom',
@@ -68,7 +83,6 @@ module.exports = function (group, element, moddle) {
 
         group.entries.push(entryFactory.textField({
             id: 'pageTo',
-            description: 'Page To descr.',
             label: 'Page To',
             modelProperty: 'pageTo',
             set: setValue(getBusinessObject(element), 'pageTo'),
@@ -77,8 +91,7 @@ module.exports = function (group, element, moddle) {
 
         group.entries.push(entryFactory.textField({
             id: 'paragraphFrom',
-            description: 'paragraphFrom...',
-            label: 'paragraphFrom',
+            label: 'Paragraph From',
             modelProperty: 'paragraphFrom',
             set: setValue(getBusinessObject(element), 'paragraphFrom'),
             get: getValue(getBusinessObject(element), 'paragraphFrom')
@@ -86,29 +99,11 @@ module.exports = function (group, element, moddle) {
 
         group.entries.push(entryFactory.textField({
             id: 'paragraphTo',
-            description: 'paragraphTo...',
-            label: 'paragraphTo',
+            label: 'Paragraph To',
             modelProperty: 'paragraphTo',
             set: setValue(getBusinessObject(element), 'paragraphTo'),
             get: getValue(getBusinessObject(element), 'paragraphTo')
         }));
 
-        group.entries.push(entryFactory.textField({
-            id: 'url',
-            description: 'url...',
-            label: 'url',
-            modelProperty: 'url',
-            set: setValue(getBusinessObject(element), 'url'),
-            get: getValue(getBusinessObject(element), 'url')
-        }));
-
-        group.entries.push(entryFactory.textField({
-            id: 'cpgName',
-            description: 'cpgName...',
-            label: 'cpgName',
-            modelProperty: 'cpgName',
-            set: setValue(getBusinessObject(element), 'cpgName'),
-            get: getValue(getBusinessObject(element), 'cpgName')
-        }));
     }
 };

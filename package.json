@@ -1,11 +1,11 @@
 {
-  "name": "custom-elements-example",
-  "version": "0.0.0",
-  "description": "An example on how to create a custom elements with bpmn-js",
+  "name": "bpmn-js-clinical-pathways",
+  "version": "1.0.0",
+  "description": "Prototype for modeling clinical pathways with bpmn-js",
   "main": "app/app.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bpmn-io/bpmn-js-examples"
+    "url": "https://github.com/koseduhemak/bpmn-js-clinical-pathways"
   },
   "scripts": {
     "test": "grunt test",
@@ -14,23 +14,12 @@
     "php-dependencies": "cd php && php composer.phar update"
   },
   "keywords": [
-    "bpmnjs-example"
+    "bpmn-js-clinical-pathways"
   ],
   "author": {
-    "name": "Ricardo Matias",
-    "url": "https://github.com/ricardomatias"
+    "name": "Maximilian Füsslin",
+    "url": "https://github.com/koseduhemak"
   },
-  "contributors": [
-    {
-      "name": "bpmn.io contributors",
-      "url": "https://github.com/bpmn-io"
-    },
-    {
-      "name": "Philipp Fromme",
-      "url": "https://github.com/philippfromme"
-    }
-  ],
-  "license": "MIT",
   "devDependencies": {
     "brfs": "^1.4.1",
     "browserify": "^13.0.0",

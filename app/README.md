@@ -6,7 +6,7 @@ In dieser README wird auf die einzelnen Unterordner **./app/*** kurz eingegangen
 [Zurück zur Hauptseite](../../../)
 
 - [app/clinical-pathways](#appclinical-pathways)
-    - [context-pad/CPContextPadProvider.js](#context-padCPContextPadProvider)
+    - [context-pad/CPContextPadProvider.js](#context-padcpcontextpadprovider)
     - [draw/CPRenderer.js](#drawcprenderer)
     - [ext-metamodel/CPMetamodel.json](#ext-metamodelcpmetamodeljson)
     - [import/CPImporter.js](#importcpimporter)

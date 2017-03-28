@@ -51,43 +51,6 @@ var cpBehavior = require('./clinical-pathways/modeling/behavior');
 
 // CP Importer
 var cpImporter = require('./clinical-pathways/import');
-/*
-var modelingModules = [
-
-    // core
-    require('bpmn-js/lib/core'),
-    require('diagram-js/lib/i18n/translate'),
-    require('diagram-js/lib/features/selection'),
-    require('diagram-js/lib/features/overlays'),
-
-    // modeling components
-    require('diagram-js/lib/features/auto-scroll'),
-    require('diagram-js/lib/features/bendpoints'),
-    require('diagram-js/lib/features/move'),
-    require('diagram-js/lib/features/resize'),
-    require('bpmn-js/lib/features/auto-resize'),
-    require('bpmn-js/lib/features/editor-actions'),
-    require('bpmn-js/lib/features/context-pad'),
-    require('bpmn-js/lib/features/keyboard'),
-    require('bpmn-js/lib/features/label-editing'),
-    require('bpmn-js/lib/features/modeling'),
-    require('bpmn-js/lib/features/palette'),
-    require('bpmn-js/lib/features/replace-preview'),
-    require('bpmn-js/lib/features/snapping')
-
-];
-
-var interactionModules = [
-    // non-modeling components
-    require('diagram-js/lib/navigation/movecanvas'),
-    require('diagram-js/lib/navigation/touch'),
-    require('diagram-js/lib/navigation/zoomscroll')
-];
-
-var modules = [].concat(
-    modelingModules,
-    interactionModules
-);*/
 
 var modeler = new BpmnModeler({
     container: canvas, keyboard: {bindTo: document},
@@ -102,14 +65,12 @@ var modeler = new BpmnModeler({
         cpRules,
         cpContextPad,
         propertiesPanelModule,
-       // propertiesProviderModule,
         CliModule,
         CPpropertiesProviderModule,
         cpPaletteModule,
         cpDrawModule,
 
         cpPopupMenu,
-        //elementFactory,
         cpAutoResize
 
     ],
