@@ -27,7 +27,7 @@ module.exports = CPReplaceMenuProvider;
 
 /**
  * Get all entries from replaceOptions for the given element and apply filters
- * on them. Get for example only elements, which are different from the current one.
+ * on them. Gets for example only elements, which are different from the current one.
  *
  * @param {djs.model.Base} element
  *
@@ -39,7 +39,6 @@ CPReplaceMenuProvider.prototype.getEntries = function (element) {
     var entries;
 
     var differentType = isDifferentType(element);
-    console.log(businessObject);
 
     // flow nodes
     if (is(businessObject, 'bpmn:Task')) {

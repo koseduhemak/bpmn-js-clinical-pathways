@@ -12,6 +12,10 @@ function CPPaletteProvider(palette, create, elementFactory) {
     palette.registerProvider(this);
 }
 
+/**
+ * This function fills the modeling palette.
+ * @returns {{}}
+ */
 CPPaletteProvider.prototype.getPaletteEntries = function () {
 
     var elementFactory = this._elementFactory,

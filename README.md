@@ -35,6 +35,8 @@ Das Testsystem bestand aus folgenden Komponenten und wurde unter Windows 10 aufg
 * [PHP 7.1.0 (ZTS MSVC14 (Visual C++ 2015) x64)](http://php.net/)
 * [NodeJS 7.2.0 & NPM 4.0.5](https://nodejs.org/)
 
+Die Anwendung wurde mit Mozilla Firefox und Google Chrome getestet.
+
 **!Wichtig!**
 
 Die Pfade der Programme `node`, `npm` und `php` müssen in der Windows PATH-Variable vorhanden sein, um Befehle über die Kommandozeile ausführen zu können.

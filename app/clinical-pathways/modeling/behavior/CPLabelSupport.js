@@ -14,6 +14,10 @@ function CPLabelSupport(eventBus, modeling, bpmnFactory) {
         return isAny(bo, ['cp:Objective', 'cp:QualityIndicator', 'cp:ParallelGateway', 'cp:EvidenceGateway']);
     };
 
+    /**
+     * This function checks if an external label should be rendered for a given element.
+     * @param e
+     */
     this.labelCreate = function(e) {
         var context = e.context;
 

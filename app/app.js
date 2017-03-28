@@ -9,6 +9,8 @@ var container = $('#js-drop-zone');
 
 var canvas = $('#js-canvas');
 
+var swal = require('sweetalert');
+
 // helper
 var forEach = require('lodash/collection/forEach');
 var isAny = require('bpmn-js/lib/features/modeling/util/ModelingUtil').isAny;
@@ -79,7 +81,7 @@ var modeler = new BpmnModeler({
     }
 });
 
-
+var latestXML, diagramName;
 var newDiagramXML = fs.readFileSync(__dirname + '/../resources/newDiagram.bpmn', 'utf-8');
 
 function createNewDiagram() {
@@ -114,9 +116,6 @@ function openDiagram(xml) {
                     return true;
                 }
             });
-
-            console.log(cpElements);
-
 
             // @todo auslagern in module?
             // applys overlays to specific elements
@@ -167,6 +166,8 @@ function registerFileDrop(container, callback) {
         reader.onload = function (e) {
 
             var xml = e.target.result;
+
+            diagramName = file.name;
 
             callback(xml);
         };
@@ -226,8 +227,48 @@ $(document).ready(function () {
         }
     });
 
+    downloadLink.click(function (e) {
+        if (isWebserver()) {
+            if (typeof diagramName === "undefined" || diagramName === "") {
+                swal({
+                        title: "Where should I save your diagram?",
+                        text: "Specify a path, please! New folders will be automatically created [Current dir: workspace].",
+                        type: "input",
+                        showCancelButton: true,
+                        closeOnConfirm: false,
+                        animation: "slide-from-top",
+                        inputPlaceholder: "newBPMN.bpmn"
+                    },
+                    function (inputValue) {
+                        if (inputValue === false) return false;
+
+                        if (inputValue === "") {
+                            return true;
+                        }
+
+                        diagramName = inputValue;
+
+                        if (diagramName.substr(diagramName.lastIndexOf('.') + 1) !== "bpmn") {
+                            diagramName += ".bpmn";
+                        }
+
+                        saveDiagramToDisk(diagramName, latestXML);
+                    });
+
+                return false;
+            } else {
+                saveDiagramToDisk(diagramName, latestXML);
+                return false;
+            }
+        }
+
+        return true;
+    });
+
     function setEncoded(link, name, data) {
         var encodedData = encodeURIComponent(data);
+
+        latestXML = data;
 
         if (data) {
             link.addClass('active').attr({
@@ -254,3 +295,35 @@ $(document).ready(function () {
 
     modeler.on('commandStack.changed', exportArtifacts);
 });
+
+function saveDiagramToDisk(fileName, latestXML) {
+    $.post('/diagram/save/' + encodeURI(fileName), {xml: latestXML}).done(function (json) {
+        if (json.result) {
+            swal({
+                title: "BPMN model saved!",
+                text: "Your BPMN model was saved.",
+                type: "success",
+                timer: 3000,
+                showConfirmButton: false
+            });
+        } else {
+            swal({
+                title: "BPMN not saved!",
+                text: "Your BPMN model was NOT saved. Something is wrong. Please check your POST data via browsers console window!",
+                type: "error",
+                showConfirmButton: false
+            });
+        }
+    }).fail(function () {
+        swal({
+            title: "BPMN not saved!",
+            text: "Your BPMN model was NOT saved. Something is wrong. Please check your POST data via browsers console window!",
+            type: "error",
+            showConfirmButton: false
+        });
+    });
+}
+
+function isWebserver() {
+    return window.location.href.indexOf("localhost:9013") === -1;
+}

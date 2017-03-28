@@ -4,13 +4,10 @@
 var $ = require('jquery');
 
 function ElFinderHelper(modeler, openDiagramFunc) {
-    console.log(modeler);
 
     window.elFinderFileSelected = function(filePath) {
 
-
         $.get(filePath, function (xml) {
-            console.log(modeler);
             openDiagramFunc(xml);
         });
 

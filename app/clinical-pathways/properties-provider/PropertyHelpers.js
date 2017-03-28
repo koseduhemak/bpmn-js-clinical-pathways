@@ -7,7 +7,6 @@ module.exports.getEnumValues = function(enumType) {
     var type = getTypeWithoutNS(enumType);
 
     var enums = metamodel.enumerations.filter(function(enumElement) {
-        console.log(enumElement);
         return enumElement.name === type;
     });
 

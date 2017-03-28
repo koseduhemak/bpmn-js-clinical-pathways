@@ -27,7 +27,7 @@ var renderer = new DmnModeler({
 
 var newTableXML = fs.readFileSync('./resources/newTable.dmn', 'utf-8');
 
-var diagramName = "newDiagram.dmn";
+var diagramName;
 
 function createNewTable() {
     openTable(newTableXML);
@@ -104,6 +104,8 @@ function registerFileDrop(container, callback) {
         reader.onload = function (e) {
 
             var xml = e.target.result;
+
+            diagramName = file.name;
 
             callback(xml);
         };
@@ -184,7 +186,7 @@ $(document).ready(function () {
 
     var exportArtifacts = function () {
         saveTable(function (err, xml) {
-            setEncoded(downloadLink, diagramName, err ? null : xml);
+            setEncoded(downloadLink, 'newDMN.dmn', err ? null : xml);
         });
     };
 
@@ -195,32 +197,34 @@ $(document).ready(function () {
         dirty = false;
 
         if (isWebserver()) {
+            if (typeof diagramName === "undefined" || diagramName === "") {
+                swal({
+                        title: "Where should I save your diagram?",
+                        text: "Specify a path, please! New folders will be automatically created [Current dir: workspace]. If you leave the path empty, I will only save it into the BPMN-Diagram but not to disk.",
+                        type: "input",
+                        showCancelButton: true,
+                        closeOnConfirm: false,
+                        animation: "slide-from-top",
+                        inputPlaceholder: "my_dir/new.dmn"
+                    },
+                    function (inputValue) {
+                        if (inputValue === false) return false;
 
-            swal({
-                    title: "Where should I save your diagram?",
-                    text: "Specify a path, please! New folders will be automatically created. [Current dir: workspace]",
-                    type: "input",
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    animation: "slide-from-top",
-                    inputPlaceholder: "my_dir/new.dmn"
-                },
-                function (inputValue) {
-                    if (inputValue === false) return false;
+                        if (inputValue === "") {
+                            openerCallback(latestXML);
+                        }
 
-                    if (inputValue === "") {
-                        swal.showInputError("Please specify a path!");
-                        return false
-                    }
+                        diagramName = inputValue;
 
-                    diagramName = inputValue;
+                        if (diagramName.substr(diagramName.lastIndexOf('.') + 1) !== "dmn") {
+                            diagramName += ".dmn";
+                        }
 
-                    if (diagramName.substr(diagramName.lastIndexOf('.') + 1) !== "dmn") {
-                        diagramName += ".dmn";
-                    }
-
-                    saveDiagramToDisk(diagramName, latestXML);
-                });
+                        saveDiagramToDisk(diagramName, latestXML);
+                    });
+            } else {
+                saveDiagramToDisk(diagramName, latestXML);
+            }
 
             return false;
 
@@ -272,7 +276,7 @@ function getParameterByName(name, url) {
 }
 
 function isWebserver() {
-    return window.location.href.indexOf("localhost:9013") == -1;
+    return window.location.href.indexOf("localhost:9013") === -1;
 }
 
 function openerCallback(xml) {
@@ -282,8 +286,8 @@ function openerCallback(xml) {
 
     // display message that modeler is closed after download is executed... This is a workaround due browsers insufficiency
     swal({
-        title: "DMN saved!",
-        text: "Your DMN model was saved. It will be included inline in your bpmn and served as file download / or persisted to your workspace. You will return to your BPMN diagram in 3 seconds.",
+        title: "DMN model saved!",
+        text: "Your DMN model was saved. It will be included inline in your bpmn and served as file download / or persisted to your workspace if you have specified a path. You will return to your BPMN diagram in 3 seconds.",
         type: "success",
         showConfirmButton: false
     });

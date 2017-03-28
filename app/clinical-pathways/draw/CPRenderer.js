@@ -29,6 +29,14 @@ var LABEL_STYLE = {
 };
 var TASK_BORDER_RADIUS = 10;
 
+/**
+ * This class is required for rendering clinical pathway elements.
+ * @param eventBus
+ * @param styles
+ * @param pathMap
+ * @param modeling
+ * @constructor
+ */
 function CPRenderer(eventBus, styles, pathMap, modeling) {
     BaseRenderer.call(this, eventBus, 1500);
 
@@ -89,6 +97,7 @@ function CPRenderer(eventBus, styles, pathMap, modeling) {
                 x: 3,
                 y: 3,
                 width: 20,
+                height: 20,
                 href: url
             });
 
@@ -104,6 +113,7 @@ function CPRenderer(eventBus, styles, pathMap, modeling) {
                 x: 3,
                 y: 3,
                 width: 15,
+                height: 20,
                 href: url
             });
 
@@ -119,6 +129,7 @@ function CPRenderer(eventBus, styles, pathMap, modeling) {
                 x: 3,
                 y: 3,
                 width: 20,
+                height: 20,
                 href: url
             });
 
@@ -449,6 +460,7 @@ function CPRenderer(eventBus, styles, pathMap, modeling) {
             var iconGfx = svgCreate('image', {
                 x: 3,
                 y: element.height - 28,
+                width: 25,
                 height: 25,
                 href: url
             });
@@ -807,6 +819,7 @@ function CPRenderer(eventBus, styles, pathMap, modeling) {
             x: -2,
             y: 2,
             width: 25,
+            height: 25,
             href: 'clinical-pathways/icons/webfont-medical-icons/i-' + icon + '.png'
         }, options));
 

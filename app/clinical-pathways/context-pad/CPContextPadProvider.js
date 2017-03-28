@@ -9,6 +9,20 @@ var isAny = require('bpmn-js/lib/features/modeling/util/ModelingUtil').isAny;
 var assign = require('lodash/object/assign'),
     bind = require('lodash/function/bind');
 
+/**
+ * This class handles the ContextPad.
+ * @param eventBus
+ * @param contextPad
+ * @param modeling
+ * @param elementFactory
+ * @param connect
+ * @param create
+ * @param popupMenu
+ * @param canvas
+ * @param rules
+ * @param translate
+ * @constructor
+ */
 function CPContextPadProvider(eventBus, contextPad, modeling, elementFactory, connect,
                               create, popupMenu, canvas, rules, translate) {
 
@@ -21,6 +35,10 @@ function CPContextPadProvider(eventBus, contextPad, modeling, elementFactory, co
         connect.start(event, element, autoActivate);
     }
 
+    /**
+     * This function determines the content of the ContextPad for a given element.
+     * @param element
+     */
     this.getContextPadEntries = function (element) {
         var actions = cached(element);
 

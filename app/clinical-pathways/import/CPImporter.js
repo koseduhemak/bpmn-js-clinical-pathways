@@ -18,6 +18,11 @@ function CPImporter(eventBus, canvas, elementFactory, elementRegistry, translate
     this._elementRegistry = elementRegistry;
     this._translate = translate;
 
+    /**
+     * This function checks, if an external label should be rendered by diagram import for the given element.
+     * @param semantic
+     * @param parentElement
+     */
     this.add = function(semantic, parentElement) {
         var element = cached(semantic, parentElement);
 
