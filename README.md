@@ -6,6 +6,16 @@ Die vollständigen Literaturverweise können im Abschnitt [Literatur](#literatur
 
 Dabei wurde die JavaScript-Library **bpmn-js** als Ausgangsbasis herangezogen und an notwendigen Stellen erweitert.
 
+## Table of Contents
+
+- [Vorstellung](#vorstellung)
+- [Voraussetzungen](#voraussetzungen)
+- [Struktur](#struktur)
+    - [app](#app)
+    - [php](#php)
+- [Ausführung](#ausführung)
+- [Literatur](#literatur)
+
 ## Vorstellung
 
 ### Modellierungseditor bpmn-js-clinical-pathways. Quelle: [`FÜSSLIN (2017), S. 49`](#literatur)

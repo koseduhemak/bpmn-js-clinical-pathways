@@ -3,7 +3,7 @@ In dieser README wird auf die einzelnen Unterordner **./app/*** kurz eingegangen
 
 ## Table of Contents
 
-[Zurück zur Hauptseite](../)
+[Zurück zur Hauptseite](../../../)
 
 - [app/clinical-pathways](#appclinical-pathways)
     - [context-pad/CPContextPadProvider.js](#context-padCPContextPadProvider)
